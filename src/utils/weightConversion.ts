@@ -10,6 +10,14 @@ export function convertKgsToLbs(kgs: number): number {
   return kgs * LBS_PER_KG;
 }
 
+export function convertLbsToStLb(lbs: number, precision?: number): string {
+  let p = typeof precision === 'undefined' ? 1 : precision;
+
+  const stone = Math.floor(lbs / 14);
+  const remainderLbs = (lbs % 14).toFixed(p);
+  return `${stone}st ${remainderLbs}lb`;
+}
+
 export function formatWeight(weightRecord: WeightRecord, unit: WeightUnit): string {
   let { kgs, lbs } = weightRecord;
 
@@ -22,9 +30,7 @@ export function formatWeight(weightRecord: WeightRecord, unit: WeightUnit): stri
   }
 
   if (unit === WeightUnit.STONES_LBS) {
-    const stone = Math.floor(lbs / 14);
-    const remainderLbs = (lbs % 14).toFixed(1);
-    return `${stone}st ${remainderLbs}lb`;
+    return convertLbsToStLb(lbs);
   }
 
   if (unit === WeightUnit.LBS) {
