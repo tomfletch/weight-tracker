@@ -1,9 +1,21 @@
 import { createContext } from 'react';
-import { WeightRecord } from '../components/AddWeight';
 import useLocalStorage from '../hooks/useLocalStorage';
 
+export enum WeightUnit {
+  LBS = 'LBS',
+  STONES_LBS = 'STONES_LBS',
+  KGS = 'KGS',
+};
+
+export interface WeightRecord {
+  date: string;
+  lbs?: number;
+  kgs?: number;
+}
+
 interface WeightContextInterface {
-  weights: WeightRecord[];
+  weightUnit: WeightUnit;
+  weightRecords: WeightRecord[];
   addWeight: (weightRecort: WeightRecord) => void;
 };
 
@@ -14,14 +26,16 @@ type Props = {
 };
 
 export function WeightProvider({ children }: Props) {
-  const [weights, setWeights] = useLocalStorage('weights', []);
+  const [weightRecords, setWeightRecords] = useLocalStorage('weightRecords', []);
+  const [weightUnit, setWeightUnit] = useLocalStorage('weightUnit', WeightUnit.LBS);
 
   const addWeight = (weightRecord: WeightRecord) => {
-    setWeights((prevWeights: WeightRecord[]) => [...prevWeights, weightRecord]);
+    setWeightRecords((prevWeights: WeightRecord[]) => [...prevWeights, weightRecord]);
   }
 
   const contextValue = {
-    weights,
+    weightUnit,
+    weightRecords,
     addWeight,
   };
 

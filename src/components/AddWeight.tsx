@@ -1,14 +1,9 @@
 import React, { useContext, useState } from 'react';
-import WeightContext from '../context/WeightContext';
+import WeightContext, { WeightRecord } from '../context/WeightContext';
 import styles from './AddWeight.module.css';
 
 const today = new Date();
 const todayStr = today.toISOString().split('T')[0];
-
-export interface WeightRecord {
-  date: string;
-  lbs: number;
-}
 
 function AddWeight() {
   const [date, setDate] = useState(todayStr);
