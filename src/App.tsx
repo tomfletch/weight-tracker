@@ -1,8 +1,15 @@
+import AddWeight from './components/AddWeight';
+import { WeightProvider } from './context/WeightContext';
+import './index.css';
+
 function App() {
+
   return (
-    <div className="App">
-      App Component
-    </div>
+    <WeightProvider>
+      <div className="App">
+        <AddWeight />
+      </div>
+    </WeightProvider>
   );
 }
 

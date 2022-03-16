@@ -1,0 +1,13 @@
+.section {
+  display: inline;
+  margin-right: 1rem;
+}
+
+.section label {
+  margin: 0 0.5rem;
+}
+
+.weightInput {
+  width: 30px;
+  text-align:right;
+}
