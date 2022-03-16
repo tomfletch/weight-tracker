@@ -2,7 +2,13 @@ import { useContext, useMemo } from 'react';
 import WeightContext, { WeightRecord, WeightUnit } from '../context/WeightContext';
 import { formatWeight } from '../utils/weightConversion';
 
-function WeightHistoryRow({weightRecord, unit}: {weightRecord: WeightRecord, unit: WeightUnit}) {
+interface WeightHistoryRowProps {
+  weightRecord: WeightRecord;
+  unit: WeightUnit;
+  onDelete: () => void;
+};
+
+function WeightHistoryRow({weightRecord, unit, onDelete}: WeightHistoryRowProps) {
   const weightStr = formatWeight(weightRecord, unit);
 
   const date = new Date(weightRecord.date);
@@ -11,12 +17,13 @@ function WeightHistoryRow({weightRecord, unit}: {weightRecord: WeightRecord, uni
     <tr>
       <td>{date.toLocaleDateString()}</td>
       <td>{weightStr}</td>
+      <td><button type="button" onClick={onDelete}>&times;</button></td>
     </tr>
   );
 }
 
 function WeightHistory() {
-  const { weightRecords, weightUnit } = useContext(WeightContext);
+  const { weightRecords, weightUnit, deleteWeight } = useContext(WeightContext);
 
   const sortedWeightRecords = useMemo(() => weightRecords.sort((a, b) => a.date.localeCompare(b.date)), [weightRecords]);
 
@@ -27,7 +34,12 @@ function WeightHistory() {
       <table>
         <tbody>
           {sortedWeightRecords.map((weightRecord) => (
-            <WeightHistoryRow key={weightRecord.date} weightRecord={weightRecord} unit={weightUnit} />
+            <WeightHistoryRow
+              key={weightRecord.date}
+              weightRecord={weightRecord}
+              unit={weightUnit}
+              onDelete={() => deleteWeight(weightRecord.date)}
+            />
           ))}
         </tbody>
       </table>

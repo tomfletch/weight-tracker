@@ -17,6 +17,7 @@ interface WeightContextInterface {
   weightUnit: WeightUnit;
   weightRecords: WeightRecord[];
   addWeight: (weightRecort: WeightRecord) => void;
+  deleteWeight: (date: string) => void;
 };
 
 const WeightContext = createContext<WeightContextInterface>({} as WeightContextInterface);
@@ -30,13 +31,20 @@ export function WeightProvider({ children }: Props) {
   const [weightUnit, setWeightUnit] = useLocalStorage('weightUnit', WeightUnit.LBS);
 
   const addWeight = (weightRecord: WeightRecord) => {
-    setWeightRecords((prevWeights: WeightRecord[]) => [...prevWeights, weightRecord]);
-  }
+    setWeightRecords((prevWeightRecords: WeightRecord[]) => [...prevWeightRecords, weightRecord]);
+  };
+
+  const deleteWeight = (date: string) => {
+    setWeightRecords((prevWeightRecords: WeightRecord[]) => {
+      return prevWeightRecords.filter((weightRecord) => weightRecord.date !== date);
+    });
+  };
 
   const contextValue = {
     weightUnit,
     weightRecords,
     addWeight,
+    deleteWeight,
   };
 
   return (
