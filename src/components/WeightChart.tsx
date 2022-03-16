@@ -13,15 +13,27 @@ function WeightChart() {
   const weights = weightRecords.map((weightRecord) => weightRecord.lbs);
 
   return (
-    <Line data={{
-      labels: dates,
-      datasets: [
-        {
-          label: 'Weight',
-          data: weights,
-        },
-      ],
-    }} />
+    <Line
+      data={{
+        labels: dates,
+        datasets: [
+          {
+            label: 'Weight',
+            data: weights,
+            borderColor: 'rgb(0,200,255)',
+            borderWidth: 1,
+            backgroundColor: 'rgb(0,200,255)',
+          },
+        ],
+      }}
+      options={{
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }}
+    />
   );
 }
 
