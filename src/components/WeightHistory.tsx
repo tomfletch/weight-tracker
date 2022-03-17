@@ -1,7 +1,7 @@
 import { useContext, useMemo } from 'react';
 import WeightContext, { WeightRecord, WeightUnit } from '../context/WeightContext';
 import { formatDate } from '../utils/dates';
-import { formatWeight } from '../utils/weightConversion';
+import { formatWeight } from '../utils/weights';
 import styles from './WeightHistory.module.css';
 
 interface WeightHistoryRowProps {
@@ -11,7 +11,7 @@ interface WeightHistoryRowProps {
 };
 
 function WeightHistoryRow({weightRecord, unit, onDelete}: WeightHistoryRowProps) {
-  const weightStr = formatWeight(weightRecord, unit);
+  const weightStr = formatWeight(weightRecord.weightKgs, unit);
 
   return (
     <tr>

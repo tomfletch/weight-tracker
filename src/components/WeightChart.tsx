@@ -1,25 +1,56 @@
 import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, registerables } from 'chart.js';
+import { Chart, registerables } from 'chart.js';
 import 'chartjs-adapter-moment';
-import WeightContext from '../context/WeightContext';
+import WeightContext, { WeightUnit } from '../context/WeightContext';
 import { useContext } from 'react';
-import { convertLbsToStLb } from '../utils/weightConversion';
+import { convertKgsToLbs, formatKgs, formatLbs, formatLbsAsStsLbs } from '../utils/weights';
 
-ChartJS.register(...registerables);
+Chart.register(...registerables);
 
-function formatTick(value: number | string): string {
-  if (typeof value === 'number') {
-    return convertLbsToStLb(value, 0);
+const showLabelPlugin = {
+  id: 'showlabel',
+  afterDraw: function(chart: Chart) {
+    const ctx = chart.ctx;
+
+    chart.data.datasets.forEach((dataset, datasetIndex) => {
+      if (!dataset.showLabel) {
+        return;
+      }
+
+      const meta = chart.getDatasetMeta(datasetIndex);
+      const point = meta.data[0];
+      ctx.fillStyle = 'red';
+
+      if ( point.y > 30) {
+        ctx.textBaseline = 'bottom';
+        ctx.fillText('Target', point.x + 2, point.y - 2);
+      } else {
+        ctx.textBaseline = 'top';
+        ctx.fillText('Target', point.x + 2, point.y + 2);
+      }
+
+    });
   }
-  return '';
-}
+};
+
+Chart.register(showLabelPlugin);
 
 
 function WeightChart() {
-  const { weightRecords } = useContext(WeightContext);
+  const { weightRecords, weightTargetKgs, weightUnit } = useContext(WeightContext);
+
+  if (weightRecords.length === 0) {
+    return <div>Not enough data</div>
+  }
 
   const dates = weightRecords.map((weightRecord) => weightRecord.date);
-  const weights = weightRecords.map((weightRecord) => weightRecord.lbs);
+  let weights = weightRecords.map((weightRecord) => weightRecord.weightKgs);
+  let targetWeights = weightRecords.map(() => weightTargetKgs);
+
+  if (weightUnit !== WeightUnit.KGS) {
+    weights = weights.map((weightKg) => Math.round(convertKgsToLbs(weightKg) * 10)/10);
+    targetWeights = targetWeights.map((weightKg) => Math.round(convertKgsToLbs(weightKg) * 10)/10);
+  }
 
   return (
     <Line
@@ -32,6 +63,14 @@ function WeightChart() {
             borderColor: 'rgb(0,200,255)',
             borderWidth: 1,
             backgroundColor: 'rgb(0,200,255)',
+          },
+          {
+            label: 'Target Weight',
+            data: targetWeights,
+            borderColor: 'rgb(255, 0, 0)',
+            borderWidth: 1,
+            pointRadius: 0,
+            showLabel: true,
           },
         ],
       }}
@@ -50,7 +89,21 @@ function WeightChart() {
           },
           y: {
             ticks: {
-              callback: (value) => formatTick(value)
+              callback: (value: number | string): string => {
+                if (typeof value === 'number') {
+                  if (weightUnit === WeightUnit.KGS) {
+                    return formatKgs(value, 0);
+                  }
+                  if (weightUnit === WeightUnit.LBS) {
+                    return formatLbs(value, 0);
+                  }
+                  if (weightUnit === WeightUnit.STONES_LBS) {
+                    return formatLbsAsStsLbs(value, 0);
+                  }
+                }
+
+                return '';
+              }
             }
           }
         }

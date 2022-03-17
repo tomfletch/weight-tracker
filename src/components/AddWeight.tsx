@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import WeightContext, { WeightRecord } from '../context/WeightContext';
+import { convertStsLbsToKg } from '../utils/weights';
 import styles from './AddWeight.module.css';
 
 const today = new Date();
@@ -26,12 +27,11 @@ function AddWeight() {
     e.preventDefault();
     const stone = parseInt(stoneStr, 10);
     const lbs = parseFloat(lbsStr);
-
-    const totalLbs = stone * 14 + lbs;
+    const kgs = convertStsLbsToKg(stone, lbs);
 
     const weightRecord: WeightRecord = {
       date,
-      lbs: totalLbs
+      weightKgs: kgs
     };
     addWeight(weightRecord);
   };

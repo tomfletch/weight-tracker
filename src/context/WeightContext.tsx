@@ -9,8 +9,7 @@ export enum WeightUnit {
 
 export interface WeightRecord {
   date: string;
-  lbs?: number;
-  kgs?: number;
+  weightKgs: number;
 }
 
 interface WeightContextInterface {
@@ -18,6 +17,7 @@ interface WeightContextInterface {
   weightRecords: WeightRecord[];
   addWeight: (weightRecort: WeightRecord) => void;
   deleteWeight: (date: string) => void;
+  weightTargetKgs: number;
 };
 
 const WeightContext = createContext<WeightContextInterface>({} as WeightContextInterface);
@@ -29,6 +29,8 @@ type Props = {
 export function WeightProvider({ children }: Props) {
   const [weightRecords, setWeightRecords] = useLocalStorage('weightRecords', []);
   const [weightUnit, setWeightUnit] = useLocalStorage('weightUnit', WeightUnit.LBS);
+  const [weightTargetKgs, setWeightTargetKgs] = useLocalStorage('weightTargetKgs', {value: 154, unit: WeightUnit.LBS});
+
 
   const addWeight = (weightRecord: WeightRecord) => {
     setWeightRecords((prevWeightRecords: WeightRecord[]) => [...prevWeightRecords, weightRecord]);
@@ -45,6 +47,7 @@ export function WeightProvider({ children }: Props) {
     weightRecords,
     addWeight,
     deleteWeight,
+    weightTargetKgs,
   };
 
   return (

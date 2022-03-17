@@ -1,7 +1,8 @@
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables } from 'chart.js';
-import WeightContext from '../context/WeightContext';
+import WeightContext, { WeightUnit } from '../context/WeightContext';
 import { useContext } from 'react';
+import { convertKgsToLbs, formatKgs, formatLbs } from '../utils/weights';
 
 ChartJS.register(...registerables);
 
@@ -13,7 +14,11 @@ function getDateDiff(dateStr: string, days: number): string {
 }
 
 function WeightDeltaChart() {
-  const { weightRecords } = useContext(WeightContext);
+  const { weightRecords, weightUnit } = useContext(WeightContext);
+
+  if (weightRecords.length === 0) {
+    return <div>Not enough data</div>
+  }
 
   const deltaDates: string[] = [];
   const deltaWeights: number[] = [];
@@ -22,10 +27,15 @@ function WeightDeltaChart() {
     const prevWeekDate = getDateDiff(weightRecord.date, -7);
     const prevWeekRecord = weightRecords.find((w) => w.date === prevWeekDate);
 
-    if (prevWeekRecord && weightRecord.lbs && prevWeekRecord.lbs) {
-      const delta = weightRecord.lbs - prevWeekRecord.lbs;
+    if (prevWeekRecord && weightRecord.weightKgs && prevWeekRecord.weightKgs) {
+      const delta = weightRecord.weightKgs - prevWeekRecord.weightKgs;
       deltaDates.push(weightRecord.date);
-      deltaWeights.push(delta);
+
+      if (weightUnit === WeightUnit.LBS || weightUnit === WeightUnit.STONES_LBS) {
+        deltaWeights.push(convertKgsToLbs(delta));
+      } else {
+        deltaWeights.push(delta);
+      }
     }
   }
 
@@ -50,8 +60,28 @@ function WeightDeltaChart() {
           }
         },
         scales: {
+          x: {
+            type: 'time',
+            time: {
+              unit: 'day'
+            }
+          },
           y: {
-            beginAtZero: true
+            beginAtZero: true,
+            ticks: {
+              callback: (value: number | string): string => {
+                if (typeof value === 'number') {
+                  if (weightUnit === WeightUnit.KGS) {
+                    return formatKgs(value, 0);
+                  }
+                  if (weightUnit === WeightUnit.LBS || weightUnit === WeightUnit.STONES_LBS) {
+                    return formatLbs(value, 0);
+                  }
+                }
+
+                return '';
+              }
+            }
           }
         }
       }}
