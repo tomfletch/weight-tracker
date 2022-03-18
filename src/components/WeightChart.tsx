@@ -7,6 +7,8 @@ import { convertKgsToLbs, formatKgs, formatLbs, formatLbsAsStsLbs } from '../uti
 
 Chart.register(...registerables);
 
+// const DAY_SECONDS = 60 * 60 * 24;
+
 const showLabelPlugin = {
   id: 'showlabel',
   afterDraw: function(chart: Chart) {
@@ -47,10 +49,44 @@ function WeightChart() {
   let weights = weightRecords.map((weightRecord) => weightRecord.weightKgs);
   let targetWeights = weightRecords.map(() => weightTargetKgs);
 
+  // const firstDate = new Date(dates[0]).getTime() / 1000;
+
+  // const days = dates.map((d) => (new Date(d).getTime() / 1000 - firstDate) / DAY_SECONDS);
+
+  // let sumX = 0;
+  // let sumY = 0;
+  // let sumXX = 0;
+  // let sumXY = 0;
+
+  // const N = days.length;
+
+  // for (let i = 0; i < N; i++) {
+  //   const x = days[i];
+  //   const y = weights[i];
+
+  //   sumX += x;
+  //   sumY += y;
+  //   sumXX += x * x;
+  //   sumXY += x * y;
+  // }
+
+  // const m = (N * sumXY - sumX*sumY) / (N * sumXX - sumX*sumX);
+  // const b = (sumY - m * sumX) / N;
+
+  // let regressionWeightStart = b;
+  // let regressionWeightEnd = m*days[N-1] + b;
+
   if (weightUnit !== WeightUnit.KGS) {
     weights = weights.map((weightKg) => Math.round(convertKgsToLbs(weightKg) * 10)/10);
     targetWeights = targetWeights.map((weightKg) => Math.round(convertKgsToLbs(weightKg) * 10)/10);
+
+    // regressionWeightStart = convertKgsToLbs(regressionWeightStart);
+    // regressionWeightEnd = convertKgsToLbs(regressionWeightEnd);
   }
+
+  // const regressionWeights = new Array(N).fill(undefined);
+  // regressionWeights[0] = regressionWeightStart;
+  // regressionWeights[N-1] = regressionWeightEnd;
 
   return (
     <Line
@@ -72,6 +108,14 @@ function WeightChart() {
             pointRadius: 0,
             showLabel: true,
           },
+          // {
+          //   label: 'Line of Best Fit',
+          //   data: regressionWeights,
+          //   borderColor: 'rgba(255, 0, 0, 0.8)',
+          //   borderWidth: 1,
+          //   borderDash: [3,3],
+          //   pointRadius: 0,
+          // },
         ],
       }}
       options={{
@@ -80,6 +124,7 @@ function WeightChart() {
             display: false
           }
         },
+        spanGaps: true,
         scales: {
           x: {
             type: 'time',
