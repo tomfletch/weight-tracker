@@ -1,20 +1,26 @@
-import AddWeight from './components/AddWeight';
-import WeightChart from './components/WeightChart';
-import WeightDeltaChart from './components/WeightDeltaChart';
-import WeightHistory from './components/WeightHistory';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import StatsPage from './pages/StatsPage';
+import HistoryPage from './pages/HistoryPage';
+import SettingsPage from './pages/SettingsPage';
 import { WeightProvider } from './context/WeightContext';
 import './index.css';
+
 
 function App() {
 
   return (
     <WeightProvider>
-      <div className="App">
-        <AddWeight />
-        <WeightHistory />
-        <WeightChart />
-        <WeightDeltaChart />
-      </div>
+      <Router>
+        <div className="App">
+          <Header />
+          <Routes>
+            <Route path="/" element={<StatsPage />} />
+            <Route path="/history" element={<HistoryPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+          </Routes>
+        </div>
+      </Router>
     </WeightProvider>
   );
 }

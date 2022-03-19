@@ -1,0 +1,46 @@
+header {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 0 2rem;
+  border-bottom: 1px solid #E7E7E7;
+}
+
+.logo {
+  font-size: 1.6rem;
+  margin-right: 3rem;
+}
+
+.logo a {
+  text-decoration: none;
+  color: #111;
+}
+
+.mainNav {
+  display: inline-block;
+}
+
+.mainNav li {
+  list-style-type: none;
+  display: inline-block;
+}
+
+.mainNav a {
+  display: inline-block;
+  text-decoration: none;
+  color: #888;
+  padding: 1rem 2rem;
+}
+
+.mainNav a svg {
+  margin-right: 0.5rem;
+}
+
+.mainNav a.active {
+  /* font-weight: bold; */
+  color: #111;
+}
+
+.mainNav a.active svg {
+  color: #007596;
+}

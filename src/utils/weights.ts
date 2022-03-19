@@ -30,7 +30,11 @@ export function formatLbs(lbs: number, precision: number=1): string {
 }
 
 export function formatStsLbs(stone: number, lbs: number, precision: number=1): string {
-  return `${stone}st ${lbs.toFixed(precision)}lb`;
+  if (stone > 0) {
+    return `${stone}st ${lbs.toFixed(precision)}lb`;
+  }
+
+  return `${lbs.toFixed(precision)}lb`;
 }
 
 export function formatLbsAsStsLbs(lbs: number, precision: number=1): string {

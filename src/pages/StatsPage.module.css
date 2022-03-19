@@ -1,0 +1,75 @@
+
+.ellipse {
+  overflow: hidden;
+  height: 200px;
+  width: 100%;
+  position: absolute;
+}
+
+.ellipse::after {
+  display: block;
+  position: absolute;
+  background-color: #DDD;
+  border-radius: 100%;
+  margin-top: -100px;
+  margin-left: -25%;
+  width: 150%;
+  height: 100%;
+  content: '';
+}
+
+.currentWeightContainer {
+  color: white;
+  background-color: #00c8ff;
+  width: 130px;
+  height: 130px;
+  border-radius: 100%;
+  margin: 30px auto;
+  border: 5px solid #EEE;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.currentWeight {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.currentWeightLabel {
+  font-size: 1.2rem;
+  font-weight: normal;
+}
+
+.headlineStats {
+  margin-top: -75px;
+  display: flex;
+  gap: 180px;
+}
+
+.weightTarget, .weightChange {
+  width: 50%;
+}
+
+.weightTarget {
+  text-align: right;
+}
+
+.weightChange {
+  text-align: left;
+}
+
+.weightChangeIcon {
+  margin-left: 0.5rem;
+  font-size: 1rem;
+  vertical-align: 0;
+}
+
+.headlineStats .label {
+  color: #777;
+  margin-right: 1rem;
+  padding-right: 1rem;
+  border-right: 1px solid #CCC;
+}
