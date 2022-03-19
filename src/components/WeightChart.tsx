@@ -4,6 +4,7 @@ import 'chartjs-adapter-moment';
 import WeightContext, { WeightUnit } from '../context/WeightContext';
 import { useContext } from 'react';
 import { convertKgsToLbs, formatKgs, formatLbs, formatLbsAsStsLbs } from '../utils/weights';
+import SettingsContext from '../context/SettingsContext';
 
 Chart.register(...registerables);
 
@@ -40,6 +41,7 @@ Chart.register(showLabelPlugin);
 
 function WeightChart() {
   const { weightRecords, weightTargetKgs, weightUnit } = useContext(WeightContext);
+  const { accentColour } = useContext(SettingsContext);
 
   if (weightRecords.length === 0) {
     return <div>Not enough data</div>
@@ -88,72 +90,78 @@ function WeightChart() {
   // regressionWeights[0] = regressionWeightStart;
   // regressionWeights[N-1] = regressionWeightEnd;
 
-  return (
-    <Line
-      data={{
-        labels: dates,
-        datasets: [
-          {
-            label: 'Weight',
-            data: weights,
-            borderColor: 'rgb(0,200,255)',
-            borderWidth: 1,
-            backgroundColor: 'rgb(0,200,255)',
-          },
-          {
-            label: 'Target Weight',
-            data: targetWeights,
-            borderColor: 'rgb(255, 0, 0)',
-            borderWidth: 1,
-            pointRadius: 0,
-            showLabel: true,
-          },
-          // {
-          //   label: 'Line of Best Fit',
-          //   data: regressionWeights,
-          //   borderColor: 'rgba(255, 0, 0, 0.8)',
-          //   borderWidth: 1,
-          //   borderDash: [3,3],
-          //   pointRadius: 0,
-          // },
-        ],
-      }}
-      options={{
-        plugins: {
-          legend: {
-            display: false
-          }
-        },
-        spanGaps: true,
-        scales: {
-          x: {
-            type: 'time',
-            time: {
-              unit: 'day'
-            }
-          },
-          y: {
-            ticks: {
-              callback: (value: number | string): string => {
-                if (typeof value === 'number') {
-                  if (weightUnit === WeightUnit.KGS) {
-                    return formatKgs(value, 0);
-                  }
-                  if (weightUnit === WeightUnit.LBS) {
-                    return formatLbs(value, 0);
-                  }
-                  if (weightUnit === WeightUnit.STONES_LBS) {
-                    return formatLbsAsStsLbs(value, 0);
-                  }
-                }
+  const chartData = {
+    labels: dates,
+    datasets: [
+      {
+        label: 'Weight',
+        data: weights,
+        borderColor: accentColour,
+        borderWidth: 1,
+        backgroundColor: accentColour,
+      },
+      {
+        label: 'Target Weight',
+        data: targetWeights,
+        borderColor: 'rgb(255, 0, 0)',
+        borderWidth: 1,
+        pointRadius: 0,
+        showLabel: true,
+      },
+      // {
+      //   label: 'Line of Best Fit',
+      //   data: regressionWeights,
+      //   borderColor: 'rgba(255, 0, 0, 0.8)',
+      //   borderWidth: 1,
+      //   borderDash: [3,3],
+      //   pointRadius: 0,
+      // },
+    ],
+  };
 
-                return '';
+  const chartOptions = {
+    plugins: {
+      legend: {
+        display: false
+      }
+    },
+    spanGaps: true,
+    scales: {
+      x: {
+        type: 'time' as const,
+        timeseries: {
+          unit: 'day'
+        }
+      },
+      y: {
+        ticks: {
+          callback: (value: number | string): string => {
+            if (typeof value === 'number') {
+              if (weightUnit === WeightUnit.KGS) {
+                return formatKgs(value, 0);
+              }
+              if (weightUnit === WeightUnit.LBS) {
+                return formatLbs(value, 0);
+              }
+              if (weightUnit === WeightUnit.STONES_LBS) {
+                return formatLbsAsStsLbs(value, 0);
               }
             }
+
+            return '';
           }
         }
-      }}
-    />
+      }
+    }
+  };
+
+  return (
+    <div className="card">
+      <Line
+        data={chartData}
+        options={chartOptions}
+      />
+    </div>
   );
 }
 

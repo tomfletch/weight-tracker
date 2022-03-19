@@ -2,6 +2,7 @@ import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useContext } from 'react';
 import ProgressBar from '../components/ProgressBar';
+import WeightChart from '../components/WeightChart';
 import SettingsContext from '../context/SettingsContext';
 import WeightContext from '../context/WeightContext';
 import { formatWeight } from '../utils/weights';
@@ -44,6 +45,7 @@ function StatsPage() {
           </div>
         </div>
         <ProgressBar />
+        <WeightChart />
       </div>
     </>
   );
