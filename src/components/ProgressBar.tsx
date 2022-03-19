@@ -40,6 +40,10 @@ function ProgressBar() {
         </div>
         <div className={styles.weight}>{targetWeightStr}</div>
       </div>
+      <div className={styles.labels}>
+        <span>Start Weight</span>
+        <span>Target Weight</span>
+      </div>
     </div>
   );
 }
