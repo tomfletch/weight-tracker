@@ -1,0 +1,38 @@
+.progressBarContainer {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.progressBar {
+  flex-grow: 1;
+  margin: 0 1rem;
+  background-color: #FAFAFA;
+  border: 1px solid #DDD;
+  height: 25px;
+  border-radius: 25px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.progressBarFill {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  box-sizing: border-box;
+  background-color: #00c8ff;
+  height: 100%;
+  text-align: right;
+
+}
+
+.progressBarFill .value {
+  padding-right: 5px;
+  color: white;
+}
+
+.progressBarEmpty .value {
+  padding-left: 5px;
+  color: #007596;
+}

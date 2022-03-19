@@ -40,7 +40,3 @@ header {
   /* font-weight: bold; */
   color: #111;
 }
-
-.mainNav a.active svg {
-  color: #007596;
-}

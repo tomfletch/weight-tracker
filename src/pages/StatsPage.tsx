@@ -1,12 +1,15 @@
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useContext } from 'react';
+import ProgressBar from '../components/ProgressBar';
+import SettingsContext from '../context/SettingsContext';
 import WeightContext from '../context/WeightContext';
 import { formatWeight } from '../utils/weights';
 import styles from './StatsPage.module.css';
 
 function StatsPage() {
   const { weightRecords, weightUnit, weightTargetKgs } = useContext(WeightContext);
+  const { accentColour } = useContext(SettingsContext);
 
   const firstWeight = weightRecords[0].weightKgs;
   const lastWeight = weightRecords[weightRecords.length - 1].weightKgs;
@@ -21,7 +24,7 @@ function StatsPage() {
     <>
       <div className={styles.ellipse}></div>
       <div className="pageContainer">
-        <div className={styles.currentWeightContainer}>
+        <div className={styles.currentWeightContainer} style={{backgroundColor: accentColour}}>
           <span className={styles.currentWeight}>{lastWeightStr}</span>
           <span className={styles.currentWeightLabel}>Current Weight</span>
         </div>
@@ -40,6 +43,7 @@ function StatsPage() {
           </span>
           </div>
         </div>
+        <ProgressBar />
       </div>
     </>
   );
