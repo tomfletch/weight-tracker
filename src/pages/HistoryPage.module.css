@@ -1,0 +1,12 @@
+.columns {
+  display: flex;
+  flex-direction: row;
+}
+
+.calendarColumn {
+  margin-right: 2rem;
+}
+
+.timelineColumn {
+  flex-grow: 1;
+}

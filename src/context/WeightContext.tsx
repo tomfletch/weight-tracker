@@ -31,9 +31,15 @@ export function WeightProvider({ children }: Props) {
   const [weightUnit, setWeightUnit] = useLocalStorage('weightUnit', WeightUnit.LBS);
   const [weightTargetKgs, setWeightTargetKgs] = useLocalStorage('weightTargetKgs', {value: 154, unit: WeightUnit.LBS});
 
+  const compareWeightRecords = (a: WeightRecord, b: WeightRecord): number => {
+    return a.date.localeCompare(b.date);
+  };
 
   const addWeight = (weightRecord: WeightRecord) => {
-    setWeightRecords((prevWeightRecords: WeightRecord[]) => [...prevWeightRecords, weightRecord]);
+    setWeightRecords((prevWeightRecords: WeightRecord[]) => {
+      const newWeightRecords = prevWeightRecords.filter((w) => w.date !== weightRecord.date);
+      return [...newWeightRecords, weightRecord].sort(compareWeightRecords);
+    });
   };
 
   const deleteWeight = (date: string) => {

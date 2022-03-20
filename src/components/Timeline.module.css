@@ -1,0 +1,33 @@
+.timeline {
+  padding-left: 2rem;
+  border-left: 1px solid #00c8ff;
+}
+
+.weightRecord {
+  position: relative;
+  padding: 0.5rem 0;
+}
+
+.weightRecord .date {
+  display: inline-block;
+  width: 60px;
+}
+
+.weightRecord .weight {
+  display: inline-block;
+}
+
+.weightRecord .dataDot {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background-color: #00c8ff;
+  left: calc(-2rem - 3px);
+  top: calc(50% - 4px);
+  border-radius: 100%;
+}
+
+.month {
+  font-size: 2rem;
+  padding: 1.5rem 0;
+}

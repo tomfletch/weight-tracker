@@ -6,6 +6,7 @@ import SettingsPage from './pages/SettingsPage';
 import { WeightProvider } from './context/WeightContext';
 import { SettingsProvider } from './context/SettingsContext';
 import './index.css';
+import AddWeight from './components/AddWeight';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Router>
           <div className="App">
             <Header />
+            <AddWeight />
             <Routes>
               <Route path="/" element={<StatsPage />} />
               <Route path="/history" element={<HistoryPage />} />

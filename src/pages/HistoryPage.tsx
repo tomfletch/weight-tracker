@@ -1,7 +1,18 @@
+import styles from './HistoryPage.module.css';
+import Calendar from '../components/Calendar';
+import Timeline from '../components/Timeline';
+
 function History() {
   return (
     <div className="pageContainer">
-      <h2>History Page</h2>
+      <div className={styles.columns}>
+        <div className={styles.calendarColumn}>
+          <Calendar />
+        </div>
+        <div className={styles.timelineColumn}>
+          <Timeline />
+        </div>
+      </div>
     </div>
   );
 }

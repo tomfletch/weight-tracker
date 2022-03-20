@@ -1,0 +1,60 @@
+.calendar {
+  width: 280px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.header .month {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.header .arrow {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  border: none;
+  background-color: transparent;
+}
+
+.header .arrow:hover {
+  background-color: rgba(0,0,0,0.1);
+  border-radius: 5px;
+}
+
+.calendarTable {
+  width: 100%;
+  border-spacing: 0;
+  text-align: center;
+}
+
+.calendarTable th {
+  padding: 1rem;
+  color: #777;
+  font-weight: normal;
+  font-size: 1.2rem;
+}
+
+.calendarTable td {
+  width: 40px;
+  padding: 0.8rem 0;
+}
+
+.calendarTable .futureDate {
+  color: #CCC;
+}
+
+.calendarTable .dataDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 100%;
+  margin: 0.2rem auto;
+}
