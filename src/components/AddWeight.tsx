@@ -43,14 +43,14 @@ function AddWeight() {
   return (
     <div className={`card ${styles.addWeight}`}>
       <form onSubmit={onWeightSubmit}>
-        <div className={styles.section}>
+        <div className={`${styles.section} ${styles.dateSection}`}>
           <label htmlFor="date">Date:</label>
           <input type="date" id="date" value={date} max={todayStr} onChange={(e) => setDate(e.target.value)} className={styles.dateInput} />
         </div>
-        <div className={styles.section}>
-          <input type="text" id="stone" value={stoneStr} className={styles.weightInput} maxLength={2} autoComplete="off" onChange={onStoneChange} />
+        <div className={`${styles.section} ${styles.weightSection}`}>
+          <input type="text" id="stone" value={stoneStr} maxLength={2} autoComplete="off" onChange={onStoneChange} />
           <label htmlFor="stone">st</label>
-          <input type="text" id="lbs" value={lbsStr} className={styles.weightInput} maxLength={4} autoComplete="off" onChange={onLbsChange} />
+          <input type="text" id="lbs" value={lbsStr} maxLength={4} autoComplete="off" onChange={onLbsChange} />
           <label htmlFor="lbs">lb</label>
         </div>
         <div className={styles.section}>
