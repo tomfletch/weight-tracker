@@ -24,7 +24,15 @@ function Header() {
 
   return (
     <header className={styles.header}>
-      <h1 className={styles.logo}><Link to="/">Weight Tracker</Link></h1>
+      <h1>
+        <Link to="/" className={styles.logo}>
+          <div className={styles.logoIcon}>
+            <div className={styles.logoIconShape}></div>
+            <div className={styles.logoIconShape}></div>
+          </div>
+          <div className={styles.logoText}>Weight Tracker</div>
+        </Link>
+      </h1>
       <nav className={styles.mainNav}>
         <ul>
           <li>

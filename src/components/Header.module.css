@@ -7,13 +7,42 @@ header {
 }
 
 .logo {
-  font-size: 1.6rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1.2rem;
   margin-right: 3rem;
-}
-
-.logo a {
+  font-weight: normal;
   text-decoration: none;
   color: #111;
+  letter-spacing: 0.8px;
+  line-height: 20px;
+  text-transform: uppercase;
+}
+
+.logoIcon {
+  display: inline-block;
+  width: 35px;
+  height: 20px;
+  position: relative;
+}
+
+.logoIconShape {
+  position: absolute;
+  background-color: white;
+  width: 4px;
+  height: 15px;
+  left: 4px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-left: 5px solid #00c8ff;
+  border-right: 5px solid #00c8ff;
+  border-bottom: 5px solid #00c8ff;
+  opacity: 0.6;
+}
+
+.logoIconShape:last-child {
+  left: 12px;
 }
 
 .mainNav {
@@ -30,6 +59,10 @@ header {
   text-decoration: none;
   color: #888;
   padding: 1rem 2rem;
+}
+
+.mainNav a:hover {
+  color: #111;
 }
 
 .mainNav a svg {
