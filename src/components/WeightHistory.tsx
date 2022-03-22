@@ -1,6 +1,6 @@
 import { useContext, useMemo } from 'react';
 import WeightContext, { WeightRecord, WeightUnit } from '../context/WeightContext';
-import { formatDate } from '../utils/dates';
+import { formatDateStr } from '../utils/dates';
 import { formatWeight } from '../utils/weights';
 import styles from './WeightHistory.module.css';
 
@@ -15,7 +15,7 @@ function WeightHistoryRow({weightRecord, unit, onDelete}: WeightHistoryRowProps)
 
   return (
     <tr>
-      <td>{formatDate(weightRecord.date)}</td>
+      <td>{formatDateStr(weightRecord.date)}</td>
       <td>{weightStr}</td>
       <td><button className={styles.deleteBtn} type="button" onClick={onDelete}>&times;</button></td>
     </tr>

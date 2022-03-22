@@ -1,10 +1,11 @@
 import { Line } from 'react-chartjs-2';
-import { Chart, registerables } from 'chart.js';
-import 'chartjs-adapter-moment';
+import { Chart, registerables, TooltipItem, TooltipModel } from 'chart.js';
+import 'chartjs-adapter-date-fns';
 import WeightContext, { WeightUnit } from '../context/WeightContext';
 import { useContext } from 'react';
 import { convertKgsToLbs, formatKgs, formatLbs, formatLbsAsStsLbs } from '../utils/weights';
 import SettingsContext from '../context/SettingsContext';
+import { formatDate, toISODate } from '../utils/dates';
 
 Chart.register(...registerables);
 
@@ -42,14 +43,21 @@ Chart.register(showLabelPlugin);
 function WeightChart() {
   const { weightRecords, weightTargetKgs, weightUnit } = useContext(WeightContext);
   const { accentColour } = useContext(SettingsContext);
+  const today = toISODate(new Date());
+
 
   if (weightRecords.length === 0) {
     return <div>Not enough data</div>
   }
 
   const dates = weightRecords.map((weightRecord) => weightRecord.date);
+
+  if (dates[dates.length - 1] !== today) {
+    dates.push(today);
+  }
+
   let weights = weightRecords.map((weightRecord) => weightRecord.weightKgs);
-  let targetWeights = weightRecords.map(() => weightTargetKgs);
+  let targetWeights = dates.map(() => weightTargetKgs);
 
   // const firstDate = new Date(dates[0]).getTime() / 1000;
 
@@ -99,6 +107,7 @@ function WeightChart() {
         borderColor: accentColour,
         borderWidth: 1,
         backgroundColor: accentColour,
+        hitRadius: 500,
       },
       {
         label: 'Target Weight',
@@ -106,6 +115,8 @@ function WeightChart() {
         borderColor: 'rgb(255, 0, 0)',
         borderWidth: 1,
         pointRadius: 0,
+        hoverRadius: 0,
+        hitRadius: 0,
         showLabel: true,
       },
       // {
@@ -123,14 +134,77 @@ function WeightChart() {
     plugins: {
       legend: {
         display: false
+      },
+      tooltip: {
+        enabled: false,
+        filter: function(tooltipItem: TooltipItem<'line'>) {
+          return tooltipItem.datasetIndex === 0;
+        },
+        position: 'nearest' as const,
+        callbacks: {
+          label: function(context: TooltipItem<'line'>) {
+            return formatLbsAsStsLbs(context.parsed.y);
+          }
+        },
+        external: function({ chart }: { chart: Chart}) {
+          // Tooltip Element
+          let tooltipEl = document.getElementById('chartjsTooltip');
+
+          // Create element on first render
+          if (!tooltipEl) {
+            tooltipEl = document.createElement('div');
+            tooltipEl.id = 'chartjsTooltip';
+            document.body.appendChild(tooltipEl);
+          }
+
+          // Hide if no tooltip
+          const tooltipModel = chart.tooltip;
+          if (!tooltipModel || tooltipModel.opacity === 0) {
+            tooltipEl.style.opacity = '0';
+            return;
+          }
+
+          const date = new Date(chart.tooltip.dataPoints[0].parsed.x);
+
+          // Set Text
+          if (tooltipModel.body) {
+            const bodyLines = tooltipModel.body.map((bodyItem) => bodyItem.lines);
+
+            let innerHtml = '<div class="date">' + formatDate(date) + '</div>';
+
+            bodyLines.forEach(function(body, i) {
+              innerHtml += '<div>' + body + '</div>';
+            });
+
+            tooltipEl.innerHTML = innerHtml;
+          }
+
+          const position = chart.canvas.getBoundingClientRect();
+          // const bodyFont = Chart.helpers.toFont(tooltipModel.options.bodyFont);
+
+          // Display, position, and set styles for font
+          tooltipEl.style.opacity = '1';
+          tooltipEl.style.position = 'absolute';
+          tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px';
+          tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY + 'px';
+          // tooltipEl.style.font = bodyFont.string;
+          // tooltipEl.style.padding = tooltipModel.padding + 'px ' + tooltipModel.padding + 'px';
+          tooltipEl.style.pointerEvents = 'none';
+        }
       }
+    },
+    interaction: {
+      mode: 'nearest' as const,
+      axis: 'x' as const,
+      intersect: true,
     },
     spanGaps: true,
     scales: {
       x: {
         type: 'time' as const,
-        timeseries: {
-          unit: 'day'
+        max: today,
+        time: {
+          unit: 'day' as const
         }
       },
       y: {
