@@ -4,6 +4,7 @@ import { CSSProperties, useContext } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import SettingsContext from '../context/SettingsContext';
 import styles from './Header.module.css';
+import { ReactComponent as Logo } from '../assets/logo.svg';
 
 function Header() {
   const { accentColour } = useContext(SettingsContext);
@@ -26,10 +27,7 @@ function Header() {
     <header className={styles.header}>
       <h1>
         <Link to="/" className={styles.logo}>
-          <div className={styles.logoIcon}>
-            <div className={styles.logoIconShape}></div>
-            <div className={styles.logoIconShape}></div>
-          </div>
+          <Logo className={styles.logoIcon} width="27" height="20" />
           <div className={styles.logoText}>Weight Tracker</div>
         </Link>
       </h1>
