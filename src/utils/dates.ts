@@ -36,3 +36,7 @@ export function formatDayth(dateStr: string) {
 export function toISODate(date: Date): string {
   return date.toISOString().split('T')[0];
 }
+
+export function daysBetween(a: Date, b: Date): number {
+  return Math.round((b.getTime()-a.getTime())/(1000*60*60*24))
+}

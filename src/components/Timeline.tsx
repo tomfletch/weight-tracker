@@ -6,7 +6,7 @@ import { formatWeight } from '../utils/weights';
 import styles from './Timeline.module.css';
 
 function Timeline() {
-  const { weightRecords, weightUnit } = useContext(WeightContext);
+  const { weightRecords, weightUnit, deleteWeight } = useContext(WeightContext);
   const { accentColour } = useContext(SettingsContext);
 
   const reverseWeightRecords = [...weightRecords].reverse();
@@ -29,6 +29,9 @@ function Timeline() {
           <div key={weightRecord.date} className={styles.weightRecord}>
             <div className={styles.date}>{formatDayth(weightRecord.date)}</div>
             <div className={styles.weight}>{formatWeight(weightRecord.weightKgs, weightUnit)}</div>
+            <div className={styles.options}>
+              <button className={styles.deleteBtn} type="button" onClick={() => deleteWeight(weightRecord.date)}>&times;</button>
+            </div>
             <div className={styles.dataDot} style={{backgroundColor: accentColour}}></div>
           </div>
         ))}

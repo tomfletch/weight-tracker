@@ -1,0 +1,26 @@
+.statsBar {
+  display: flex;
+  gap: 2rem;
+}
+
+.statsWidget {
+  flex-grow: 1;
+  font-size: 1.4rem;
+}
+
+.statsWidget .title {
+  font-size: 1.6rem;
+  line-height: 1;
+  border-bottom: 1px solid #DDD;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.statsWidget p {
+  margin-bottom: 0.5rem;
+}
+
+.weightChangeIcon {
+  font-size: 1rem;
+  vertical-align: 0;
+}
