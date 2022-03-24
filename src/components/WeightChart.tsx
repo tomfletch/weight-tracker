@@ -1,5 +1,5 @@
 import { Line } from 'react-chartjs-2';
-import { Chart, registerables, TooltipItem, TooltipModel } from 'chart.js';
+import { Chart, registerables, TooltipItem } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 import WeightContext, { WeightUnit } from '../context/WeightContext';
 import { useContext } from 'react';
