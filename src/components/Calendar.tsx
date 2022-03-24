@@ -47,16 +47,22 @@ function Calendar() {
     const calendarRow = [];
 
     for (let i = 0; i < 7; i++) {
+      let isDayInCurrentMonth = calendarDay.getMonth() === currentMonth.getMonth();
+
       calendarRow.push(
         <td
           key={calendarDay.toISOString()}
           className={calendarDay <= today ? styles.pastDate : styles.futureDate}
         >
-          {calendarDay.getMonth() === currentMonth.getMonth() && calendarDay.getDate()}
-          <div
-            className={styles.dataDot}
-            style={{backgroundColor: dateHasWeightRecord(calendarDay) ? accentColour : 'transparent'}}
-          ></div>
+          {isDayInCurrentMonth && (
+            <>
+              {calendarDay.getDate()}
+              <div
+                className={styles.dataDot}
+                style={{backgroundColor: dateHasWeightRecord(calendarDay) ? accentColour : 'transparent'}}
+              ></div>
+            </>
+          )}
         </td>
       );
       calendarDay.setDate(calendarDay.getDate() + 1);
