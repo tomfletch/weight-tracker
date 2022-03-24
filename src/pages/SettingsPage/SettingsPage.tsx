@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react';
-import WeightInput from '../components/WeightInput';
-import WeightContext, { WeightUnit } from '../context/WeightContext';
+import WeightInput from '../../components/WeightInput/WeightInput';
+import WeightContext, { WeightUnit } from '../../context/WeightContext';
 import styles from './SettingsPage.module.css';
 
 const weightUnitOptions = [

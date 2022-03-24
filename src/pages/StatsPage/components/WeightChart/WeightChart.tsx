@@ -1,11 +1,11 @@
 import { Line } from 'react-chartjs-2';
 import { Chart, registerables, TooltipItem } from 'chart.js';
 import 'chartjs-adapter-date-fns';
-import WeightContext, { WeightUnit } from '../context/WeightContext';
+import WeightContext, { WeightUnit } from '../../../../context/WeightContext';
 import { useContext } from 'react';
-import { convertKgToLb, formatKg, formatLb, formatLbAsStLb } from '../utils/weights';
-import SettingsContext from '../context/SettingsContext';
-import { formatDate, toISODate } from '../utils/dates';
+import { convertKgToLb, formatKg, formatLb, formatLbAsStLb } from '../../../../utils/weights';
+import SettingsContext from '../../../../context/SettingsContext';
+import { formatDate, toISODate } from '../../../../utils/dates';
 
 Chart.register(...registerables);
 

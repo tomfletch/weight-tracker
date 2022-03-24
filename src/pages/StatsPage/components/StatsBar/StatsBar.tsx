@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import { subDays } from 'date-fns';
-import WeightContext, { WeightRecord } from '../context/WeightContext';
-import { daysBetween } from '../utils/dates';
-import { formatWeight } from '../utils/weights';
+import WeightContext, { WeightRecord } from '../../../../context/WeightContext';
+import { daysBetween } from '../../../../utils/dates';
+import { formatWeight } from '../../../../utils/weights';
 import styles from './StatsBar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLongArrowDown, faLongArrowUp } from '@fortawesome/free-solid-svg-icons';

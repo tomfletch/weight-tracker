@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
-import WeightContext, { WeightUnit } from '../context/WeightContext';
-import { convertKgToLb, convertKgToStLb, convertLbToKg, convertStLbToKg } from '../utils/weights';
+import WeightContext, { WeightUnit } from '../../context/WeightContext';
+import { convertKgToLb, convertKgToStLb, convertLbToKg, convertStLbToKg } from '../../utils/weights';
 import styles from './WeightInput.module.css';
 
 interface Props {

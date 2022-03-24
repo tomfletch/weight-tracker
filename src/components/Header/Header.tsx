@@ -2,9 +2,9 @@ import { faCalendarDays, faChartLine, faGear } from '@fortawesome/free-solid-svg
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CSSProperties, useContext } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import SettingsContext from '../context/SettingsContext';
+import SettingsContext from '../../context/SettingsContext';
 import styles from './Header.module.css';
-import { ReactComponent as Logo } from '../assets/logo.svg';
+import { ReactComponent as Logo } from '../../assets/logo.svg';
 
 function Header() {
   const { accentColour } = useContext(SettingsContext);

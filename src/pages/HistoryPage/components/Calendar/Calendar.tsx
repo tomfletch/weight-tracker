@@ -1,9 +1,9 @@
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useContext, useState } from 'react';
-import SettingsContext from '../context/SettingsContext';
-import WeightContext from '../context/WeightContext';
-import { getFirstOfMonth, MONTH_NAMES } from '../utils/dates';
+import SettingsContext from '../../../../context/SettingsContext';
+import WeightContext from '../../../../context/WeightContext';
+import { getFirstOfMonth, MONTH_NAMES } from '../../../../utils/dates';
 import styles from './Calendar.module.css';
 
 function Calendar() {

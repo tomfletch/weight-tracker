@@ -1,7 +1,7 @@
 import { useContext } from 'react';
-import SettingsContext from '../context/SettingsContext';
-import WeightContext from '../context/WeightContext';
-import { formatWeight } from '../utils/weights';
+import SettingsContext from '../../../../context/SettingsContext';
+import WeightContext from '../../../../context/WeightContext';
+import { formatWeight } from '../../../../utils/weights';
 import styles from './ProgressBar.module.css';
 
 

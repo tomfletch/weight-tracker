@@ -1,10 +1,10 @@
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useContext, useState } from 'react';
-import SettingsContext from '../context/SettingsContext';
-import WeightContext, { WeightRecord } from '../context/WeightContext';
+import SettingsContext from '../../../../context/SettingsContext';
+import WeightContext, { WeightRecord } from '../../../../context/WeightContext';
+import WeightInput from '../../../../components/WeightInput/WeightInput';
 import styles from './AddWeight.module.css';
-import WeightInput from './WeightInput';
 
 const today = new Date();
 const todayStr = today.toISOString().split('T')[0];

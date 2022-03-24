@@ -1,6 +1,6 @@
 import styles from './HistoryPage.module.css';
-import Calendar from '../components/Calendar';
-import Timeline from '../components/Timeline';
+import Calendar from './components/Calendar/Calendar';
+import Timeline from './components/Timeline/Timeline';
 
 function History() {
   return (
