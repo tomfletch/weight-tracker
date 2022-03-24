@@ -1,6 +1,8 @@
 import { useCallback, useContext } from 'react';
 import WeightInput from '../../components/WeightInput/WeightInput';
+import SettingsContext from '../../context/SettingsContext';
 import WeightContext, { WeightUnit } from '../../context/WeightContext';
+import ColourSelect from './ColourSelect/ColourSelect';
 import styles from './SettingsPage.module.css';
 
 const weightUnitOptions = [
@@ -11,6 +13,7 @@ const weightUnitOptions = [
 
 function SettingsPage() {
   const { weightUnit, setWeightUnit, weightTargetKgs, setWeightTargetKgs } = useContext(WeightContext);
+  const { accentColour, setAccentColour } = useContext(SettingsContext);
 
   const onTargetWeightChange = useCallback((weight: number | null) => {
     if (!weight) return;
@@ -37,6 +40,10 @@ function SettingsPage() {
         <div className={styles.field}>
           <label htmlFor="target-weight">Target Weight:</label>
           <WeightInput id="target-weight" weight={weightTargetKgs} onChange={onTargetWeightChange} />
+        </div>
+        <div className={styles.field}>
+          <label>Theme Colour:</label>
+          <ColourSelect value={accentColour} onChange={setAccentColour} />
         </div>
       </div>
     </div>
