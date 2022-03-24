@@ -13,3 +13,7 @@
   display: inline-block;
   margin-right: 0.8rem;
 }
+
+.weightInput input.weightInputLb, .weightInput input.weightInputKg {
+  width: 45px;
+}

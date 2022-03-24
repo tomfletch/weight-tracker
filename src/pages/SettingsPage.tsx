@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useCallback, useContext } from 'react';
 import WeightInput from '../components/WeightInput';
 import WeightContext, { WeightUnit } from '../context/WeightContext';
 import styles from './SettingsPage.module.css';
@@ -12,10 +12,10 @@ const weightUnitOptions = [
 function SettingsPage() {
   const { weightUnit, setWeightUnit, weightTargetKgs, setWeightTargetKgs } = useContext(WeightContext);
 
-  const onTargetWeightChange = (weight: number | null) => {
+  const onTargetWeightChange = useCallback((weight: number | null) => {
     if (!weight) return;
     setWeightTargetKgs(weight);
-  };
+  }, [setWeightTargetKgs]);
 
   const onWeightUnitChange = (weightUnitStr: string) => {
     const newWeightUnit: WeightUnit = WeightUnit[weightUnitStr as keyof typeof WeightUnit];
