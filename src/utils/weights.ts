@@ -1,62 +1,77 @@
 import { WeightUnit } from "../context/WeightContext";
 
-const LBS_PER_KG = 2.20462;
+const LB_PER_ST = 14;
+const LB_PER_KG = 2.20462;
 
-function convertStsLbsToLbs(sts: number, lbs: number): number {
-  return sts * 14 + lbs;
+interface StLb {
+  st: number,
+  lb: number
+};
+
+
+export function convertStLbToLb({ st, lb }: StLb): number {
+  return st * LB_PER_ST + lb;
 }
 
-export function convertStsLbsToKg(sts: number, lbs: number): number {
-  const totalLbs = convertStsLbsToLbs(sts, lbs);
-  return convertLbsToKgs(totalLbs);
+export function convertStLbToKg(st_lb: StLb): number {
+  const lb = convertStLbToLb(st_lb);
+  return convertLbToKg(lb);
 }
 
-export function convertLbsToKgs(lbs: number): number {
-  return lbs / LBS_PER_KG;
+export function convertLbToKg(lb: number): number {
+  return lb / LB_PER_KG;
 }
 
-export function convertKgsToLbs(kgs: number): number {
-  return kgs * LBS_PER_KG;
+export function convertKgToLb(kgs: number): number {
+  return kgs * LB_PER_KG;
+}
+
+export function convertLbToStLb(totalLb: number): StLb {
+  const st = Math.floor(totalLb / LB_PER_ST);
+  const lb = (totalLb % LB_PER_ST);
+  return { st, lb };
+}
+
+export function convertKgToStLb(kgs: number): StLb {
+  const lb = convertKgToLb(kgs);
+  return convertLbToStLb(lb);
 }
 
 
-
-export function formatKgs(kgs: number, precision: number=1): string {
+export function formatKg(kgs: number, precision: number=1): string {
   return `${kgs.toFixed(precision)}kg`;
 }
 
-export function formatLbs(lbs: number, precision: number=1): string {
+export function formatLb(lbs: number, precision: number=1): string {
   return `${lbs.toFixed(precision)}lb`;
 }
 
-export function formatStsLbs(stone: number, lbs: number, precision: number=1): string {
-  if (stone > 0) {
-    return `${stone}st ${lbs.toFixed(precision)}lb`;
+export function formatStLb({ st, lb }: StLb, precision: number=1): string {
+  if (st > 0) {
+    return `${st}st ${lb.toFixed(precision)}lb`;
   }
-
-  return `${lbs.toFixed(precision)}lb`;
+  return `${lb.toFixed(precision)}lb`;
 }
 
-export function formatLbsAsStsLbs(lbs: number, precision: number=1): string {
-  const stone = Math.floor(lbs / 14);
-  const remainderLbs = (lbs % 14);
-  return formatStsLbs(stone, remainderLbs, precision);
+export function formatLbAsStLb(totalLb: number, precision: number=1): string {
+  const st_lb = convertLbToStLb(totalLb);
+  return formatStLb(st_lb, precision);
 }
 
 export function formatWeight(kgs: number, unit: WeightUnit): string {
 
   if (unit === WeightUnit.STONES_LBS) {
-    const lbs = convertKgsToLbs(kgs);
-    return formatLbsAsStsLbs(lbs);
+    const st_lb = convertKgToStLb(kgs);
+    return formatStLb(st_lb);
   }
 
   if (unit === WeightUnit.LBS) {
-    const lbs = convertKgsToLbs(kgs);
-    return formatLbs(lbs);
+    const lbs = convertKgToLb(kgs);
+    return formatLb(lbs);
   }
 
   if (unit === WeightUnit.KGS) {
-    return formatKgs(kgs);
+    return formatKg(kgs);
   }
 
   throw Error('Invalid weight unit');

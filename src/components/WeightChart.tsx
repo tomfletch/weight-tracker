@@ -3,7 +3,7 @@ import { Chart, registerables, TooltipItem, TooltipModel } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 import WeightContext, { WeightUnit } from '../context/WeightContext';
 import { useContext } from 'react';
-import { convertKgsToLbs, formatKgs, formatLbs, formatLbsAsStsLbs } from '../utils/weights';
+import { convertKgToLb, formatKg, formatLb, formatLbAsStLb } from '../utils/weights';
 import SettingsContext from '../context/SettingsContext';
 import { formatDate, toISODate } from '../utils/dates';
 
@@ -87,11 +87,11 @@ function WeightChart() {
   // let regressionWeightEnd = m*days[N-1] + b;
 
   if (weightUnit !== WeightUnit.KGS) {
-    weights = weights.map((weightKg) => Math.round(convertKgsToLbs(weightKg) * 10)/10);
-    targetWeights = targetWeights.map((weightKg) => Math.round(convertKgsToLbs(weightKg) * 10)/10);
+    weights = weights.map((weightKg) => Math.round(convertKgToLb(weightKg) * 10)/10);
+    targetWeights = targetWeights.map((weightKg) => Math.round(convertKgToLb(weightKg) * 10)/10);
 
-    // regressionWeightStart = convertKgsToLbs(regressionWeightStart);
-    // regressionWeightEnd = convertKgsToLbs(regressionWeightEnd);
+    // regressionWeightStart = convertKgToLb(regressionWeightStart);
+    // regressionWeightEnd = convertKgToLb(regressionWeightEnd);
   }
 
   // const regressionWeights = new Array(N).fill(undefined);
@@ -143,7 +143,7 @@ function WeightChart() {
         position: 'nearest' as const,
         callbacks: {
           label: function(context: TooltipItem<'line'>) {
-            return formatLbsAsStsLbs(context.parsed.y);
+            return formatLbAsStLb(context.parsed.y);
           }
         },
         external: function({ chart }: { chart: Chart}) {
@@ -212,13 +212,13 @@ function WeightChart() {
           callback: (value: number | string): string => {
             if (typeof value === 'number') {
               if (weightUnit === WeightUnit.KGS) {
-                return formatKgs(value, 0);
+                return formatKg(value, 0);
               }
               if (weightUnit === WeightUnit.LBS) {
-                return formatLbs(value, 0);
+                return formatLb(value, 0);
               }
               if (weightUnit === WeightUnit.STONES_LBS) {
-                return formatLbsAsStsLbs(value, 0);
+                return formatLbAsStLb(value, 0);
               }
             }
 

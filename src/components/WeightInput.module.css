@@ -1,0 +1,15 @@
+.weightInput {
+  display: inline-block;
+}
+
+.weightInput input {
+  display: inline-block;
+  margin-right: 0.5rem;
+  width: 35px;
+  text-align: right;
+}
+
+.weightInput .weightUnit {
+  display: inline-block;
+  margin-right: 0.8rem;
+}

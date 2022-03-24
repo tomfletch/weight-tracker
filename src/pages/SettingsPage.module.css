@@ -1,0 +1,21 @@
+.settingsPage h2 {
+  margin-bottom: 2rem;
+  font-weight: normal;
+}
+
+.field {
+  margin-bottom: 1.5rem;
+}
+
+.field label {
+  display: inline-block;
+  width: 150px;
+}
+
+.field input, .field select {
+  font-size: 1.6rem;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0.4rem 0.4rem;
+  border: 1px solid #BBB;
+  border-radius: 3px;
+}

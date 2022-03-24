@@ -14,10 +14,12 @@ export interface WeightRecord {
 
 interface WeightContextInterface {
   weightUnit: WeightUnit;
+  setWeightUnit: (weightUnit: WeightUnit) => void;
   weightRecords: WeightRecord[];
   addWeight: (weightRecort: WeightRecord) => void;
   deleteWeight: (date: string) => void;
   weightTargetKgs: number;
+  setWeightTargetKgs: (weightTarget: number) => void;
 };
 
 const WeightContext = createContext<WeightContextInterface>({} as WeightContextInterface);
@@ -50,10 +52,12 @@ export function WeightProvider({ children }: Props) {
 
   const contextValue = {
     weightUnit,
+    setWeightUnit,
     weightRecords,
     addWeight,
     deleteWeight,
     weightTargetKgs,
+    setWeightTargetKgs,
   };
 
   return (
