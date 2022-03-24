@@ -34,7 +34,6 @@ function Calendar() {
 
   const dateHasWeightRecord = (date: Date): boolean => {
     const dateStr = date.toISOString().split('T')[0];
-    console.log(dateStr);
     const weightRecord = weightRecords.find((w) => w.date === dateStr);
     return weightRecord !== undefined;
   }
