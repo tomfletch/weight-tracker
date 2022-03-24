@@ -7,7 +7,7 @@ interface SettingsContextInterface {
 
 const SettingsContext = createContext<SettingsContextInterface>({} as SettingsContextInterface);
 
-type Props = {
+interface Props {
   children?: React.ReactNode
 };
 

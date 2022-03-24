@@ -36,7 +36,7 @@ function SettingsPage() {
         </div>
         <div className={styles.field}>
           <label htmlFor="target-weight">Target Weight:</label>
-          <WeightInput weight={weightTargetKgs} onChange={onTargetWeightChange} />
+          <WeightInput id="target-weight" weight={weightTargetKgs} onChange={onTargetWeightChange} />
         </div>
       </div>
     </div>

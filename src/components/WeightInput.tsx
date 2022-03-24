@@ -3,11 +3,17 @@ import WeightContext, { WeightUnit } from '../context/WeightContext';
 import { convertKgToLb, convertKgToStLb, convertLbToKg, convertStLbToKg } from '../utils/weights';
 import styles from './WeightInput.module.css';
 
+interface Props {
+  id: string;
+  weight: number | null;
+  onChange: (weight: number | null) => void;
+};
+
 function toFixedNoZero(n: number, digits: number): string {
   return n.toFixed(digits).replace(/\.?0+$/, '');
 }
 
-function WeightInputKg({ weight, onChange }: { weight: number | null, onChange: (weight: number | null) => void}) {
+function WeightInputKg({ id, weight, onChange }: Props) {
   let initialKgStr = '';
 
   if (weight) {
@@ -37,13 +43,13 @@ function WeightInputKg({ weight, onChange }: { weight: number | null, onChange: 
 
   return (
     <div className={styles.weightInput}>
-      <input type="text" className={styles.weightInputKg} value={kgStr} maxLength={5} autoComplete="off" onChange={onKgChange} />
+      <input id={id} type="text" className={styles.weightInputKg} value={kgStr} maxLength={5} autoComplete="off" onChange={onKgChange} />
       <div className={styles.weightUnit}>kg</div>
     </div>
   );
 }
 
-function WeightInputStLb({ weight, onChange }: { weight: number | null, onChange: (weight: number | null) => void}) {
+function WeightInputStLb({ id, weight, onChange }: Props) {
   let initialStStr = '';
   let initialLbStr = '';
 
@@ -86,7 +92,7 @@ function WeightInputStLb({ weight, onChange }: { weight: number | null, onChange
 
   return (
     <div className={styles.weightInput}>
-      <input type="text" value={stStr} maxLength={2} autoComplete="off" onChange={onStoneChange} />
+      <input id={id} type="text" value={stStr} maxLength={2} autoComplete="off" onChange={onStoneChange} />
       <div className={styles.weightUnit}>st</div>
       <input type="text" value={lbStr} maxLength={4} autoComplete="off" onChange={onLbsChange} />
       <div className={styles.weightUnit}>lb</div>
@@ -94,7 +100,7 @@ function WeightInputStLb({ weight, onChange }: { weight: number | null, onChange
   );
 }
 
-function WeightInputLb({ weight, onChange }: { weight: number | null, onChange: (weight: number | null) => void}) {
+function WeightInputLb({ id, weight, onChange }: Props) {
   let initialLbStr = '';
 
   if (weight) {
@@ -126,13 +132,13 @@ function WeightInputLb({ weight, onChange }: { weight: number | null, onChange: 
 
   return (
     <div className={styles.weightInput}>
-      <input type="text" className={styles.weightInputLb} value={lbStr} maxLength={5} autoComplete="off" onChange={onLbChange} />
+      <input id={id} type="text" className={styles.weightInputLb} value={lbStr} maxLength={5} autoComplete="off" onChange={onLbChange} />
       <div className={styles.weightUnit}>lb</div>
     </div>
   );
 }
 
-function WeightInput({ weight, onChange }: { weight: number | null, onChange: (weight: number | null) => void}) {
+function WeightInput({ id, weight, onChange }: Props) {
   const { weightUnit } = useContext(WeightContext);
 
   let InputComponent = WeightInputKg;
@@ -145,7 +151,7 @@ function WeightInput({ weight, onChange }: { weight: number | null, onChange: (w
     InputComponent = WeightInputLb;
   }
 
-  return <InputComponent weight={weight} onChange={onChange} />
+  return <InputComponent id={id} weight={weight} onChange={onChange} />
 }
 
 export default WeightInput;

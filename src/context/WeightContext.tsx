@@ -24,7 +24,7 @@ interface WeightContextInterface {
 
 const WeightContext = createContext<WeightContextInterface>({} as WeightContextInterface);
 
-type Props = {
+interface Props {
   children?: React.ReactNode
 };
 

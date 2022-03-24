@@ -1,16 +1,29 @@
+.addWeightContainer {
+  text-align: center;
+}
+
 .addWeight {
-  width: 400px;
-  margin: 0 auto 2rem;
+  display: inline-block;
+  width: 450px;
+  margin-bottom: 2rem;
   border-radius: 100px;
   padding: 0.8rem 0.8rem 0.8rem 2rem;
   font-size: 1.4rem;
 }
 
 .addWeight form {
-  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.addWeight .field {
+  margin-right: 1rem;
+  flex-grow: 1;
+}
+
+.addWeight label {
+  margin-right: 0.5rem;
 }
 
 .addWeight input {
@@ -20,32 +33,6 @@
   padding: 0 0.4rem;
   border: 1px solid #BBB;
   border-radius: 3px;
-}
-
-.section {
-  flex-grow: 1;
-}
-
-.section:first-child {
-  margin-right: 2rem;
-}
-
-.dateSection label {
-  margin-right: 0.5rem;
-}
-
-.weightSection label {
-  margin-right: 0.8rem;
-}
-
-.weightSection input {
-  margin-right: 0.5rem;
-  width: 30px;
-  text-align:right;
-}
-
-.section:last-child {
-  margin-right: 0;
 }
 
 .addButton {
