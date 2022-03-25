@@ -1,5 +1,6 @@
 import { useCallback, useContext } from 'react';
 import WeightInput from '../../components/WeightInput/WeightInput';
+import HeightContext, { HeightUnit } from '../../context/HeightContext';
 import SettingsContext from '../../context/SettingsContext';
 import WeightContext, { WeightUnit } from '../../context/WeightContext';
 import ColourSelect from './ColourSelect/ColourSelect';
@@ -11,9 +12,16 @@ const weightUnitOptions = [
   {key: WeightUnit.KGS, name: 'Kilograms (kg)'},
 ];
 
+const heightUnitOptions = [
+  {key: HeightUnit.CM, name: 'Centimeters (cm)'},
+  {key: HeightUnit.FT_IN, name: 'Feet and Inches (ft, in)'},
+  {key: HeightUnit.IN, name: 'Inches (in)'},
+];
+
 function SettingsPage() {
   const { weightUnit, setWeightUnit, weightTargetKgs, setWeightTargetKgs } = useContext(WeightContext);
   const { accentColour, setAccentColour } = useContext(SettingsContext);
+  const { heightUnit, setHeightUnit } = useContext(HeightContext);
 
   const onTargetWeightChange = useCallback((weight: number | null) => {
     if (!weight) return;
@@ -23,6 +31,11 @@ function SettingsPage() {
   const onWeightUnitChange = (weightUnitStr: string) => {
     const newWeightUnit: WeightUnit = WeightUnit[weightUnitStr as keyof typeof WeightUnit];
     setWeightUnit(newWeightUnit);
+  };
+
+  const onHeightUnitChange = (heightUnitStr: string) => {
+    const newHeightUnit: HeightUnit = HeightUnit[heightUnitStr as keyof typeof HeightUnit];
+    setHeightUnit(newHeightUnit);
   };
 
   return (
@@ -40,6 +53,14 @@ function SettingsPage() {
         <div className={styles.field}>
           <label htmlFor="target-weight">Target Weight:</label>
           <WeightInput id="target-weight" weight={weightTargetKgs} onChange={onTargetWeightChange} />
+        </div>
+        <div className={styles.field}>
+          <label htmlFor="height-units">Height Units:</label>
+          <select id="height-units" value={heightUnit} onChange={(e) => onHeightUnitChange(e.target.value)}>
+            {heightUnitOptions.map((option) => (
+              <option key={option.key} value={option.key}>{option.name}</option>
+            ))}
+          </select>
         </div>
         <div className={styles.field}>
           <label>Theme Colour:</label>
