@@ -6,6 +6,7 @@ import { formatWeight } from '../../../../utils/weights';
 import styles from './StatsBar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLongArrowDown, faLongArrowUp } from '@fortawesome/free-solid-svg-icons';
+import HeightContext from '../../../../context/HeightContext';
 
 function interpolateWeight(weightRecords: WeightRecord[], date: Date): number | null {
   let nearestRecordBefore: WeightRecord | null = null;
@@ -91,6 +92,31 @@ function RateStatsWidget({ type, startDate }: { type: string, startDate: Date })
   );
 }
 
+function BMIWidget() {
+  const { weightRecords } = useContext(WeightContext);
+  const { height } = useContext(HeightContext);
+
+  let content;
+
+  if (!height) {
+    content = <>Height not set</>;
+  } else {
+    const weight = weightRecords[weightRecords.length - 1].weightKgs;
+    const bmi = weight / (height*height);
+
+    content = bmi.toFixed(1);
+  }
+
+
+
+  return (
+    <div className={`card ${styles.statsWidget}`}>
+      <div className={styles.title}>BMI</div>
+      {content}
+    </div>
+  );
+}
+
 function StatsBar() {
   const { weightRecords } = useContext(WeightContext);
 
@@ -102,6 +128,7 @@ function StatsBar() {
     <div className={styles.statsBar}>
       <RateStatsWidget type="All Time" startDate={firstRecordDate} />
       <RateStatsWidget type="Current" startDate={weekAgoDate} />
+      <BMIWidget />
     </div>
   );
 }
