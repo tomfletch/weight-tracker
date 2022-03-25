@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import WeightContext, { WeightUnit } from '../../context/WeightContext';
+import { toFixedNoZero } from '../../utils/numbers';
 import { convertKgToLb, convertKgToStLb, convertLbToKg, convertStLbToKg } from '../../utils/weights';
 import styles from './WeightInput.module.css';
 
@@ -8,10 +9,6 @@ interface Props {
   weight: number | null;
   onChange: (weight: number | null) => void;
 };
-
-function toFixedNoZero(n: number, digits: number): string {
-  return n.toFixed(digits).replace(/\.?0+$/, '');
-}
 
 function WeightInputKg({ id, weight, onChange }: Props) {
   let initialKgStr = '';

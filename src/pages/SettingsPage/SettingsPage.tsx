@@ -1,4 +1,5 @@
 import { useCallback, useContext } from 'react';
+import HeightInput from '../../components/HeightInput/HeightInput';
 import WeightInput from '../../components/WeightInput/WeightInput';
 import HeightContext, { HeightUnit } from '../../context/HeightContext';
 import SettingsContext from '../../context/SettingsContext';
@@ -21,7 +22,7 @@ const heightUnitOptions = [
 function SettingsPage() {
   const { weightUnit, setWeightUnit, weightTargetKgs, setWeightTargetKgs } = useContext(WeightContext);
   const { accentColour, setAccentColour } = useContext(SettingsContext);
-  const { heightUnit, setHeightUnit } = useContext(HeightContext);
+  const { heightUnit, setHeightUnit, height, setHeight } = useContext(HeightContext);
 
   const onTargetWeightChange = useCallback((weight: number | null) => {
     if (!weight) return;
@@ -61,6 +62,10 @@ function SettingsPage() {
               <option key={option.key} value={option.key}>{option.name}</option>
             ))}
           </select>
+        </div>
+        <div className={styles.field}>
+          <label htmlFor="height">Height:</label>
+          <HeightInput id="height" height={height} onChange={setHeight} />
         </div>
         <div className={styles.field}>
           <label>Theme Colour:</label>

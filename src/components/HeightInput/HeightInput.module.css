@@ -1,19 +1,15 @@
-.weightInput {
+.heightInput {
   display: inline-block;
 }
 
-.weightInput input {
+.heightInput input {
   display: inline-block;
   margin-right: 0.5rem;
   width: 45px;
   text-align: right;
 }
 
-.weightInput .weightUnit {
+.heightInput .heightUnit {
   display: inline-block;
   margin-right: 0.8rem;
-}
-
-.weightInput input.weightInputLb, .weightInput input.weightInputKg {
-  width: 45px;
 }
