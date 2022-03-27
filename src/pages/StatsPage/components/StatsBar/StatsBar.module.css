@@ -4,6 +4,7 @@
 }
 
 .statsWidget {
+  flex-basis: 0;
   flex-grow: 1;
   font-size: 1.4rem;
 }
@@ -23,4 +24,75 @@
 .weightChangeIcon {
   font-size: 1rem;
   vertical-align: 0;
+}
+
+.bmiBar .bmiContainer {
+  position: relative;
+  height: 20px;
+}
+
+.bmiBar .bmi {
+  position: absolute;
+  width: 100px;
+  margin-left: -50px;
+  text-align: center;
+}
+
+.bmiBar .arrowContainer {
+  position: relative;
+  height: 8px;
+}
+
+.bmiBar .arrow {
+  position: absolute;
+  border-top: 8px solid #111;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  width: 0;
+  height: 0;
+  margin-left: -5px;
+  margin-right: -5px;
+}
+
+.bmiBar .bar {
+  height: 20px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.bmiBar .bar div {
+  display: inline-block;
+  height: 20px;
+}
+
+.bmiBar .bar .underweight {
+  background-color: #e65424;
+}
+
+.bmiBar .bar .normal {
+  background-color: #92cf18;
+}
+
+.bmiBar .bar .overweight {
+  background-color: #ffbb00;
+}
+
+.bmiBar .bar .obese {
+  background-color: #e65424;
+}
+
+.bmiBar .labels {
+  position: relative;
+  margin-top: 5px;
+  height: 20px;
+}
+
+.labels div {
+  position: absolute;
+  text-align: center;
+  width: 100px;
+  margin-left: -50px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
 }
