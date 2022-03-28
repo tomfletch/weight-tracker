@@ -30,7 +30,12 @@ function Timeline() {
             <div className={styles.date}>{formatDayth(weightRecord.date)}</div>
             <div className={styles.weight}>{formatWeight(weightRecord.weightKgs, weightUnit)}</div>
             <div className={styles.options}>
-              <button className={styles.deleteBtn} type="button" onClick={() => deleteWeight(weightRecord.date)}>&times;</button>
+              <button
+                className={styles.deleteBtn}
+                type="button"
+                onClick={() => deleteWeight(weightRecord.date)}
+                style={{color: accentColour}}
+              >&times;</button>
             </div>
             <div className={styles.dataDot} style={{backgroundColor: accentColour}}></div>
           </div>
