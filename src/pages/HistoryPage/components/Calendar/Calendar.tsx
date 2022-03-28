@@ -17,26 +17,22 @@ function Calendar() {
 
   const month = MONTH_NAMES[currentMonth.getMonth()];
   const year = currentMonth.getFullYear();
-  const dayOfMonth = currentMonth.getDay() - 1 % 7;
+  const dayOfMonth = (currentMonth.getDay() - 1) % 7;
 
 
   const onPrevMonth = () => {
-    setCurrentMonth((prevMonth) => {
-      return new Date(prevMonth.getFullYear(), prevMonth.getMonth()-1, 1);
-    });
-  }
+    setCurrentMonth((prevMonth) => new Date(prevMonth.getFullYear(), prevMonth.getMonth() - 1, 1));
+  };
 
   const onNextMonth = () => {
-    setCurrentMonth((prevMonth) => {
-      return new Date(prevMonth.getFullYear(), prevMonth.getMonth()+1, 1);
-    });
-  }
+    setCurrentMonth((prevMonth) => new Date(prevMonth.getFullYear(), prevMonth.getMonth() + 1, 1));
+  };
 
   const dateHasWeightRecord = (date: Date): boolean => {
     const dateStr = date.toISOString().split('T')[0];
     const weightRecord = weightRecords.find((w) => w.date === dateStr);
     return weightRecord !== undefined;
-  }
+  };
 
   const calendarDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), currentMonth.getDate() - dayOfMonth);
 
@@ -46,7 +42,7 @@ function Calendar() {
     const calendarRow = [];
 
     for (let i = 0; i < 7; i++) {
-      let isDayInCurrentMonth = calendarDay.getMonth() === currentMonth.getMonth();
+      const isDayInCurrentMonth = calendarDay.getMonth() === currentMonth.getMonth();
 
       calendarRow.push(
         <td
@@ -58,11 +54,11 @@ function Calendar() {
               {calendarDay.getDate()}
               <div
                 className={styles.dataDot}
-                style={{backgroundColor: dateHasWeightRecord(calendarDay) ? accentColour : 'transparent'}}
-              ></div>
+                style={{ backgroundColor: dateHasWeightRecord(calendarDay) ? accentColour : 'transparent' }}
+              />
             </>
           )}
-        </td>
+        </td>,
       );
       calendarDay.setDate(calendarDay.getDate() + 1);
     }

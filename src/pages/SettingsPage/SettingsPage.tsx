@@ -8,21 +8,25 @@ import ColourSelect from './ColourSelect/ColourSelect';
 import styles from './SettingsPage.module.css';
 
 const weightUnitOptions = [
-  {key: WeightUnit.STONES_LBS, name: 'Stone and Pounds (st, lb)'},
-  {key: WeightUnit.LBS, name: 'Pounds (lb)'},
-  {key: WeightUnit.KGS, name: 'Kilograms (kg)'},
+  { key: WeightUnit.STONES_LBS, name: 'Stone and Pounds (st, lb)' },
+  { key: WeightUnit.LBS, name: 'Pounds (lb)' },
+  { key: WeightUnit.KGS, name: 'Kilograms (kg)' },
 ];
 
 const heightUnitOptions = [
-  {key: HeightUnit.CM, name: 'Centimeters (cm)'},
-  {key: HeightUnit.FT_IN, name: 'Feet and Inches (ft, in)'},
-  {key: HeightUnit.IN, name: 'Inches (in)'},
+  { key: HeightUnit.CM, name: 'Centimeters (cm)' },
+  { key: HeightUnit.FT_IN, name: 'Feet and Inches (ft, in)' },
+  { key: HeightUnit.IN, name: 'Inches (in)' },
 ];
 
 function SettingsPage() {
-  const { weightUnit, setWeightUnit, weightTargetKgs, setWeightTargetKgs } = useContext(WeightContext);
+  const {
+    weightUnit, setWeightUnit, weightTargetKgs, setWeightTargetKgs,
+  } = useContext(WeightContext);
   const { accentColour, setAccentColour } = useContext(SettingsContext);
-  const { heightUnit, setHeightUnit, height, setHeight } = useContext(HeightContext);
+  const {
+    heightUnit, setHeightUnit, height, setHeight,
+  } = useContext(HeightContext);
 
   const onTargetWeightChange = useCallback((weight: number | null) => {
     if (!weight) return;

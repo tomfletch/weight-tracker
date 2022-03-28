@@ -1,14 +1,16 @@
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import WeightContext, { WeightUnit } from '../../context/WeightContext';
 import { toFixedNoZero } from '../../utils/numbers';
-import { convertKgToLb, convertKgToStLb, convertLbToKg, convertStLbToKg } from '../../utils/weights';
+import {
+  convertKgToLb, convertKgToStLb, convertLbToKg, convertStLbToKg,
+} from '../../utils/weights';
 import styles from './WeightInput.module.css';
 
 interface Props {
   id: string;
   weight: number | null;
   onChange: (weight: number | null) => void;
-};
+}
 
 function WeightInputKg({ id, weight, onChange }: Props) {
   let initialKgStr = '';
@@ -36,7 +38,7 @@ function WeightInputKg({ id, weight, onChange }: Props) {
     const val = e.target.value;
     setKgStr(val.replace(/[^\d.]/, ''));
     setIsChanged(true);
-  }
+  };
 
   return (
     <div className={styles.weightInput}>
@@ -71,7 +73,7 @@ function WeightInputStLb({ id, weight, onChange }: Props) {
     const st = parseInt(stStr, 10);
     const lb = parseFloat(lbStr);
 
-    const newWeightKg = convertStLbToKg({st, lb});
+    const newWeightKg = convertStLbToKg({ st, lb });
     onChange(newWeightKg);
   }, [isChanged, stStr, lbStr, onChange]);
 
@@ -79,13 +81,13 @@ function WeightInputStLb({ id, weight, onChange }: Props) {
     const val = e.target.value;
     setStStr(val.replace(/[^\d]/, ''));
     setIsChanged(true);
-  }
+  };
 
   const onLbsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     setLbStr(val.replace(/[^\d.]/, ''));
     setIsChanged(true);
-  }
+  };
 
   return (
     <div className={styles.weightInput}>
@@ -125,7 +127,7 @@ function WeightInputLb({ id, weight, onChange }: Props) {
     const val = e.target.value;
     setLbStr(val.replace(/[^\d.]/, ''));
     setIsChanged(true);
-  }
+  };
 
   return (
     <div className={styles.weightInput}>
@@ -148,7 +150,7 @@ function WeightInput({ id, weight, onChange }: Props) {
     InputComponent = WeightInputLb;
   }
 
-  return <InputComponent id={id} weight={weight} onChange={onChange} />
+  return <InputComponent id={id} weight={weight} onChange={onChange} />;
 }
 
 export default WeightInput;

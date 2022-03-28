@@ -11,13 +11,11 @@ function setStorageValue(key: string, value: any): void {
 }
 
 function useLocalStorage(key: string, defaultValue: any) {
-  const [value, setValue] = useState(() => {
-    return getStorageValue(key, defaultValue);
-  });
+  const [value, setValue] = useState(() => getStorageValue(key, defaultValue));
 
   useEffect(() => {
     setStorageValue(key, value);
-  }, [key, value])
+  }, [key, value]);
 
   return [value, setValue];
 }

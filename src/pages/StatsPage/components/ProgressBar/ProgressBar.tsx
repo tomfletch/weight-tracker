@@ -22,7 +22,7 @@ function ProgressBar() {
   let weightChangePercent = weightChangeProgress / weightChangeTarget;
   weightChangePercent = Math.max(0, Math.min(1, weightChangePercent));
 
-  const weightChangePercentStr = Math.round(weightChangePercent * 100) + '%';
+  const weightChangePercentStr = `${Math.round(weightChangePercent * 100)}%`;
 
   const valueSideThreshold = 0.5;
 
@@ -31,11 +31,11 @@ function ProgressBar() {
       <div className={styles.progressBarContainer}>
         <div className={styles.weight}>{startWeightStr}</div>
         <div className={styles.progressBar}>
-          <div className={styles.progressBarFill} style={{width: `${weightChangePercent*100}%`, backgroundColor: accentColour}}>
+          <div className={styles.progressBarFill} style={{ width: `${weightChangePercent * 100}%`, backgroundColor: accentColour }}>
             {weightChangePercent >= valueSideThreshold && <div className={styles.value}>{weightChangePercentStr}</div>}
           </div>
           <div className={styles.progressBarEmpty}>
-            {weightChangePercent < valueSideThreshold && <div className={styles.value} style={{color: accentColour}}>{weightChangePercentStr}</div>}
+            {weightChangePercent < valueSideThreshold && <div className={styles.value} style={{ color: accentColour }}>{weightChangePercentStr}</div>}
           </div>
         </div>
         <div className={styles.weight}>{targetWeightStr}</div>

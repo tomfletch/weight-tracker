@@ -9,19 +9,13 @@ import { ReactComponent as Logo } from '../../assets/logo.svg';
 function Header() {
   const { accentColour } = useContext(SettingsContext);
 
-  const isActiveClass = ({ isActive }: { isActive: boolean}) => {
-    if (isActive) {
-      return styles.active;
-    }
-  }
+  const isActiveClass = ({ isActive }: { isActive: boolean}): string | undefined => (
+    (isActive) ? styles.active : undefined
+  );
 
-  const isActiveStyle = ({ isActive }: { isActive: boolean}): CSSProperties => {
-    if (isActive) {
-      return {color: accentColour}
-    }
-
-    return {};
-  }
+  const isActiveStyle = ({ isActive }: { isActive: boolean}): CSSProperties => (
+    (isActive) ? { color: accentColour } : {}
+  );
 
   return (
     <header className={styles.header}>
@@ -40,12 +34,12 @@ function Header() {
           </li>
           <li>
             <NavLink to="/history" className={isActiveClass} style={isActiveStyle}>
-            <FontAwesomeIcon icon={faCalendarDays} /> History
+              <FontAwesomeIcon icon={faCalendarDays} /> History
             </NavLink>
           </li>
           <li>
             <NavLink to="/settings" className={isActiveClass} style={isActiveStyle}>
-            <FontAwesomeIcon icon={faGear} /> Settings
+              <FontAwesomeIcon icon={faGear} /> Settings
             </NavLink>
           </li>
         </ul>

@@ -2,7 +2,7 @@
 interface FtIn {
   ft: number,
   inch: number
-};
+}
 
 const IN_PER_M = 39.3701;
 const IN_PER_F = 12;

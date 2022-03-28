@@ -22,8 +22,8 @@ function getTh(d: number) {
     case 1: return 'st';
     case 2: return 'nd';
     case 3: return 'rd';
+    default: return 'th';
   }
-  return 'th';
 }
 
 export function formatDayth(dateStr: string) {
@@ -38,5 +38,5 @@ export function toISODate(date: Date): string {
 }
 
 export function daysBetween(a: Date, b: Date): number {
-  return Math.round((b.getTime()-a.getTime())/(1000*60*60*24))
+  return Math.round((b.getTime() - a.getTime()) / (1000 * 60 * 60 * 24));
 }

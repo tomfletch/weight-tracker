@@ -34,10 +34,11 @@ function Timeline() {
                 className={styles.deleteBtn}
                 type="button"
                 onClick={() => deleteWeight(weightRecord.date)}
-                style={{color: accentColour}}
-              >&times;</button>
+                style={{ color: accentColour }}
+              >&times;
+              </button>
             </div>
-            <div className={styles.dataDot} style={{backgroundColor: accentColour}}></div>
+            <div className={styles.dataDot} style={{ backgroundColor: accentColour }} />
           </div>
         ))}
       </div>
@@ -45,11 +46,11 @@ function Timeline() {
 
     months.push(month);
 
-    currentMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth()-1, 1);
+    currentMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1);
   }
 
   return (
-    <div className={styles.timeline} style={{borderLeftColor: accentColour}}>
+    <div className={styles.timeline} style={{ borderLeftColor: accentColour }}>
       {months}
     </div>
   );

@@ -21,8 +21,8 @@ function StatsHeader() {
 
   return (
     <>
-      <div className={styles.ellipse}></div>
-      <div className={styles.currentWeightContainer} style={{backgroundColor: accentColour}}>
+      <div className={styles.ellipse} />
+      <div className={styles.currentWeightContainer} style={{ backgroundColor: accentColour }}>
         <span className={styles.currentWeight}>{lastWeightStr}</span>
         <span className={styles.currentWeightLabel}>Current Weight</span>
       </div>
@@ -32,13 +32,13 @@ function StatsHeader() {
           <span className={styles.value}>{weightTargetStr}</span>
         </div>
         <div className={styles.weightChange}>
-        <span className={styles.label}>Weight Change</span>
-        <span className={styles.value}>
-          {weightChangeStr}
-          {weightChange !== 0  && (
+          <span className={styles.label}>Weight Change</span>
+          <span className={styles.value}>
+            {weightChangeStr}
+            {weightChange !== 0 && (
             <FontAwesomeIcon icon={weightChange > 0 ? faLongArrowUp : faLongArrowDown} className={styles.weightChangeIcon} />
-          )}
-        </span>
+            )}
+          </span>
         </div>
       </div>
     </>

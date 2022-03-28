@@ -1,9 +1,11 @@
 import { Line } from 'react-chartjs-2';
 import { Chart, registerables, TooltipItem } from 'chart.js';
 import 'chartjs-adapter-date-fns';
-import WeightContext, { WeightUnit } from '../../../../context/WeightContext';
 import { useContext } from 'react';
-import { convertKgToLb, formatKg, formatLb, formatLbAsStLb } from '../../../../utils/weights';
+import WeightContext, { WeightUnit } from '../../../../context/WeightContext';
+import {
+  convertKgToLb, formatKg, formatLb, formatLbAsStLb,
+} from '../../../../utils/weights';
 import SettingsContext from '../../../../context/SettingsContext';
 import { formatDate, toISODate } from '../../../../utils/dates';
 
@@ -13,8 +15,8 @@ Chart.register(...registerables);
 
 const showLabelPlugin = {
   id: 'showlabel',
-  afterDraw: function(chart: Chart) {
-    const ctx = chart.ctx;
+  afterDraw(chart: Chart) {
+    const { ctx } = chart;
 
     chart.data.datasets.forEach((dataset, datasetIndex) => {
       if (!dataset.showLabel) {
@@ -25,16 +27,15 @@ const showLabelPlugin = {
       const point = meta.data[0];
       ctx.fillStyle = 'red';
 
-      if ( point.y > 30) {
+      if (point.y > 30) {
         ctx.textBaseline = 'bottom';
         ctx.fillText('Target', point.x + 2, point.y - 2);
       } else {
         ctx.textBaseline = 'top';
         ctx.fillText('Target', point.x + 2, point.y + 2);
       }
-
     });
-  }
+  },
 };
 
 Chart.register(showLabelPlugin);
@@ -47,7 +48,7 @@ function WeightChart() {
 
 
   if (weightRecords.length === 0) {
-    return <div>Not enough data</div>
+    return <div>Not enough data</div>;
   }
 
   const dates = weightRecords.map((weightRecord) => weightRecord.date);
@@ -87,8 +88,8 @@ function WeightChart() {
   // let regressionWeightEnd = m*days[N-1] + b;
 
   if (weightUnit !== WeightUnit.KGS) {
-    weights = weights.map((weightKg) => Math.round(convertKgToLb(weightKg) * 10)/10);
-    targetWeights = targetWeights.map((weightKg) => Math.round(convertKgToLb(weightKg) * 10)/10);
+    weights = weights.map((weightKg) => Math.round(convertKgToLb(weightKg) * 10) / 10);
+    targetWeights = targetWeights.map((weightKg) => Math.round(convertKgToLb(weightKg) * 10) / 10);
 
     // regressionWeightStart = convertKgToLb(regressionWeightStart);
     // regressionWeightEnd = convertKgToLb(regressionWeightEnd);
@@ -133,20 +134,20 @@ function WeightChart() {
   const chartOptions = {
     plugins: {
       legend: {
-        display: false
+        display: false,
       },
       tooltip: {
         enabled: false,
-        filter: function(tooltipItem: TooltipItem<'line'>) {
+        filter(tooltipItem: TooltipItem<'line'>) {
           return tooltipItem.datasetIndex === 0;
         },
         position: 'nearest' as const,
         callbacks: {
-          label: function(context: TooltipItem<'line'>) {
+          label(context: TooltipItem<'line'>) {
             return formatLbAsStLb(context.parsed.y);
-          }
+          },
         },
-        external: function({ chart }: { chart: Chart}) {
+        external({ chart }: { chart: Chart}) {
           // Tooltip Element
           let tooltipEl = document.getElementById('chartjsTooltip');
 
@@ -170,10 +171,10 @@ function WeightChart() {
           if (tooltipModel.body) {
             const bodyLines = tooltipModel.body.map((bodyItem) => bodyItem.lines);
 
-            let innerHtml = '<div class="date">' + formatDate(date) + '</div>';
+            let innerHtml = `<div class="date">${formatDate(date)}</div>`;
 
-            bodyLines.forEach(function(body, i) {
-              innerHtml += '<div>' + body + '</div>';
+            bodyLines.forEach((body, i) => {
+              innerHtml += `<div>${body}</div>`;
             });
 
             tooltipEl.innerHTML = innerHtml;
@@ -185,13 +186,13 @@ function WeightChart() {
           // Display, position, and set styles for font
           tooltipEl.style.opacity = '1';
           tooltipEl.style.position = 'absolute';
-          tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px';
-          tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY + 'px';
+          tooltipEl.style.left = `${position.left + window.pageXOffset + tooltipModel.caretX}px`;
+          tooltipEl.style.top = `${position.top + window.pageYOffset + tooltipModel.caretY}px`;
           // tooltipEl.style.font = bodyFont.string;
           // tooltipEl.style.padding = tooltipModel.padding + 'px ' + tooltipModel.padding + 'px';
           tooltipEl.style.pointerEvents = 'none';
-        }
-      }
+        },
+      },
     },
     interaction: {
       mode: 'nearest' as const,
@@ -204,8 +205,8 @@ function WeightChart() {
         type: 'time' as const,
         max: today,
         time: {
-          unit: 'day' as const
-        }
+          unit: 'day' as const,
+        },
       },
       y: {
         ticks: {
@@ -223,10 +224,10 @@ function WeightChart() {
             }
 
             return '';
-          }
-        }
-      }
-    }
+          },
+        },
+      },
+    },
   };
 
   return (

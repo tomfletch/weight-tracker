@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import React, { createContext, useMemo } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 interface SettingsContextInterface {
@@ -9,22 +9,25 @@ interface SettingsContextInterface {
 const SettingsContext = createContext<SettingsContextInterface>({} as SettingsContextInterface);
 
 interface Props {
-  children?: React.ReactNode
-};
+  children: React.ReactNode
+}
 
 export function SettingsProvider({ children }: Props) {
   const [accentColour, setAccentColour] = useLocalStorage('accentColour', '#00c8ff');
 
-  const contextValue = {
+  const contextValue = useMemo(() => ({
     accentColour,
     setAccentColour,
-  };
+  }), [
+    accentColour,
+    setAccentColour,
+  ]);
 
   return (
     <SettingsContext.Provider value={contextValue}>
       {children}
     </SettingsContext.Provider>
-  )
+  );
 }
 
 export default SettingsContext;

@@ -4,7 +4,7 @@ import styles from './ColourSelect.module.css';
 interface Props {
   value: string;
   onChange: (value: string) => void;
-};
+}
 
 const colours = ['#00C8FF', '#FF70A9', '#2BC356'];
 
@@ -24,8 +24,8 @@ function ColourSelect({ value, onChange }: Props) {
           <label
             htmlFor={`colour-${colour}`}
             className={styles.colourLabel}
-            style={{backgroundColor: colour}}
-          ></label>
+            style={{ backgroundColor: colour }}
+          />
         </React.Fragment>
       ))}
     </div>

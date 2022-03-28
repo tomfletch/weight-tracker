@@ -23,7 +23,7 @@ function AddWeight() {
 
     const weightRecord: WeightRecord = {
       date,
-      weightKgs: weight
+      weightKgs: weight,
     };
     addWeight(weightRecord);
   };
@@ -40,13 +40,13 @@ function AddWeight() {
             <label htmlFor="weight-input">Weight:</label>
             <WeightInput id="weight-input" weight={weight} onChange={(newWeight) => setWeight(newWeight)} />
           </div>
-          <button type="submit" className={styles.addButton} style={{backgroundColor: accentColour}}>
+          <button type="submit" className={styles.addButton} style={{ backgroundColor: accentColour }}>
             <FontAwesomeIcon icon={faAdd} />
           </button>
         </form>
       </div>
     </div>
-  )
+  );
 }
 
 export default AddWeight;

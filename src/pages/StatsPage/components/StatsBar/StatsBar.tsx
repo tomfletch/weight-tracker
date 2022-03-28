@@ -1,22 +1,22 @@
 import { useContext } from 'react';
 import { subDays } from 'date-fns';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLongArrowDown, faLongArrowUp } from '@fortawesome/free-solid-svg-icons';
 import WeightContext, { WeightRecord } from '../../../../context/WeightContext';
 import { daysBetween } from '../../../../utils/dates';
 import { formatWeight } from '../../../../utils/weights';
 import styles from './StatsBar.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLongArrowDown, faLongArrowUp } from '@fortawesome/free-solid-svg-icons';
 import HeightContext from '../../../../context/HeightContext';
 
 const BMI_NORMAL_MIN = 18.5;
 const BMI_NORMAL_MAX = 25;
 const BMI_OVERWEIGHT_MAX = 30;
 
-function map(value: number, from_min: number, from_max: number, to_min: number, to_max: number): number {
-  const from_range = from_max - from_min;
-  const to_range = to_max - to_min;
+function map(value: number, fromMin: number, fromMax: number, toMin: number, toMax: number): number {
+  const fromRange = fromMax - fromMin;
+  const toRange = toMax - toMin;
 
-  return (value - from_min) / from_range * to_range + to_min;
+  return ((value - fromMin) / fromRange) * toRange + toMin;
 }
 
 function limit(value: number, min: number, max: number): number {
@@ -54,7 +54,7 @@ function interpolateWeight(weightRecords: WeightRecord[], date: Date): number | 
   const targetDays = daysBetween(beforeDate, date);
 
   const deltaWeight = nearestRecordAfter.weightKgs - nearestRecordBefore.weightKgs;
-  const targetDeltaWeight = deltaWeight / deltaDays * targetDays;
+  const targetDeltaWeight = (deltaWeight / deltaDays) * targetDays;
 
   const interpolatedWeight = nearestRecordBefore.weightKgs + targetDeltaWeight;
 
@@ -86,13 +86,13 @@ function RateStatsWidget({ type, startDate }: { type: string, startDate: Date })
     let icon = null;
 
     if (kgPerWeek !== 0) {
-        icon = <FontAwesomeIcon icon={kgPerWeek > 0 ? faLongArrowUp : faLongArrowDown} className={styles.weightChangeIcon} />
+      icon = <FontAwesomeIcon icon={kgPerWeek > 0 ? faLongArrowUp : faLongArrowDown} className={styles.weightChangeIcon} />;
     }
 
     currentRate = <>{icon} {formattedWeight} per week</>;
 
     if (kgPerDay !== 0 && Math.sign(kgPerDay) === Math.sign(targetWeightDelta)) {
-      daysUntilTarget = Math.round(targetWeightDelta / kgPerDay)
+      daysUntilTarget = Math.round(targetWeightDelta / kgPerDay);
     }
   }
 
@@ -117,38 +117,38 @@ function BMIWidget() {
     content = <>Height not set</>;
   } else {
     const weight = weightRecords[weightRecords.length - 1].weightKgs;
-    const bmi = weight / (height*height);
+    const bmi = weight / (height * height);
 
-    const bar_min = BMI_NORMAL_MIN - 1;
-    const bar_max = BMI_OVERWEIGHT_MAX + 1;
+    const barMin = BMI_NORMAL_MIN - 1;
+    const barMax = BMI_OVERWEIGHT_MAX + 1;
 
-    const map_bar = (value: number) => map(value, bar_min, bar_max, 0, 100);
+    const mapBar = (value: number) => map(value, barMin, barMax, 0, 100);
 
-    const position = limit(map_bar(bmi), 0, 100);
-    const normal_min = map_bar(BMI_NORMAL_MIN);
-    const normal_max = map_bar(BMI_NORMAL_MAX);
-    const overweight_max = map_bar(BMI_OVERWEIGHT_MAX);
+    const position = limit(mapBar(bmi), 0, 100);
+    const normalMin = mapBar(BMI_NORMAL_MIN);
+    const normalMax = mapBar(BMI_NORMAL_MAX);
+    const overweightMax = mapBar(BMI_OVERWEIGHT_MAX);
 
-    const normal_mid = map_bar((BMI_NORMAL_MIN + BMI_NORMAL_MAX) / 2);
-    const overweight_mid = map_bar((BMI_NORMAL_MAX + BMI_OVERWEIGHT_MAX) / 2);
+    const normalMid = mapBar((BMI_NORMAL_MIN + BMI_NORMAL_MAX) / 2);
+    const overweightMid = mapBar((BMI_NORMAL_MAX + BMI_OVERWEIGHT_MAX) / 2);
 
     content = (
       <div className={styles.bmiBar}>
         <div className={styles.bmiContainer}>
-          <div className={styles.bmi} style={{left: `${position}%`}}>{bmi.toFixed(1)}</div>
+          <div className={styles.bmi} style={{ left: `${position}%` }}>{bmi.toFixed(1)}</div>
         </div>
         <div className={styles.arrowContainer}>
-          <div className={styles.arrow} style={{left: `${position}%`}}></div>
+          <div className={styles.arrow} style={{ left: `${position}%` }} />
         </div>
         <div className={styles.bar}>
-          <div className={styles.underweight} style={{width: `${normal_min}%`}}></div>
-          <div className={styles.normal} style={{width: `${normal_max - normal_min}%`}}></div>
-          <div className={styles.overweight} style={{width: `${overweight_max - normal_max}%`}}></div>
-          <div className={styles.obese} style={{width: `${100 - overweight_max}%`}}></div>
+          <div className={styles.underweight} style={{ width: `${normalMin}%` }} />
+          <div className={styles.normal} style={{ width: `${normalMax - normalMin}%` }} />
+          <div className={styles.overweight} style={{ width: `${overweightMax - normalMax}%` }} />
+          <div className={styles.obese} style={{ width: `${100 - overweightMax}%` }} />
         </div>
         <div className={styles.labels}>
-          <div style={{left: `${normal_mid}%`}}>Healthy</div>
-          <div style={{left: `${overweight_mid}%`}}>Overweight</div>
+          <div style={{ left: `${normalMid}%` }}>Healthy</div>
+          <div style={{ left: `${overweightMid}%` }}>Overweight</div>
         </div>
       </div>
     );
