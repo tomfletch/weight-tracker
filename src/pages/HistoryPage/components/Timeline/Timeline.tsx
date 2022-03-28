@@ -1,7 +1,12 @@
 import { useContext } from 'react';
 import SettingsContext from '../../../../context/SettingsContext';
 import WeightContext from '../../../../context/WeightContext';
-import { formatDayth, getFirstOfMonth, MONTH_NAMES } from '../../../../utils/dates';
+import {
+  formatDayth,
+  getFirstOfMonth,
+  MONTH_NAMES,
+  toISODate,
+} from '../../../../utils/dates';
 import { formatWeight } from '../../../../utils/weights';
 import styles from './Timeline.module.css';
 
@@ -23,7 +28,7 @@ function Timeline() {
     const year = currentMonth.getFullYear();
 
     const month = (
-      <div key={currentMonth.toISOString()}>
+      <div key={toISODate(currentMonth)}>
         <div className={styles.month}>{monthStr} {year}</div>
         {reverseWeightRecords.map((weightRecord) => (
           <div key={weightRecord.date} className={styles.weightRecord}>

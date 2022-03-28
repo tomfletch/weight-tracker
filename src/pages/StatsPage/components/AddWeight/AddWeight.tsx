@@ -5,9 +5,10 @@ import SettingsContext from '../../../../context/SettingsContext';
 import WeightContext, { WeightRecord } from '../../../../context/WeightContext';
 import WeightInput from '../../../../components/WeightInput/WeightInput';
 import styles from './AddWeight.module.css';
+import { toISODate } from '../../../../utils/dates';
 
 const today = new Date();
-const todayStr = today.toISOString().split('T')[0];
+const todayStr = toISODate(today);
 
 function AddWeight() {
   const [date, setDate] = useState(todayStr);

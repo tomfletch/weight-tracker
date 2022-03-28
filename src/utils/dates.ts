@@ -33,8 +33,16 @@ export function formatDayth(dateStr: string) {
   return `${day}${th}`;
 }
 
+function zeroPad(value: number, length: number) {
+  return String(value).padStart(length, '0');
+}
+
 export function toISODate(date: Date): string {
-  return date.toISOString().split('T')[0];
+  const yyyy = date.getFullYear();
+  const mm = zeroPad(date.getMonth() + 1, 2);
+  const dd = zeroPad(date.getDate(), 2);
+
+  return `${yyyy}-${mm}-${dd}`;
 }
 
 export function daysBetween(a: Date, b: Date): number {

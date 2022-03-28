@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useContext, useState } from 'react';
 import SettingsContext from '../../../../context/SettingsContext';
 import WeightContext from '../../../../context/WeightContext';
-import { getFirstOfMonth, MONTH_NAMES } from '../../../../utils/dates';
+import { getFirstOfMonth, MONTH_NAMES, toISODate } from '../../../../utils/dates';
 import styles from './Calendar.module.css';
 
 function Calendar() {
@@ -29,7 +29,7 @@ function Calendar() {
   };
 
   const dateHasWeightRecord = (date: Date): boolean => {
-    const dateStr = date.toISOString().split('T')[0];
+    const dateStr = toISODate(date);
     const weightRecord = weightRecords.find((w) => w.date === dateStr);
     return weightRecord !== undefined;
   };
@@ -46,7 +46,7 @@ function Calendar() {
 
       calendarRow.push(
         <td
-          key={calendarDay.toISOString()}
+          key={toISODate(calendarDay)}
           className={calendarDay <= today ? styles.pastDate : styles.futureDate}
         >
           {isDayInCurrentMonth && (
@@ -63,7 +63,7 @@ function Calendar() {
       calendarDay.setDate(calendarDay.getDate() + 1);
     }
 
-    calendarRows.push(<tr key={calendarDay.toISOString()}>{calendarRow}</tr>);
+    calendarRows.push(<tr key={toISODate(calendarDay)}>{calendarRow}</tr>);
   }
 
   return (
