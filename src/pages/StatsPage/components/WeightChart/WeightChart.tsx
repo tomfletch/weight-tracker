@@ -4,7 +4,10 @@ import 'chartjs-adapter-date-fns';
 import { useContext } from 'react';
 import WeightContext, { WeightUnit } from '../../../../context/WeightContext';
 import {
-  convertKgToLb, formatKg, formatLb, formatLbAsStLb,
+  convertKgToLb,
+  formatKg,
+  formatLb,
+  formatLbAsStLb,
 } from '../../../../utils/weights';
 import SettingsContext from '../../../../context/SettingsContext';
 import { formatDate, toISODate } from '../../../../utils/dates';
@@ -154,7 +157,16 @@ function WeightChart() {
         position: 'nearest' as const,
         callbacks: {
           label(context: TooltipItem<'line'>) {
-            return formatLbAsStLb(context.parsed.y);
+            if (weightUnit === WeightUnit.KGS) {
+              return formatKg(context.parsed.y);
+            }
+            if (weightUnit === WeightUnit.LBS) {
+              return formatLb(context.parsed.y);
+            }
+            if (weightUnit === WeightUnit.STONES_LBS) {
+              return formatLbAsStLb(context.parsed.y);
+            }
+            return '';
           },
         },
         external({ chart }: { chart: Chart}) {
