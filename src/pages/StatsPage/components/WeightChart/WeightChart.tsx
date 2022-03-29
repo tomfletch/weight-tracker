@@ -200,6 +200,7 @@ function WeightChart() {
       intersect: true,
     },
     spanGaps: true,
+    clip: false,
     scales: {
       x: {
         type: 'time' as const,
