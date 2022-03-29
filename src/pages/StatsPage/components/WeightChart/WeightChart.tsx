@@ -25,15 +25,25 @@ const showLabelPlugin = {
 
       const meta = chart.getDatasetMeta(datasetIndex);
       const point = meta.data[0];
-      ctx.fillStyle = 'red';
 
-      if (point.y > 30) {
-        ctx.textBaseline = 'bottom';
-        ctx.fillText('Target', point.x + 2, point.y - 2);
+      const colour = meta.dataset?.options.borderColor;
+
+      if (typeof colour === 'string') {
+        ctx.fillStyle = colour;
       } else {
-        ctx.textBaseline = 'top';
-        ctx.fillText('Target', point.x + 2, point.y + 2);
+        ctx.fillStyle = 'red';
       }
+
+      const labelX = point.x + 2;
+      let labelY = point.y - 2;
+      ctx.textBaseline = 'bottom';
+
+      if (point.y < 30) {
+        ctx.textBaseline = 'top';
+        labelY = point.y + 2;
+      }
+
+      ctx.fillText(meta.label, labelX, labelY);
     });
   },
 };
@@ -113,7 +123,7 @@ function WeightChart() {
       {
         label: 'Target Weight',
         data: targetWeights,
-        borderColor: 'rgb(255, 0, 0)',
+        borderColor: '#e65424',
         borderWidth: 1,
         pointRadius: 0,
         hoverRadius: 0,
