@@ -4,6 +4,7 @@ import ProgressBar from './components/ProgressBar/ProgressBar';
 import WeightChart from './components/WeightChart/WeightChart';
 import StatsBar from './components/StatsBar/StatsBar';
 import MovingAverageWeightChart from './components/MovingAverageWeightChart/MovingAverageWeightChart';
+import MovingAverageDeltaChart from './components/MovingAverageDeltaChart/MovingAverageDeltaChart';
 
 function StatsPage() {
   return (
@@ -15,6 +16,7 @@ function StatsPage() {
         <WeightChart />
         <StatsBar />
         <MovingAverageWeightChart />
+        <MovingAverageDeltaChart />
       </div>
     </>
   );
