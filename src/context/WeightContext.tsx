@@ -1,5 +1,6 @@
 import React, { createContext, useMemo } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { daysBetween } from '../utils/dates';
 
 export enum WeightUnit {
   LBS = 'LBS',
@@ -16,6 +17,7 @@ interface WeightContextInterface {
   weightUnit: WeightUnit;
   setWeightUnit: (weightUnit: WeightUnit) => void;
   weightRecords: WeightRecord[];
+  getInterpolatedWeight: (date: Date) => number | null;
   addWeight: (weightRecort: WeightRecord) => void;
   deleteWeight: (date: string) => void;
   weightTargetKgs: number;
@@ -46,10 +48,49 @@ export function WeightProvider({ children }: Props) {
     setWeightRecords((prevWeightRecords: WeightRecord[]) => prevWeightRecords.filter((weightRecord) => weightRecord.date !== date));
   };
 
+  const getInterpolatedWeight = (date: Date): number | null => {
+    let nearestRecordBefore: WeightRecord | null = null;
+    let nearestRecordAfter: WeightRecord | null = null;
+
+    for (const weightRecord of weightRecords) {
+      const weightRecordDate = new Date(weightRecord.date);
+
+      if (weightRecordDate.getTime() === date.getTime()) {
+        return weightRecord.weightKgs;
+      }
+
+      if (weightRecordDate < date && (!nearestRecordBefore || weightRecordDate > new Date(nearestRecordBefore.date))) {
+        nearestRecordBefore = weightRecord;
+      }
+
+      if (weightRecordDate > date && (!nearestRecordAfter || weightRecordDate < new Date(nearestRecordAfter.date))) {
+        nearestRecordAfter = weightRecord;
+      }
+    }
+
+    if (!nearestRecordBefore || !nearestRecordAfter) {
+      return null;
+    }
+
+    const beforeDate = new Date(nearestRecordBefore.date);
+    const afterDate = new Date(nearestRecordAfter.date);
+
+    const deltaDays = daysBetween(beforeDate, afterDate);
+    const targetDays = daysBetween(beforeDate, date);
+
+    const deltaWeight = nearestRecordAfter.weightKgs - nearestRecordBefore.weightKgs;
+    const targetDeltaWeight = (deltaWeight / deltaDays) * targetDays;
+
+    const interpolatedWeight = nearestRecordBefore.weightKgs + targetDeltaWeight;
+
+    return interpolatedWeight;
+  };
+
   const contextValue = useMemo(() => ({
     weightUnit,
     setWeightUnit,
     weightRecords,
+    getInterpolatedWeight,
     addWeight,
     deleteWeight,
     weightTargetKgs,
@@ -58,6 +99,7 @@ export function WeightProvider({ children }: Props) {
     weightUnit,
     setWeightUnit,
     weightRecords,
+    getInterpolatedWeight,
     addWeight,
     deleteWeight,
     weightTargetKgs,

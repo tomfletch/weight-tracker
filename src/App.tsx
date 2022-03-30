@@ -6,6 +6,7 @@ import SettingsPage from './pages/SettingsPage/SettingsPage';
 import { SettingsProvider } from './context/SettingsContext';
 import { WeightProvider } from './context/WeightContext';
 import { HeightProvider } from './context/HeightContext';
+import './utils/chartjs';
 import './index.css';
 
 

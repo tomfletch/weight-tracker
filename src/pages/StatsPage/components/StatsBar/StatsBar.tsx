@@ -23,53 +23,20 @@ function limit(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value));
 }
 
-function interpolateWeight(weightRecords: WeightRecord[], date: Date): number | null {
-  let nearestRecordBefore: WeightRecord | null = null;
-  let nearestRecordAfter: WeightRecord | null = null;
-
-  for (const weightRecord of weightRecords) {
-    const weightRecordDate = new Date(weightRecord.date);
-
-    if (weightRecordDate.getTime() === date.getTime()) {
-      return weightRecord.weightKgs;
-    }
-
-    if (weightRecordDate < date && (!nearestRecordBefore || weightRecordDate > new Date(nearestRecordBefore.date))) {
-      nearestRecordBefore = weightRecord;
-    }
-
-    if (weightRecordDate > date && (!nearestRecordAfter || weightRecordDate < new Date(nearestRecordAfter.date))) {
-      nearestRecordAfter = weightRecord;
-    }
-  }
-
-  if (!nearestRecordBefore || !nearestRecordAfter) {
-    return null;
-  }
-
-  const beforeDate = new Date(nearestRecordBefore.date);
-  const afterDate = new Date(nearestRecordAfter.date);
-
-  const deltaDays = daysBetween(beforeDate, afterDate);
-  const targetDays = daysBetween(beforeDate, date);
-
-  const deltaWeight = nearestRecordAfter.weightKgs - nearestRecordBefore.weightKgs;
-  const targetDeltaWeight = (deltaWeight / deltaDays) * targetDays;
-
-  const interpolatedWeight = nearestRecordBefore.weightKgs + targetDeltaWeight;
-
-  return interpolatedWeight;
-}
-
 function RateStatsWidget({ type, startDate }: { type: string, startDate: Date }) {
-  const { weightRecords, weightUnit, weightTargetKgs } = useContext(WeightContext);
+  const {
+    weightRecords,
+    getInterpolatedWeight,
+    weightUnit,
+    weightTargetKgs,
+  } = useContext(WeightContext);
 
   const lastWeightRecord = weightRecords[weightRecords.length - 1];
   const lastWeightDate = new Date(lastWeightRecord.date);
   const lastWeight = lastWeightRecord.weightKgs;
   const targetWeightDelta = weightTargetKgs - lastWeight;
 
-  const startWeight = interpolateWeight(weightRecords, startDate);
+  const startWeight = getInterpolatedWeight(startDate);
 
   let currentRate = <>Unknown</>;
   let daysUntilTarget = null;

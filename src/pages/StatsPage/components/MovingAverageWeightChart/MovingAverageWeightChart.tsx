@@ -12,69 +12,64 @@ import {
 import SettingsContext from '../../../../context/SettingsContext';
 import { formatDate, toISODate } from '../../../../utils/dates';
 
-function WeightChart() {
-  const { weightRecords, weightTargetKgs, weightUnit } = useContext(WeightContext);
+const MOVING_AVERAGE_SIZE = 7;
+const MOVING_AVERAGE_OFFSET = (MOVING_AVERAGE_SIZE - 1) / 2;
+
+function MovingAverageWeightChart() {
+  const {
+    weightRecords,
+    getInterpolatedWeight,
+    weightTargetKgs,
+    weightUnit,
+  } = useContext(WeightContext);
   const { accentColour } = useContext(SettingsContext);
   const today = toISODate(new Date());
+
+  const getAverageWeight = (date: Date): number | null => {
+    let sumWeight = 0;
+
+    for (let offset = -MOVING_AVERAGE_OFFSET; offset <= MOVING_AVERAGE_OFFSET; offset += 1) {
+      const offsetDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() + offset);
+      const weight = getInterpolatedWeight(offsetDate);
+      if (weight === null) return null;
+      sumWeight += weight;
+    }
+
+    return sumWeight / MOVING_AVERAGE_SIZE;
+  };
 
 
   if (weightRecords.length === 0) {
     return <div>Not enough data</div>;
   }
 
-  const dates = weightRecords.map((weightRecord) => weightRecord.date);
+  const firstDate = new Date(weightRecords[0].date);
+  const lastDate = new Date(weightRecords[weightRecords.length - 1].date);
+  const currentDate = new Date(firstDate.getTime());
 
-  if (dates[dates.length - 1] !== today) {
-    dates.push(today);
+  const dates = [];
+  let weights = [];
+  let targetWeights = [];
+
+  while (currentDate < lastDate) {
+    dates.push(toISODate(currentDate));
+    targetWeights.push(weightTargetKgs);
+    weights.push(getAverageWeight(currentDate));
+
+    currentDate.setDate(currentDate.getDate() + 1);
   }
 
-  let weights = weightRecords.map((weightRecord) => weightRecord.weightKgs);
-  let targetWeights = dates.map(() => weightTargetKgs);
-
-  // const firstDate = new Date(dates[0]).getTime() / 1000;
-
-  // const days = dates.map((d) => (new Date(d).getTime() / 1000 - firstDate) / DAY_SECONDS);
-
-  // let sumX = 0;
-  // let sumY = 0;
-  // let sumXX = 0;
-  // let sumXY = 0;
-
-  // const N = days.length;
-
-  // for (let i = 0; i < N; i++) {
-  //   const x = days[i];
-  //   const y = weights[i];
-
-  //   sumX += x;
-  //   sumY += y;
-  //   sumXX += x * x;
-  //   sumXY += x * y;
-  // }
-
-  // const m = (N * sumXY - sumX*sumY) / (N * sumXX - sumX*sumX);
-  // const b = (sumY - m * sumX) / N;
-
-  // let regressionWeightStart = b;
-  // let regressionWeightEnd = m*days[N-1] + b;
 
   if (weightUnit !== WeightUnit.KGS) {
-    weights = weights.map((weightKg) => Math.round(convertKgToLb(weightKg) * 10) / 10);
+    weights = weights.map((weightKg) => weightKg && Math.round(convertKgToLb(weightKg) * 10) / 10);
     targetWeights = targetWeights.map((weightKg) => Math.round(convertKgToLb(weightKg) * 10) / 10);
-
-    // regressionWeightStart = convertKgToLb(regressionWeightStart);
-    // regressionWeightEnd = convertKgToLb(regressionWeightEnd);
   }
-
-  // const regressionWeights = new Array(N).fill(undefined);
-  // regressionWeights[0] = regressionWeightStart;
-  // regressionWeights[N-1] = regressionWeightEnd;
 
   const chartData = {
     labels: dates,
     datasets: [
       {
-        label: 'Weight',
+        label: 'Moving Average Weight',
         data: weights,
         borderColor: accentColour,
         borderWidth: 1,
@@ -91,14 +86,6 @@ function WeightChart() {
         hitRadius: 0,
         showLabel: true,
       },
-      // {
-      //   label: 'Line of Best Fit',
-      //   data: regressionWeights,
-      //   borderColor: 'rgba(255, 0, 0, 0.8)',
-      //   borderWidth: 1,
-      //   borderDash: [3,3],
-      //   pointRadius: 0,
-      // },
     ],
   };
 
@@ -221,4 +208,4 @@ function WeightChart() {
   );
 }
 
-export default WeightChart;
+export default MovingAverageWeightChart;
