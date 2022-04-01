@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import SettingsContext from '../../../../context/SettingsContext';
-import WeightContext from '../../../../context/WeightContext';
+import WeightContext, { WeightRecord } from '../../../../context/WeightContext';
 import {
   formatDayth,
   getFirstOfMonth,
@@ -23,14 +23,21 @@ function Timeline() {
 
   const months = [];
 
+  const filterCurrentMonth = (weightRecord: WeightRecord): boolean => {
+    const weightRecordDate = new Date(weightRecord.date);
+    return weightRecordDate.getFullYear() === currentMonth.getFullYear() && weightRecordDate.getMonth() === currentMonth.getMonth();
+  };
+
   while (currentMonth >= firstMonth) {
     const monthStr = MONTH_NAMES[currentMonth.getMonth()];
     const year = currentMonth.getFullYear();
 
+    const currentMonthRecords = reverseWeightRecords.filter(filterCurrentMonth);
+
     const month = (
       <div key={toISODate(currentMonth)}>
         <div className={styles.month}>{monthStr} {year}</div>
-        {reverseWeightRecords.map((weightRecord) => (
+        {currentMonthRecords.map((weightRecord) => (
           <div key={weightRecord.date} className={styles.weightRecord}>
             <div className={styles.date}>{formatDayth(weightRecord.date)}</div>
             <div className={styles.weight}>{formatWeight(weightRecord.weightKgs, weightUnit)}</div>
