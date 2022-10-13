@@ -62,12 +62,12 @@ function MovingAverageDeltaChart() {
   for (let i = 0; i < weights.length - 1; i++) {
     let delta = null;
 
-    if (i !== 0) {
-      const prevWeight = weights[i - 1];
+    if (i >= 7) {
+      const prevWeight = weights[i - 7];
       const currentWeight = weights[i];
 
       if (prevWeight && currentWeight) {
-        delta = (currentWeight - prevWeight) * 7;
+        delta = currentWeight - prevWeight;
       }
     }
 
