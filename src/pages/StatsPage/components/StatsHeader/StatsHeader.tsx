@@ -10,14 +10,19 @@ function StatsHeader() {
   const { weightRecords, weightUnit, weightTargetKgs } = useContext(WeightContext);
   const { accentColour } = useContext(SettingsContext);
 
-  const firstWeight = weightRecords[0].weightKgs;
-  const lastWeight = weightRecords[weightRecords.length - 1].weightKgs;
-  const lastWeightStr = formatWeight(lastWeight, weightUnit);
-
   const weightTargetStr = formatWeight(weightTargetKgs, weightUnit);
+  let lastWeightStr = 'N/A';
+  let weightChange = 0;
+  let weightChangeStr = 'N/A';
 
-  const weightChange = lastWeight - firstWeight;
-  const weightChangeStr = formatWeight(Math.abs(weightChange), weightUnit);
+  if (weightRecords.length !== 0) {
+    const firstWeight = weightRecords[0].weightKgs;
+    const lastWeight = weightRecords[weightRecords.length - 1].weightKgs;
+    lastWeightStr = formatWeight(lastWeight, weightUnit);
+
+    weightChange = lastWeight - firstWeight;
+    weightChangeStr = formatWeight(Math.abs(weightChange), weightUnit);
+  }
 
   return (
     <>
@@ -36,7 +41,7 @@ function StatsHeader() {
           <span className={styles.value}>
             {weightChangeStr}
             {weightChange !== 0 && (
-            <FontAwesomeIcon icon={weightChange > 0 ? faLongArrowUp : faLongArrowDown} className={styles.weightChangeIcon} />
+              <FontAwesomeIcon icon={weightChange > 0 ? faLongArrowUp : faLongArrowDown} className={styles.weightChangeIcon} />
             )}
           </span>
         </div>
