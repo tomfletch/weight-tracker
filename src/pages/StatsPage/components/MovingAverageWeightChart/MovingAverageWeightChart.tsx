@@ -52,7 +52,7 @@ function MovingAverageWeightChart() {
   let weights = [];
   let targetWeights = [];
 
-  while (currentDate < lastDate) {
+  while (currentDate <= lastDate) {
     dates.push(toISODate(currentDate));
     targetWeights.push(weightTargetKgs);
     weights.push(getAverageWeight(currentDate));
