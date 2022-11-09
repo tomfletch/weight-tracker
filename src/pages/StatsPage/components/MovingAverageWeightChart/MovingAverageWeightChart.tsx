@@ -58,6 +58,7 @@ function MovingAverageWeightChart() {
     weights.push(getAverageWeight(currentDate));
 
     currentDate.setDate(currentDate.getDate() + 1);
+    currentDate.setHours(0, 0, 0, 0);
   }
 
 
