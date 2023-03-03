@@ -1,6 +1,6 @@
 .statsBar {
   display: flex;
-  gap: 2rem;
+  column-gap: 2rem;
 }
 
 .statsWidget {
@@ -95,4 +95,10 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+  .statsBar {
+    flex-direction: column;
+  }
 }

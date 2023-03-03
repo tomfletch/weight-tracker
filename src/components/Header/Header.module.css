@@ -1,6 +1,7 @@
 header {
   display: flex;
   align-items: center;
+  gap: 3rem;
   background-color: white;
   padding: 0 2rem;
   border-bottom: 1px solid #E7E7E7;
@@ -11,7 +12,6 @@ header {
   flex-direction: row;
   align-items: center;
   font-size: 1.2rem;
-  margin-right: 3rem;
   font-weight: normal;
   text-decoration: none;
   color: #111;
@@ -52,4 +52,15 @@ header {
 .mainNav a.active {
   /* font-weight: bold; */
   color: #111;
+}
+
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .logo {
+    padding-top: 1rem;
+  }
 }

@@ -33,13 +33,15 @@ function AddWeight() {
     <div className={styles.addWeightContainer}>
       <div className={`card ${styles.addWeight}`}>
         <form onSubmit={onWeightSubmit}>
-          <div className={`${styles.field} ${styles.dateSection}`}>
-            <label htmlFor="date-input">Date:</label>
-            <input id="date-input" type="date" value={date} max={todayStr} onChange={(e) => setDate(e.target.value)} className={styles.dateInput} />
-          </div>
-          <div className={styles.field}>
-            <label htmlFor="weight-input">Weight:</label>
-            <WeightInput id="weight-input" weight={weight} onChange={(newWeight) => setWeight(newWeight)} />
+          <div className={styles.formFields}>
+            <div className={`${styles.field} ${styles.dateSection}`}>
+              <label htmlFor="date-input">Date:</label>
+              <input id="date-input" type="date" value={date} max={todayStr} onChange={(e) => setDate(e.target.value)} className={styles.dateInput} />
+            </div>
+            <div className={styles.field}>
+              <label htmlFor="weight-input">Weight:</label>
+              <WeightInput id="weight-input" weight={weight} onChange={(newWeight) => setWeight(newWeight)} />
+            </div>
           </div>
           <button type="submit" className={styles.addButton} style={{ backgroundColor: accentColour }}>
             <FontAwesomeIcon icon={faAdd} />

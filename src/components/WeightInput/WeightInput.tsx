@@ -42,8 +42,10 @@ function WeightInputKg({ id, weight, onChange }: Props) {
 
   return (
     <div className={styles.weightInput}>
-      <input id={id} type="text" className={styles.weightInputKg} value={kgStr} maxLength={5} autoComplete="off" onChange={onKgChange} />
-      <div className={styles.weightUnit}>kg</div>
+      <div className={styles.weightField}>
+        <input id={id} type="text" className={styles.weightInputKg} value={kgStr} maxLength={5} autoComplete="off" onChange={onKgChange} />
+        <div className={styles.weightUnit}>kg</div>
+      </div>
     </div>
   );
 }
@@ -91,10 +93,14 @@ function WeightInputStLb({ id, weight, onChange }: Props) {
 
   return (
     <div className={styles.weightInput}>
-      <input id={id} type="text" value={stStr} maxLength={2} autoComplete="off" onChange={onStoneChange} />
-      <div className={styles.weightUnit}>st</div>
-      <input type="text" value={lbStr} maxLength={4} autoComplete="off" onChange={onLbsChange} />
-      <div className={styles.weightUnit}>lb</div>
+      <div className={styles.weightField}>
+        <input id={id} type="text" value={stStr} maxLength={2} autoComplete="off" onChange={onStoneChange} />
+        <div className={styles.weightUnit}>st</div>
+      </div>
+      <div className={styles.weightField}>
+        <input type="text" value={lbStr} maxLength={4} autoComplete="off" onChange={onLbsChange} />
+        <div className={styles.weightUnit}>lb</div>
+      </div>
     </div>
   );
 }
@@ -131,8 +137,10 @@ function WeightInputLb({ id, weight, onChange }: Props) {
 
   return (
     <div className={styles.weightInput}>
-      <input id={id} type="text" className={styles.weightInputLb} value={lbStr} maxLength={5} autoComplete="off" onChange={onLbChange} />
-      <div className={styles.weightUnit}>lb</div>
+      <div className={styles.weightField}>
+        <input id={id} type="text" className={styles.weightInputLb} value={lbStr} maxLength={5} autoComplete="off" onChange={onLbChange} />
+        <div className={styles.weightUnit}>lb</div>
+      </div>
     </div>
   );
 }

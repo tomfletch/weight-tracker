@@ -4,21 +4,46 @@
 
 .addWeight {
   display: inline-block;
-  width: 450px;
   margin-bottom: 2rem;
-  border-radius: 100px;
-  padding: 0.8rem 0.8rem 0.8rem 2rem;
+  border-radius: 23.5px;
+  padding: 6px;
+  padding-left: 20px;
   font-size: 1.4rem;
 }
 
 .addWeight form {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
+  column-gap: 3rem;
+}
+
+.formFields {
+  display: flex;
+  column-gap: 1.5rem;
+  row-gap: 1rem;
+}
+
+@media (max-width: 600px) {
+  .addWeight {
+    border-radius: 10px;
+    padding: 1.5rem 2rem;
+  }
+
+  .formFields {
+    flex-direction: column;
+  }
+
+  .addWeight label {
+    width: 60px;
+    text-align: left;
+  }
 }
 
 .addWeight .field {
-  margin-right: 1rem;
+  display: flex;
+  align-items: baseline;
   flex-grow: 1;
 }
 

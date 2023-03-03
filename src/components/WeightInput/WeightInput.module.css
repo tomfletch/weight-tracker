@@ -1,19 +1,29 @@
 .weightInput {
-  display: inline-block;
+  display: flex;
+  gap: 1rem;
 }
 
-.weightInput input {
+.weightField {
+  display: flex;
+  align-items: baseline;
+  gap: 0.2rem;
+}
+
+.weightField input {
   display: inline-block;
-  margin-right: 0.5rem;
   width: 45px;
   text-align: right;
 }
 
-.weightInput .weightUnit {
+.weightUnit {
   display: inline-block;
   margin-right: 0.8rem;
 }
 
-.weightInput input.weightInputLb, .weightInput input.weightInputKg {
+.weightUnit:last-child {
+  margin-right: 0;
+}
+
+input.weightInputLb, input.weightInputKg {
   width: 45px;
 }
