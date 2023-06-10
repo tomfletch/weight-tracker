@@ -230,6 +230,7 @@ function WeightChart() {
       <div className={styles.tabs}>
         {PERIODS.map((p) => (
           <button
+            key={p.key}
             type="button"
             className={`${styles.tab} ${p.key === period.key ? styles.active : ''}`}
             onClick={() => setPeriod(p)}
