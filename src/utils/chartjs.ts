@@ -13,7 +13,8 @@ const showLabelPlugin = {
       }
 
       const meta = chart.getDatasetMeta(datasetIndex);
-      const point = meta.data[0];
+      const firstIndex = dataset.data.findIndex((d) => d);
+      const point = meta.data[firstIndex];
 
       const colour = meta.dataset?.options.borderColor;
 

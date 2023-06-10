@@ -1,0 +1,18 @@
+.tabs {
+  display: flex;
+  margin-bottom: 1rem;
+  justify-content: end;
+}
+
+.tab {
+  cursor: pointer;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  background-color: transparent;
+  border-bottom: 2px solid transparent;
+}
+
+.tab.active {
+  border-bottom-color: var(--accent-colour);
+  color: var(--accent-colour);
+}

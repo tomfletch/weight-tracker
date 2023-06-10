@@ -25,7 +25,9 @@ export function SettingsProvider({ children }: Props) {
 
   return (
     <SettingsContext.Provider value={contextValue}>
-      {children}
+      <div style={{ '--accent-colour': accentColour } as React.CSSProperties}>
+        {children}
+      </div>
     </SettingsContext.Provider>
   );
 }

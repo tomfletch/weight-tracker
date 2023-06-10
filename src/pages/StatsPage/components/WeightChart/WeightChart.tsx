@@ -1,7 +1,7 @@
 import { Line } from 'react-chartjs-2';
 import { Chart, TooltipItem } from 'chart.js';
 import 'chartjs-adapter-date-fns';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import WeightContext, { WeightUnit } from '../../../../context/WeightContext';
 import {
   convertKgToLb,
@@ -12,12 +12,31 @@ import {
 import SettingsContext from '../../../../context/SettingsContext';
 import { formatDate, toISODate } from '../../../../utils/dates';
 import { createTooltip } from '../../../../utils/chartjs';
+import styles from './WeightChart.module.css';
+
+// const PERIODS = ['ALL', '1Y', '3M', '1M'];
+const PERIODS = [
+  { key: 'ALL', label: 'All Time' },
+  { key: '1Y', label: '1 Year' },
+  { key: '3M', label: '3 Months' },
+  { key: '1M', label: '1 Month' },
+];
+
+function insertDate(newDate: string, dates: string[]) {
+  let newIndex = 0;
+  while (newIndex < dates.length && dates[newIndex] < newDate) {
+    newIndex++;
+  }
+
+  if (newDate !== dates[newIndex]) {
+    dates.splice(newIndex, 0, newDate);
+  }
+}
 
 function WeightChart() {
   const { weightRecords, weightTargetKgs, weightUnit } = useContext(WeightContext);
   const { accentColour } = useContext(SettingsContext);
-  const today = toISODate(new Date());
-
+  const [period, setPeriod] = useState<typeof PERIODS[0]>(PERIODS[0]);
 
   if (weightRecords.length === 0) {
     return <div>Not enough data</div>;
@@ -25,12 +44,48 @@ function WeightChart() {
 
   const dates = weightRecords.map((weightRecord) => weightRecord.date);
 
-  if (dates[dates.length - 1] !== today) {
-    dates.push(today);
+  const endDate = new Date();
+  const endDateStr = toISODate(endDate);
+
+  const startDateALL = new Date(dates[0]);
+
+  const startDate1Y = new Date();
+  startDate1Y.setFullYear(endDate.getFullYear() - 1);
+
+  const startDate3M = new Date();
+  startDate3M.setMonth(endDate.getMonth() - 3);
+
+  const startDate1M = new Date();
+  startDate1M.setMonth(endDate.getMonth() - 1);
+
+  let startDate = startDateALL;
+
+  if (period.key === '1Y') {
+    startDate = startDate1Y;
+  } else if (period.key === '3M') {
+    startDate = startDate3M;
+  } else if (period.key === '1M') {
+    startDate = startDate1M;
   }
 
-  let weights = weightRecords.map((weightRecord) => weightRecord.weightKgs);
-  let targetWeights = dates.map(() => weightTargetKgs);
+  const startDateStr = toISODate(startDate);
+
+  insertDate(toISODate(startDateALL), dates);
+  insertDate(toISODate(startDate1Y), dates);
+  insertDate(toISODate(startDate3M), dates);
+  insertDate(toISODate(startDate1M), dates);
+  insertDate(endDateStr, dates);
+
+  let weights = dates.map((date) => {
+    const weightRecord = weightRecords.find((wr) => wr.date === date);
+    return weightRecord?.weightKgs || null;
+  });
+  let targetWeights = dates.map((d, index) => {
+    if (d === startDateStr || d === endDateStr) {
+      return weightTargetKgs;
+    }
+    return null;
+  });
 
   // const firstDate = new Date(dates[0]).getTime() / 1000;
 
@@ -60,8 +115,8 @@ function WeightChart() {
   // let regressionWeightEnd = m*days[N-1] + b;
 
   if (weightUnit !== WeightUnit.KGS) {
-    weights = weights.map((weightKg) => Math.round(convertKgToLb(weightKg) * 10) / 10);
-    targetWeights = targetWeights.map((weightKg) => Math.round(convertKgToLb(weightKg) * 10) / 10);
+    weights = weights.map((weightKg) => weightKg && Math.round(convertKgToLb(weightKg) * 10) / 10);
+    targetWeights = targetWeights.map((weightKg) => weightKg && Math.round(convertKgToLb(weightKg) * 10) / 10);
 
     // regressionWeightStart = convertKgToLb(regressionWeightStart);
     // regressionWeightEnd = convertKgToLb(regressionWeightEnd);
@@ -91,6 +146,7 @@ function WeightChart() {
         hoverRadius: 0,
         hitRadius: 0,
         showLabel: true,
+        animation: false,
       },
       // {
       //   label: 'Line of Best Fit',
@@ -141,7 +197,8 @@ function WeightChart() {
     scales: {
       x: {
         type: 'time' as const,
-        max: today,
+        min: toISODate(startDate),
+        max: endDateStr,
         time: {
           unit: 'day' as const,
         },
@@ -170,6 +227,17 @@ function WeightChart() {
 
   return (
     <div className="card">
+      <div className={styles.tabs}>
+        {PERIODS.map((p) => (
+          <button
+            type="button"
+            className={`${styles.tab} ${p.key === period.key ? styles.active : ''}`}
+            onClick={() => setPeriod(p)}
+          >
+            {p.label}
+          </button>
+        ))}
+      </div>
       <Line
         data={chartData}
         options={chartOptions}
