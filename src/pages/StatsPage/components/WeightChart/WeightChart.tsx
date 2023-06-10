@@ -146,7 +146,7 @@ function WeightChart() {
         hoverRadius: 0,
         hitRadius: 0,
         showLabel: true,
-        animation: false,
+        animation: false as const,
       },
       // {
       //   label: 'Line of Best Fit',
