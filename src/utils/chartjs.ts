@@ -8,12 +8,12 @@ const showLabelPlugin = {
     const { ctx } = chart;
 
     chart.data.datasets.forEach((dataset, datasetIndex) => {
-      if (!dataset.showLabel) {
-        return;
-      }
+      if (!dataset.showLabel) return;
 
       const meta = chart.getDatasetMeta(datasetIndex);
       const firstIndex = dataset.data.findIndex((d) => d);
+      if (firstIndex === -1) return;
+
       const point = meta.data[firstIndex];
 
       const colour = meta.dataset?.options.borderColor;
