@@ -8,6 +8,8 @@ function ProgressBar() {
   const { weightRecords, weightUnit, weightTargetKgs } = useWeightContext();
   const { accentColour } = useSettingsContext();
 
+  if (weightRecords.length === 0 || !weightTargetKgs) return null;
+
   const startWeight = weightRecords[0].weightKgs;
   const targetWeight = weightTargetKgs;
   const currentWeight = weightRecords[weightRecords.length - 1].weightKgs;

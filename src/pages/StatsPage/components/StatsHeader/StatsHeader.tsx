@@ -9,7 +9,7 @@ function StatsHeader() {
   const { weightRecords, weightUnit, weightTargetKgs } = useWeightContext();
   const { accentColour } = useSettingsContext();
 
-  const weightTargetStr = formatWeight(weightTargetKgs, weightUnit);
+  const weightTargetStr = weightTargetKgs ? formatWeight(weightTargetKgs, weightUnit) : 'Not set';
   let lastWeightStr = 'N/A';
   let weightChange = 0;
   let weightChangeStr = 'N/A';

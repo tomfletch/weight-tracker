@@ -26,7 +26,7 @@ interface Props {
 
 export function HeightProvider({ children }: Props) {
   const [heightUnit, setHeightUnit] = useLocalStorage('heightUnit', HeightUnit.CM);
-  const [height, setHeight] = useLocalStorage('height', null);
+  const [height, setHeight] = useLocalStorage<number | null>('height', null);
 
   const contextValue = useMemo(() => ({
     heightUnit,

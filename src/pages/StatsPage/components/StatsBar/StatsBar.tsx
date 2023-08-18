@@ -33,7 +33,7 @@ function RateStatsWidget({ type, startDate }: { type: string, startDate: Date })
   const lastWeightRecord = weightRecords[weightRecords.length - 1];
   const lastWeightDate = new Date(lastWeightRecord.date);
   const lastWeight = lastWeightRecord.weightKgs;
-  const targetWeightDelta = weightTargetKgs - lastWeight;
+  const targetWeightDelta = weightTargetKgs && weightTargetKgs - lastWeight;
 
   const startWeight = getInterpolatedWeight(startDate);
 
@@ -57,7 +57,7 @@ function RateStatsWidget({ type, startDate }: { type: string, startDate: Date })
 
     currentRate = <>{icon} {formattedWeight} per week</>;
 
-    if (kgPerDay !== 0 && Math.sign(kgPerDay) === Math.sign(targetWeightDelta)) {
+    if (targetWeightDelta && kgPerDay !== 0 && Math.sign(kgPerDay) === Math.sign(targetWeightDelta)) {
       daysUntilTarget = Math.round(targetWeightDelta / kgPerDay);
     }
   }

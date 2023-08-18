@@ -20,7 +20,7 @@ interface WeightContextInterface {
   getInterpolatedWeight: (date: Date) => number | null;
   addWeight: (weightRecort: WeightRecord) => void;
   deleteWeight: (date: string) => void;
-  weightTargetKgs: number;
+  weightTargetKgs: number | null;
   setWeightTargetKgs: (weightTarget: number) => void;
 }
 
@@ -35,9 +35,9 @@ interface Props {
 }
 
 export function WeightProvider({ children }: Props) {
-  const [weightRecords, setWeightRecords] = useLocalStorage('weightRecords', []);
+  const [weightRecords, setWeightRecords] = useLocalStorage<WeightRecord[]>('weightRecords', []);
   const [weightUnit, setWeightUnit] = useLocalStorage('weightUnit', WeightUnit.LBS);
-  const [weightTargetKgs, setWeightTargetKgs] = useLocalStorage('weightTargetKgs', { value: 154, unit: WeightUnit.LBS });
+  const [weightTargetKgs, setWeightTargetKgs] = useLocalStorage<number | null>('weightTargetKgs', null);
 
   const compareWeightRecords = (a: WeightRecord, b: WeightRecord): number => a.date.localeCompare(b.date);
 
