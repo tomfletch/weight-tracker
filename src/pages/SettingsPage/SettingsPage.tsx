@@ -48,7 +48,7 @@ function SettingsPage() {
       <div className="card">
         <h2>Settings</h2>
         <div className={styles.field}>
-          <label htmlFor="weight-units">Weight Units:</label>
+          <label htmlFor="weight-units">Weight Units</label>
           <select id="weight-units" value={weightUnit} onChange={(e) => onWeightUnitChange(e.target.value)}>
             {weightUnitOptions.map((option) => (
               <option key={option.key} value={option.key}>{option.name}</option>
@@ -56,11 +56,11 @@ function SettingsPage() {
           </select>
         </div>
         <div className={styles.field}>
-          <label htmlFor="target-weight">Target Weight:</label>
+          <label htmlFor="target-weight">Target Weight</label>
           <WeightInput id="target-weight" weight={weightTargetKgs} onChange={onTargetWeightChange} />
         </div>
         <div className={styles.field}>
-          <label htmlFor="height-units">Height Units:</label>
+          <label htmlFor="height-units">Height Units</label>
           <select id="height-units" value={heightUnit} onChange={(e) => onHeightUnitChange(e.target.value)}>
             {heightUnitOptions.map((option) => (
               <option key={option.key} value={option.key}>{option.name}</option>
@@ -68,11 +68,11 @@ function SettingsPage() {
           </select>
         </div>
         <div className={styles.field}>
-          <label htmlFor="height">Height:</label>
+          <label htmlFor="height">Height</label>
           <HeightInput id="height" height={height} onChange={setHeight} />
         </div>
         <div className={styles.field}>
-          <label>Theme Colour:</label>
+          <label>Theme Colour</label>
           <ColourSelect value={accentColour} onChange={setAccentColour} />
         </div>
       </div>
