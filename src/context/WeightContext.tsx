@@ -1,4 +1,4 @@
-import React, { createContext, useMemo } from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { daysBetween } from '../utils/dates';
 
@@ -24,7 +24,11 @@ interface WeightContextInterface {
   setWeightTargetKgs: (weightTarget: number) => void;
 }
 
-const WeightContext = createContext<WeightContextInterface>({} as WeightContextInterface);
+const WeightContext = createContext<WeightContextInterface | null>(null);
+
+export function useWeightContext() {
+  return useContext(WeightContext)!;
+}
 
 interface Props {
   children: React.ReactNode

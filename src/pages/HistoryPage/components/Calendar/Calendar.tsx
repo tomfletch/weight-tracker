@@ -1,8 +1,8 @@
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useContext, useState } from 'react';
-import SettingsContext from '../../../../context/SettingsContext';
-import WeightContext from '../../../../context/WeightContext';
+import { useState } from 'react';
+import { useSettingsContext } from '../../../../context/SettingsContext';
+import { useWeightContext } from '../../../../context/WeightContext';
 import { getFirstOfMonth, MONTH_NAMES, toISODate } from '../../../../utils/dates';
 import styles from './Calendar.module.css';
 
@@ -10,8 +10,8 @@ function Calendar() {
   const today = new Date();
   const [currentMonth, setCurrentMonth] = useState(() => getFirstOfMonth(today));
 
-  const { weightRecords } = useContext(WeightContext);
-  const { accentColour } = useContext(SettingsContext);
+  const { weightRecords } = useWeightContext();
+  const { accentColour } = useSettingsContext();
 
   const nextMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1);
 

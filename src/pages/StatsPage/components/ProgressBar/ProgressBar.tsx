@@ -1,13 +1,12 @@
-import { useContext } from 'react';
-import SettingsContext from '../../../../context/SettingsContext';
-import WeightContext from '../../../../context/WeightContext';
+import { useSettingsContext } from '../../../../context/SettingsContext';
+import { useWeightContext } from '../../../../context/WeightContext';
 import { formatWeight } from '../../../../utils/weights';
 import styles from './ProgressBar.module.css';
 
 
 function ProgressBar() {
-  const { weightRecords, weightUnit, weightTargetKgs } = useContext(WeightContext);
-  const { accentColour } = useContext(SettingsContext);
+  const { weightRecords, weightUnit, weightTargetKgs } = useWeightContext();
+  const { accentColour } = useSettingsContext();
 
   const startWeight = weightRecords[0].weightKgs;
   const targetWeight = weightTargetKgs;

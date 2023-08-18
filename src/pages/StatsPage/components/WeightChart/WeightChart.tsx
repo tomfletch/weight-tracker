@@ -1,15 +1,15 @@
 import { Line } from 'react-chartjs-2';
 import { Chart, TooltipItem } from 'chart.js';
 import 'chartjs-adapter-date-fns';
-import { useContext, useState } from 'react';
-import WeightContext, { WeightUnit } from '../../../../context/WeightContext';
+import { useState } from 'react';
+import { WeightUnit, useWeightContext } from '../../../../context/WeightContext';
 import {
   convertKgToLb,
   formatKg,
   formatLb,
   formatLbAsStLb,
 } from '../../../../utils/weights';
-import SettingsContext from '../../../../context/SettingsContext';
+import { useSettingsContext } from '../../../../context/SettingsContext';
 import { formatDate, toISODate } from '../../../../utils/dates';
 import { createTooltip } from '../../../../utils/chartjs';
 import styles from './WeightChart.module.css';
@@ -34,8 +34,8 @@ function insertDate(newDate: string, dates: string[]) {
 }
 
 function WeightChart() {
-  const { weightRecords, weightTargetKgs, weightUnit } = useContext(WeightContext);
-  const { accentColour } = useContext(SettingsContext);
+  const { weightRecords, weightTargetKgs, weightUnit } = useWeightContext();
+  const { accentColour } = useSettingsContext();
   const [period, setPeriod] = useState<typeof PERIODS[0]>(PERIODS[0]);
 
   if (weightRecords.length === 0) {

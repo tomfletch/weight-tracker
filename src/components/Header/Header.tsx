@@ -1,13 +1,13 @@
 import { faCalendarDays, faChartLine, faGear } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CSSProperties, useContext } from 'react';
+import { CSSProperties } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import SettingsContext from '../../context/SettingsContext';
+import { useSettingsContext } from '../../context/SettingsContext';
 import styles from './Header.module.css';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 
 function Header() {
-  const { accentColour } = useContext(SettingsContext);
+  const { accentColour } = useSettingsContext();
 
   const isActiveClass = ({ isActive }: { isActive: boolean}): string | undefined => (
     (isActive) ? styles.active : undefined

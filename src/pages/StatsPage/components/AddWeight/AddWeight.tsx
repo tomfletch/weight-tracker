@@ -1,8 +1,8 @@
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useContext, useState } from 'react';
-import SettingsContext from '../../../../context/SettingsContext';
-import WeightContext, { WeightRecord } from '../../../../context/WeightContext';
+import React, { useState } from 'react';
+import { useSettingsContext } from '../../../../context/SettingsContext';
+import { WeightRecord, useWeightContext } from '../../../../context/WeightContext';
 import WeightInput from '../../../../components/WeightInput/WeightInput';
 import styles from './AddWeight.module.css';
 import { toISODate } from '../../../../utils/dates';
@@ -14,8 +14,8 @@ function AddWeight() {
   const [date, setDate] = useState(todayStr);
   const [weight, setWeight] = useState<number | null>(null);
 
-  const { addWeight } = useContext(WeightContext);
-  const { accentColour } = useContext(SettingsContext);
+  const { addWeight } = useWeightContext();
+  const { accentColour } = useSettingsContext();
 
   const onWeightSubmit = (e: React.FormEvent) => {
     e.preventDefault();

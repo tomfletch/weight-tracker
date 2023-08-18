@@ -1,4 +1,4 @@
-import React, { createContext, useMemo } from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 interface SettingsContextInterface {
@@ -6,7 +6,11 @@ interface SettingsContextInterface {
   setAccentColour: (accentColour: string) => void;
 }
 
-const SettingsContext = createContext<SettingsContextInterface>({} as SettingsContextInterface);
+const SettingsContext = createContext<SettingsContextInterface | null>(null);
+
+export function useSettingsContext() {
+  return useContext(SettingsContext)!;
+}
 
 interface Props {
   children: React.ReactNode

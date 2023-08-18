@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import HeightContext, { HeightUnit } from '../../context/HeightContext';
+import React, { useEffect, useState } from 'react';
+import { HeightUnit, useHeightContext } from '../../context/HeightContext';
 import {
   convertCmToM, convertFtInToM, convertInToM, convertMToCm, convertMToFtIn, convertMToIn,
 } from '../../utils/height';
@@ -140,7 +140,7 @@ function HeightInputFtIn({ id, height, onChange }: Props) {
 }
 
 function WeightInput({ id, height, onChange }: Props) {
-  const { heightUnit } = useContext(HeightContext);
+  const { heightUnit } = useHeightContext();
 
   let InputComponent = HeightInputCm;
 

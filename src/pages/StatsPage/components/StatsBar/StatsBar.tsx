@@ -1,12 +1,11 @@
-import { useContext } from 'react';
 import { subDays } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLongArrowDown, faLongArrowUp } from '@fortawesome/free-solid-svg-icons';
-import WeightContext, { WeightRecord } from '../../../../context/WeightContext';
+import { WeightRecord, useWeightContext } from '../../../../context/WeightContext';
 import { daysBetween } from '../../../../utils/dates';
 import { formatWeight } from '../../../../utils/weights';
 import styles from './StatsBar.module.css';
-import HeightContext from '../../../../context/HeightContext';
+import { useHeightContext } from '../../../../context/HeightContext';
 
 const BMI_NORMAL_MIN = 18.5;
 const BMI_NORMAL_MAX = 25;
@@ -29,7 +28,7 @@ function RateStatsWidget({ type, startDate }: { type: string, startDate: Date })
     getInterpolatedWeight,
     weightUnit,
     weightTargetKgs,
-  } = useContext(WeightContext);
+  } = useWeightContext();
 
   const lastWeightRecord = weightRecords[weightRecords.length - 1];
   const lastWeightDate = new Date(lastWeightRecord.date);
@@ -75,8 +74,8 @@ function RateStatsWidget({ type, startDate }: { type: string, startDate: Date })
 }
 
 function BMIWidget() {
-  const { weightRecords } = useContext(WeightContext);
-  const { height } = useContext(HeightContext);
+  const { weightRecords } = useWeightContext();
+  const { height } = useHeightContext();
 
   let content;
 
@@ -132,7 +131,7 @@ function BMIWidget() {
 }
 
 function StatsBar() {
-  const { weightRecords } = useContext(WeightContext);
+  const { weightRecords } = useWeightContext();
 
   const firstRecordDate = new Date(weightRecords[0].date);
   const lastRecordDate = new Date(weightRecords[weightRecords.length - 1].date);

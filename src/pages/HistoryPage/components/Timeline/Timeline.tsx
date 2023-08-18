@@ -1,6 +1,5 @@
-import { useContext } from 'react';
-import SettingsContext from '../../../../context/SettingsContext';
-import WeightContext, { WeightRecord } from '../../../../context/WeightContext';
+import { useSettingsContext } from '../../../../context/SettingsContext';
+import { useWeightContext, WeightRecord } from '../../../../context/WeightContext';
 import {
   formatDayth,
   getFirstOfMonth,
@@ -11,8 +10,8 @@ import { formatWeight } from '../../../../utils/weights';
 import styles from './Timeline.module.css';
 
 function Timeline() {
-  const { weightRecords, weightUnit, deleteWeight } = useContext(WeightContext);
-  const { accentColour } = useContext(SettingsContext);
+  const { weightRecords, weightUnit, deleteWeight } = useWeightContext();
+  const { accentColour } = useSettingsContext();
 
   const reverseWeightRecords = [...weightRecords].reverse();
 

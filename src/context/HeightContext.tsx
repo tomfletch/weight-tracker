@@ -1,4 +1,4 @@
-import React, { createContext, useMemo } from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 export enum HeightUnit {
@@ -14,7 +14,11 @@ interface HeightContextInterface {
   setHeight: (height: number | null) => void;
 }
 
-const HeightContext = createContext<HeightContextInterface>({} as HeightContextInterface);
+const HeightContext = createContext<HeightContextInterface | null>(null);
+
+export function useHeightContext() {
+  return useContext(HeightContext)!;
+}
 
 interface Props {
   children: React.ReactNode

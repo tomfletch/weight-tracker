@@ -1,9 +1,9 @@
-import { useCallback, useContext } from 'react';
+import { useCallback } from 'react';
 import HeightInput from '../../components/HeightInput/HeightInput';
 import WeightInput from '../../components/WeightInput/WeightInput';
-import HeightContext, { HeightUnit } from '../../context/HeightContext';
-import SettingsContext from '../../context/SettingsContext';
-import WeightContext, { WeightUnit } from '../../context/WeightContext';
+import { HeightUnit, useHeightContext } from '../../context/HeightContext';
+import { useSettingsContext } from '../../context/SettingsContext';
+import { WeightUnit, useWeightContext } from '../../context/WeightContext';
 import ColourSelect from './ColourSelect/ColourSelect';
 import styles from './SettingsPage.module.css';
 
@@ -22,11 +22,11 @@ const heightUnitOptions = [
 function SettingsPage() {
   const {
     weightUnit, setWeightUnit, weightTargetKgs, setWeightTargetKgs,
-  } = useContext(WeightContext);
-  const { accentColour, setAccentColour } = useContext(SettingsContext);
+  } = useWeightContext();
+  const { accentColour, setAccentColour } = useSettingsContext();
   const {
     heightUnit, setHeightUnit, height, setHeight,
-  } = useContext(HeightContext);
+  } = useHeightContext();
 
   const onTargetWeightChange = useCallback((weight: number | null) => {
     if (!weight) return;

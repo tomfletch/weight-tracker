@@ -1,15 +1,14 @@
 import { Line } from 'react-chartjs-2';
 import { ScriptableScaleContext, TooltipItem } from 'chart.js';
 import 'chartjs-adapter-date-fns';
-import { useContext } from 'react';
-import WeightContext, { WeightUnit } from '../../../../context/WeightContext';
+import { WeightUnit, useWeightContext } from '../../../../context/WeightContext';
 import {
   convertKgToLb,
   formatKg,
   formatLb,
   formatLbAsStLb,
 } from '../../../../utils/weights';
-import SettingsContext from '../../../../context/SettingsContext';
+import { useSettingsContext } from '../../../../context/SettingsContext';
 import { toISODate } from '../../../../utils/dates';
 import { createTooltip } from '../../../../utils/chartjs';
 
@@ -22,8 +21,8 @@ function MovingAverageDeltaChart() {
     getInterpolatedWeight,
     weightTargetKgs,
     weightUnit,
-  } = useContext(WeightContext);
-  const { accentColour } = useContext(SettingsContext);
+  } = useWeightContext();
+  const { accentColour } = useSettingsContext();
   const today = toISODate(new Date());
 
   const getAverageWeight = (date: Date): number | null => {

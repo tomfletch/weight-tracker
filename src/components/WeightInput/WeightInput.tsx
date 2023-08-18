@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import WeightContext, { WeightUnit } from '../../context/WeightContext';
+import React, { useEffect, useState } from 'react';
+import { WeightUnit, useWeightContext } from '../../context/WeightContext';
 import { toFixedNoZero } from '../../utils/numbers';
 import {
   convertKgToLb, convertKgToStLb, convertLbToKg, convertStLbToKg,
@@ -146,7 +146,7 @@ function WeightInputLb({ id, weight, onChange }: Props) {
 }
 
 function WeightInput({ id, weight, onChange }: Props) {
-  const { weightUnit } = useContext(WeightContext);
+  const { weightUnit } = useWeightContext();
 
   let InputComponent = WeightInputKg;
 
