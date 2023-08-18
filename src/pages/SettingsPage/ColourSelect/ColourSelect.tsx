@@ -1,17 +1,16 @@
 import React from 'react';
 import styles from './ColourSelect.module.css';
+import { THEME_COLOURS } from '../../../utils/colours';
 
 interface Props {
   value: string;
   onChange: (value: string) => void;
 }
 
-const colours = ['#00C8FF', '#FF70A9', '#2BC356'];
-
 function ColourSelect({ value, onChange }: Props) {
   return (
     <div className={styles.colourSelect}>
-      {colours.map((colour) => (
+      {THEME_COLOURS.map((colour) => (
         <React.Fragment key={colour}>
           <input
             id={`colour-${colour}`}

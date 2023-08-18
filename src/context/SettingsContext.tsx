@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useMemo } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { THEME_COLOURS } from '../utils/colours';
 
 interface SettingsContextInterface {
   accentColour: string;
@@ -17,7 +18,7 @@ interface Props {
 }
 
 export function SettingsProvider({ children }: Props) {
-  const [accentColour, setAccentColour] = useLocalStorage('accentColour', '#00c8ff');
+  const [accentColour, setAccentColour] = useLocalStorage('accentColour', THEME_COLOURS[0]);
 
   const contextValue = useMemo(() => ({
     accentColour,
