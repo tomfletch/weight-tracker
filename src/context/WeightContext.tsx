@@ -36,7 +36,7 @@ interface Props {
 
 export function WeightProvider({ children }: Props) {
   const [weightRecords, setWeightRecords] = useLocalStorage<WeightRecord[]>('weightRecords', []);
-  const [weightUnit, setWeightUnit] = useLocalStorage('weightUnit', WeightUnit.LBS);
+  const [weightUnit, setWeightUnit] = useLocalStorage('weightUnit', WeightUnit.STONES_LBS);
   const [weightTargetKgs, setWeightTargetKgs] = useLocalStorage<number | null>('weightTargetKgs', null);
 
   const compareWeightRecords = (a: WeightRecord, b: WeightRecord): number => a.date.localeCompare(b.date);
