@@ -1,35 +1,42 @@
-import { Line } from 'react-chartjs-2';
-import { Chart, TooltipItem } from 'chart.js';
+import type { TooltipItem } from 'chart.js';
 import 'chartjs-adapter-date-fns';
-import { WeightUnit, useWeightContext } from '../../../../context/WeightContext';
+import { Line } from 'react-chartjs-2';
+import { useSettingsContext } from '../../../../context/SettingsContext';
+import {
+  useWeightContext,
+  WeightUnit,
+} from '../../../../context/WeightContext';
+import { createTooltip } from '../../../../utils/chartjs';
+import { toISODate } from '../../../../utils/dates';
 import {
   convertKgToLb,
   formatKg,
   formatLb,
   formatLbAsStLb,
 } from '../../../../utils/weights';
-import { useSettingsContext } from '../../../../context/SettingsContext';
-import { formatDate, toISODate } from '../../../../utils/dates';
-import { createTooltip } from '../../../../utils/chartjs';
 
 const MOVING_AVERAGE_SIZE = 7;
 const MOVING_AVERAGE_OFFSET = (MOVING_AVERAGE_SIZE - 1) / 2;
 
 function MovingAverageWeightChart() {
-  const {
-    weightRecords,
-    getInterpolatedWeight,
-    weightTargetKgs,
-    weightUnit,
-  } = useWeightContext();
+  const { weightRecords, getInterpolatedWeight, weightTargetKgs, weightUnit } =
+    useWeightContext();
   const { accentColour } = useSettingsContext();
   const today = toISODate(new Date());
 
   const getAverageWeight = (date: Date): number | null => {
     let sumWeight = 0;
 
-    for (let offset = -MOVING_AVERAGE_OFFSET; offset <= MOVING_AVERAGE_OFFSET; offset += 1) {
-      const offsetDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() + offset);
+    for (
+      let offset = -MOVING_AVERAGE_OFFSET;
+      offset <= MOVING_AVERAGE_OFFSET;
+      offset += 1
+    ) {
+      const offsetDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate() + offset,
+      );
       const weight = getInterpolatedWeight(offsetDate);
       if (weight === null) return null;
       sumWeight += weight;
@@ -37,7 +44,6 @@ function MovingAverageWeightChart() {
 
     return sumWeight / MOVING_AVERAGE_SIZE;
   };
-
 
   if (weightRecords.length === 0) {
     return <div>Not enough data</div>;
@@ -63,10 +69,13 @@ function MovingAverageWeightChart() {
     currentDate.setHours(0, 0, 0, 0);
   }
 
-
   if (weightUnit !== WeightUnit.KGS) {
-    weights = weights.map((weightKg) => weightKg && Math.round(convertKgToLb(weightKg) * 10) / 10);
-    targetWeights = targetWeights.map((weightKg) => Math.round(convertKgToLb(weightKg) * 10) / 10);
+    weights = weights.map(
+      (weightKg) => weightKg && Math.round(convertKgToLb(weightKg) * 10) / 10,
+    );
+    targetWeights = targetWeights.map(
+      (weightKg) => Math.round(convertKgToLb(weightKg) * 10) / 10,
+    );
   }
 
   const chartData = {
@@ -160,10 +169,7 @@ function MovingAverageWeightChart() {
 
   return (
     <div className="card">
-      <Line
-        data={chartData}
-        options={chartOptions}
-      />
+      <Line data={chartData} options={chartOptions} />
     </div>
   );
 }

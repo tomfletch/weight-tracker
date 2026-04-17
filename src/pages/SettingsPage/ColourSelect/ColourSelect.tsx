@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './ColourSelect.module.css';
 import { THEME_COLOURS } from '../../../utils/colours';
+import styles from './ColourSelect.module.css';
 
 interface Props {
   value: string;
@@ -24,6 +24,7 @@ function ColourSelect({ value, onChange }: Props) {
             htmlFor={`colour-${colour}`}
             className={styles.colourLabel}
             style={{ backgroundColor: colour }}
+            aria-label={`Color ${colour}`}
           />
         </React.Fragment>
       ))}

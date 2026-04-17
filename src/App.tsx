@@ -9,7 +9,6 @@ import { HeightProvider } from './context/HeightContext';
 import './utils/chartjs';
 import './index.css';
 
-
 function App() {
   return (
     <SettingsProvider>

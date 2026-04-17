@@ -1,7 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 import { HeightUnit, useHeightContext } from '../../context/HeightContext';
 import {
-  convertCmToM, convertFtInToM, convertInToM, convertMToCm, convertMToFtIn, convertMToIn,
+  convertCmToM,
+  convertFtInToM,
+  convertInToM,
+  convertMToCm,
+  convertMToFtIn,
+  convertMToIn,
 } from '../../utils/height';
 import { toFixedNoZero } from '../../utils/numbers';
 import styles from './HeightInput.module.css';
@@ -44,7 +50,15 @@ function HeightInputCm({ id, height, onChange }: Props) {
 
   return (
     <div className={styles.heightInput}>
-      <input id={id} type="text" inputMode="decimal" value={heightStr} maxLength={5} autoComplete="off" onChange={onCmChange} />
+      <input
+        id={id}
+        type="text"
+        inputMode="decimal"
+        value={heightStr}
+        maxLength={5}
+        autoComplete="off"
+        onChange={onCmChange}
+      />
       <div className={styles.heightUnit}>cm</div>
     </div>
   );
@@ -82,7 +96,15 @@ function HeightInputIn({ id, height, onChange }: Props) {
 
   return (
     <div className={styles.heightInput}>
-      <input id={id} type="text" inputMode="decimal" value={heightStr} maxLength={5} autoComplete="off" onChange={onInChange} />
+      <input
+        id={id}
+        type="text"
+        inputMode="decimal"
+        value={heightStr}
+        maxLength={5}
+        autoComplete="off"
+        onChange={onInChange}
+      />
       <div className={styles.heightUnit}>in</div>
     </div>
   );
@@ -131,9 +153,24 @@ function HeightInputFtIn({ id, height, onChange }: Props) {
 
   return (
     <div className={styles.heightInput}>
-      <input id={id} type="text" inputMode="numeric" value={ftStr} maxLength={2} autoComplete="off" onChange={onFtChange} />
+      <input
+        id={id}
+        type="text"
+        inputMode="numeric"
+        value={ftStr}
+        maxLength={2}
+        autoComplete="off"
+        onChange={onFtChange}
+      />
       <div className={styles.heightUnit}>ft</div>
-      <input type="text" inputMode="decimal" value={inStr} maxLength={4} autoComplete="off" onChange={onInChange} />
+      <input
+        type="text"
+        inputMode="decimal"
+        value={inStr}
+        maxLength={4}
+        autoComplete="off"
+        onChange={onInChange}
+      />
       <div className={styles.heightUnit}>in</div>
     </div>
   );

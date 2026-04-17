@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useMemo } from 'react';
+import type React from 'react';
+import { createContext, useContext } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { THEME_COLOURS } from '../utils/colours';
 
@@ -10,26 +11,34 @@ interface SettingsContextInterface {
 const SettingsContext = createContext<SettingsContextInterface | null>(null);
 
 export function useSettingsContext() {
-  return useContext(SettingsContext)!;
+  const context = useContext(SettingsContext);
+
+  if (!context) {
+    throw new Error(
+      'useSettingsContext must be used within a SettingsProvider',
+    );
+  }
+
+  return context;
 }
 
 interface Props {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export function SettingsProvider({ children }: Props) {
-  const [accentColour, setAccentColour] = useLocalStorage('accentColour', THEME_COLOURS[0]);
-
-  const contextValue = useMemo(() => ({
-    accentColour,
-    setAccentColour,
-  }), [
-    accentColour,
-    setAccentColour,
-  ]);
+  const [accentColour, setAccentColour] = useLocalStorage(
+    'accentColour',
+    THEME_COLOURS[0],
+  );
 
   return (
-    <SettingsContext.Provider value={contextValue}>
+    <SettingsContext.Provider
+      value={{
+        accentColour,
+        setAccentColour,
+      }}
+    >
       <div style={{ '--accent-colour': accentColour } as React.CSSProperties}>
         {children}
       </div>

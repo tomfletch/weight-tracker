@@ -1,9 +1,14 @@
-* { margin: 0; padding: 0; }
+* {
+  margin: 0;
+  padding: 0;
+}
 
-html { font-size: 62.5%; }
+html {
+  font-size: 62.5%;
+}
 
 body {
-  background-color: #EEE;
+  background-color: #eee;
   color: #222;
   font-size: 1.6rem;
   font-family: Arial, Helvetica, sans-serif;
@@ -18,7 +23,7 @@ body {
 
 .card {
   background-color: white;
-  border: 1px solid #E7E7E7;
+  border: 1px solid #e7e7e7;
   padding: 2rem;
   margin-bottom: 2rem;
 }
@@ -36,7 +41,7 @@ body {
   margin-left: -60px;
   margin-top: -90px;
   border-radius: 3px;
-  border: 1px solid #E7E7E7;
+  border: 1px solid #e7e7e7;
   box-shadow: 0 8px 14px rgba(0, 0, 0, 0.1);
 }
 
@@ -48,7 +53,7 @@ body {
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
   border-top: 10px solid white;
-  content: '';
+  content: "";
 }
 
 #chartjsTooltip .date {

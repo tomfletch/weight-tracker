@@ -1,4 +1,7 @@
-import { faLongArrowDown, faLongArrowUp } from '@fortawesome/free-solid-svg-icons';
+import {
+  faLongArrowDown,
+  faLongArrowUp,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSettingsContext } from '../../../../context/SettingsContext';
 import { useWeightContext } from '../../../../context/WeightContext';
@@ -9,7 +12,9 @@ function StatsHeader() {
   const { weightRecords, weightUnit, weightTargetKgs } = useWeightContext();
   const { accentColour } = useSettingsContext();
 
-  const weightTargetStr = weightTargetKgs ? formatWeight(weightTargetKgs, weightUnit) : 'Not set';
+  const weightTargetStr = weightTargetKgs
+    ? formatWeight(weightTargetKgs, weightUnit)
+    : 'Not set';
   let lastWeightStr = 'N/A';
   let weightChange = 0;
   let weightChangeStr = 'N/A';
@@ -26,7 +31,10 @@ function StatsHeader() {
   return (
     <>
       <div className={styles.ellipse} />
-      <div className={styles.currentWeightContainer} style={{ backgroundColor: accentColour }}>
+      <div
+        className={styles.currentWeightContainer}
+        style={{ backgroundColor: accentColour }}
+      >
         <span className={styles.currentWeight}>{lastWeightStr}</span>
         <span className={styles.currentWeightLabel}>Current Weight</span>
       </div>
@@ -40,7 +48,10 @@ function StatsHeader() {
           <span className={styles.value}>
             {weightChangeStr}
             {weightChange !== 0 && (
-              <FontAwesomeIcon icon={weightChange > 0 ? faLongArrowUp : faLongArrowDown} className={styles.weightChangeIcon} />
+              <FontAwesomeIcon
+                icon={weightChange > 0 ? faLongArrowUp : faLongArrowDown}
+                className={styles.weightChangeIcon}
+              />
             )}
           </span>
         </div>

@@ -1,7 +1,6 @@
-
 interface FtIn {
-  ft: number,
-  inch: number
+  ft: number;
+  inch: number;
 }
 
 const IN_PER_M = 39.3701;
@@ -30,7 +29,7 @@ export function convertInToFtIn(totalIn: number): FtIn {
 }
 
 export function convertFtInToM({ ft, inch }: FtIn): number {
-  const totalIn = (ft * IN_PER_F) + inch;
+  const totalIn = ft * IN_PER_F + inch;
   return convertInToM(totalIn);
 }
 

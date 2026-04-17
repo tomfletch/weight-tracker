@@ -4,8 +4,8 @@ const LB_PER_ST = 14;
 const LB_PER_KG = 2.20462;
 
 interface StLb {
-  st: number,
-  lb: number
+  st: number;
+  lb: number;
 }
 
 export function convertLbToKg(lb: number): number {
@@ -27,7 +27,7 @@ export function convertStLbToKg(stLb: StLb): number {
 
 export function convertLbToStLb(totalLb: number): StLb {
   const st = Math.floor(totalLb / LB_PER_ST);
-  const lb = (totalLb % LB_PER_ST);
+  const lb = totalLb % LB_PER_ST;
   return { st, lb };
 }
 
@@ -35,7 +35,6 @@ export function convertKgToStLb(kgs: number): StLb {
   const lb = convertKgToLb(kgs);
   return convertLbToStLb(lb);
 }
-
 
 export function formatKg(kgs: number, precision: number = 1): string {
   return `${kgs.toFixed(precision)}kg`;

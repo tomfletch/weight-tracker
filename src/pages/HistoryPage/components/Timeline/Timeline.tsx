@@ -1,5 +1,8 @@
 import { useSettingsContext } from '../../../../context/SettingsContext';
-import { useWeightContext, WeightRecord } from '../../../../context/WeightContext';
+import {
+  useWeightContext,
+  type WeightRecord,
+} from '../../../../context/WeightContext';
 import {
   formatDayth,
   getFirstOfMonth,
@@ -16,7 +19,9 @@ function Timeline() {
   const reverseWeightRecords = [...weightRecords].reverse();
 
   const firstMonth = getFirstOfMonth(new Date(weightRecords[0].date));
-  const lastMonth = getFirstOfMonth(new Date(weightRecords[weightRecords.length - 1].date));
+  const lastMonth = getFirstOfMonth(
+    new Date(weightRecords[weightRecords.length - 1].date),
+  );
 
   let currentMonth = lastMonth;
 
@@ -24,7 +29,10 @@ function Timeline() {
 
   const filterCurrentMonth = (weightRecord: WeightRecord): boolean => {
     const weightRecordDate = new Date(weightRecord.date);
-    return weightRecordDate.getFullYear() === currentMonth.getFullYear() && weightRecordDate.getMonth() === currentMonth.getMonth();
+    return (
+      weightRecordDate.getFullYear() === currentMonth.getFullYear() &&
+      weightRecordDate.getMonth() === currentMonth.getMonth()
+    );
   };
 
   while (currentMonth >= firstMonth) {
@@ -35,21 +43,29 @@ function Timeline() {
 
     const month = (
       <div key={toISODate(currentMonth)}>
-        <div className={styles.month}>{monthStr} {year}</div>
+        <div className={styles.month}>
+          {monthStr} {year}
+        </div>
         {currentMonthRecords.map((weightRecord) => (
           <div key={weightRecord.date} className={styles.weightRecord}>
             <div className={styles.date}>{formatDayth(weightRecord.date)}</div>
-            <div className={styles.weight}>{formatWeight(weightRecord.weightKgs, weightUnit)}</div>
+            <div className={styles.weight}>
+              {formatWeight(weightRecord.weightKgs, weightUnit)}
+            </div>
             <div className={styles.options}>
               <button
                 className={styles.deleteBtn}
                 type="button"
                 onClick={() => deleteWeight(weightRecord.date)}
                 style={{ color: accentColour }}
-              >&times;
+              >
+                &times;
               </button>
             </div>
-            <div className={styles.dataDot} style={{ backgroundColor: accentColour }} />
+            <div
+              className={styles.dataDot}
+              style={{ backgroundColor: accentColour }}
+            />
           </div>
         ))}
       </div>
@@ -57,7 +73,11 @@ function Timeline() {
 
     months.push(month);
 
-    currentMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1);
+    currentMonth = new Date(
+      currentMonth.getFullYear(),
+      currentMonth.getMonth() - 1,
+      1,
+    );
   }
 
   return (

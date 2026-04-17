@@ -1,31 +1,49 @@
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronLeft,
+  faChevronRight,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { useSettingsContext } from '../../../../context/SettingsContext';
 import { useWeightContext } from '../../../../context/WeightContext';
-import { getFirstOfMonth, MONTH_NAMES, toISODate } from '../../../../utils/dates';
+import {
+  getFirstOfMonth,
+  MONTH_NAMES,
+  toISODate,
+} from '../../../../utils/dates';
 import styles from './Calendar.module.css';
 
 function Calendar() {
   const today = new Date();
-  const [currentMonth, setCurrentMonth] = useState(() => getFirstOfMonth(today));
+  const [currentMonth, setCurrentMonth] = useState(() =>
+    getFirstOfMonth(today),
+  );
 
   const { weightRecords } = useWeightContext();
   const { accentColour } = useSettingsContext();
 
-  const nextMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1);
+  const nextMonth = new Date(
+    currentMonth.getFullYear(),
+    currentMonth.getMonth() + 1,
+    1,
+  );
 
   const month = MONTH_NAMES[currentMonth.getMonth()];
   const year = currentMonth.getFullYear();
   const dayOfMonth = (currentMonth.getDay() - 1) % 7;
 
-
   const onPrevMonth = () => {
-    setCurrentMonth((prevMonth) => new Date(prevMonth.getFullYear(), prevMonth.getMonth() - 1, 1));
+    setCurrentMonth(
+      (prevMonth) =>
+        new Date(prevMonth.getFullYear(), prevMonth.getMonth() - 1, 1),
+    );
   };
 
   const onNextMonth = () => {
-    setCurrentMonth((prevMonth) => new Date(prevMonth.getFullYear(), prevMonth.getMonth() + 1, 1));
+    setCurrentMonth(
+      (prevMonth) =>
+        new Date(prevMonth.getFullYear(), prevMonth.getMonth() + 1, 1),
+    );
   };
 
   const dateHasWeightRecord = (date: Date): boolean => {
@@ -34,7 +52,11 @@ function Calendar() {
     return weightRecord !== undefined;
   };
 
-  const calendarDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), currentMonth.getDate() - dayOfMonth);
+  const calendarDay = new Date(
+    currentMonth.getFullYear(),
+    currentMonth.getMonth(),
+    currentMonth.getDate() - dayOfMonth,
+  );
 
   const calendarRows = [];
 
@@ -42,7 +64,8 @@ function Calendar() {
     const calendarRow = [];
 
     for (let i = 0; i < 7; i++) {
-      const isDayInCurrentMonth = calendarDay.getMonth() === currentMonth.getMonth();
+      const isDayInCurrentMonth =
+        calendarDay.getMonth() === currentMonth.getMonth();
 
       calendarRow.push(
         <td
@@ -54,7 +77,11 @@ function Calendar() {
               {calendarDay.getDate()}
               <div
                 className={styles.dataDot}
-                style={{ backgroundColor: dateHasWeightRecord(calendarDay) ? accentColour : 'transparent' }}
+                style={{
+                  backgroundColor: dateHasWeightRecord(calendarDay)
+                    ? accentColour
+                    : 'transparent',
+                }}
               />
             </>
           )}
@@ -69,14 +96,12 @@ function Calendar() {
   return (
     <div className={`card ${styles.calendar}`}>
       <div className={styles.header}>
-        <button
-          type="button"
-          className={styles.arrow}
-          onClick={onPrevMonth}
-        >
+        <button type="button" className={styles.arrow} onClick={onPrevMonth}>
           <FontAwesomeIcon icon={faChevronLeft} />
         </button>
-        <div className={styles.month}>{month} {year}</div>
+        <div className={styles.month}>
+          {month} {year}
+        </div>
         <button
           type="button"
           className={styles.arrow}
@@ -98,9 +123,7 @@ function Calendar() {
             <th>S</th>
           </tr>
         </thead>
-        <tbody>
-          {calendarRows}
-        </tbody>
+        <tbody>{calendarRows}</tbody>
       </table>
     </div>
   );

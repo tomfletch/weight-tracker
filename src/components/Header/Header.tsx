@@ -2,13 +2,13 @@ import {
   faCalendarDays,
   faChartLine,
   faGear,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { CSSProperties } from "react";
-import { Link, NavLink } from "react-router-dom";
-import logo from "../../assets/logo.svg";
-import { useSettingsContext } from "../../context/SettingsContext";
-import styles from "./Header.module.css";
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import type { CSSProperties } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import logo from '../../assets/logo.svg';
+import { useSettingsContext } from '../../context/SettingsContext';
+import styles from './Header.module.css';
 
 function Header() {
   const { accentColour } = useSettingsContext();

@@ -1,35 +1,46 @@
-import { Line } from 'react-chartjs-2';
-import { ScriptableScaleContext, TooltipItem } from 'chart.js';
+import type {
+  ChartOptions,
+  ScriptableScaleContext,
+  TooltipItem,
+} from 'chart.js';
 import 'chartjs-adapter-date-fns';
-import { WeightUnit, useWeightContext } from '../../../../context/WeightContext';
+import { Line } from 'react-chartjs-2';
+import { useSettingsContext } from '../../../../context/SettingsContext';
+import {
+  useWeightContext,
+  WeightUnit,
+} from '../../../../context/WeightContext';
+import { createTooltip } from '../../../../utils/chartjs';
+import { toISODate } from '../../../../utils/dates';
 import {
   convertKgToLb,
   formatKg,
   formatLb,
   formatLbAsStLb,
 } from '../../../../utils/weights';
-import { useSettingsContext } from '../../../../context/SettingsContext';
-import { toISODate } from '../../../../utils/dates';
-import { createTooltip } from '../../../../utils/chartjs';
 
 const MOVING_AVERAGE_SIZE = 7;
 const MOVING_AVERAGE_OFFSET = (MOVING_AVERAGE_SIZE - 1) / 2;
 
 function MovingAverageDeltaChart() {
-  const {
-    weightRecords,
-    getInterpolatedWeight,
-    weightTargetKgs,
-    weightUnit,
-  } = useWeightContext();
+  const { weightRecords, getInterpolatedWeight, weightUnit } =
+    useWeightContext();
   const { accentColour } = useSettingsContext();
   const today = toISODate(new Date());
 
   const getAverageWeight = (date: Date): number | null => {
     let sumWeight = 0;
 
-    for (let offset = -MOVING_AVERAGE_OFFSET; offset <= MOVING_AVERAGE_OFFSET; offset += 1) {
-      const offsetDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() + offset);
+    for (
+      let offset = -MOVING_AVERAGE_OFFSET;
+      offset <= MOVING_AVERAGE_OFFSET;
+      offset += 1
+    ) {
+      const offsetDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate() + offset,
+      );
       const weight = getInterpolatedWeight(offsetDate);
       if (weight === null) return null;
       sumWeight += weight;
@@ -37,7 +48,6 @@ function MovingAverageDeltaChart() {
 
     return sumWeight / MOVING_AVERAGE_SIZE;
   };
-
 
   if (weightRecords.length === 0) {
     return <div>Not enough data</div>;
@@ -70,13 +80,13 @@ function MovingAverageDeltaChart() {
       }
     }
 
-
     weightChanges.push(delta);
   }
 
-
   if (weightUnit !== WeightUnit.KGS) {
-    weightChanges = weightChanges.map((weightKg) => weightKg && Math.round(convertKgToLb(weightKg) * 10) / 10);
+    weightChanges = weightChanges.map(
+      (weightKg) => weightKg && Math.round(convertKgToLb(weightKg) * 10) / 10,
+    );
   }
 
   const chartData = {
@@ -93,7 +103,7 @@ function MovingAverageDeltaChart() {
     ],
   };
 
-  const chartOptions = {
+  const chartOptions: ChartOptions<'line'> = {
     plugins: {
       legend: {
         display: false,
@@ -139,7 +149,8 @@ function MovingAverageDeltaChart() {
       y: {
         beginAtZero: true,
         grid: {
-          color: (line: ScriptableScaleContext) => (line.tick.value === 0 ? 'rgba(0, 0, 0, 0.4)' : 'rgba(0, 0, 0, 0.1)'),
+          color: (line: ScriptableScaleContext) =>
+            line.tick.value === 0 ? 'rgba(0, 0, 0, 0.4)' : 'rgba(0, 0, 0, 0.1)',
         },
         ticks: {
           callback: (value: number | string): string => {
@@ -164,10 +175,7 @@ function MovingAverageDeltaChart() {
 
   return (
     <div className="card">
-      <Line
-        data={chartData}
-        options={chartOptions}
-      />
+      <Line data={chartData} options={chartOptions} />
     </div>
   );
 }

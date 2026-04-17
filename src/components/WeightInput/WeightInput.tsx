@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 import { WeightUnit, useWeightContext } from '../../context/WeightContext';
 import { toFixedNoZero } from '../../utils/numbers';
 import {
-  convertKgToLb, convertKgToStLb, convertLbToKg, convertStLbToKg,
+  convertKgToLb,
+  convertKgToStLb,
+  convertLbToKg,
+  convertStLbToKg,
 } from '../../utils/weights';
 import styles from './WeightInput.module.css';
 
@@ -43,7 +47,16 @@ function WeightInputKg({ id, weight, onChange }: Props) {
   return (
     <div className={styles.weightInput}>
       <div className={styles.weightField}>
-        <input id={id} type="text" inputMode="decimal" className={styles.weightInputKg} value={kgStr} maxLength={5} autoComplete="off" onChange={onKgChange} />
+        <input
+          id={id}
+          type="text"
+          inputMode="decimal"
+          className={styles.weightInputKg}
+          value={kgStr}
+          maxLength={5}
+          autoComplete="off"
+          onChange={onKgChange}
+        />
         <div className={styles.weightUnit}>kg</div>
       </div>
     </div>
@@ -94,11 +107,26 @@ function WeightInputStLb({ id, weight, onChange }: Props) {
   return (
     <div className={styles.weightInput}>
       <div className={styles.weightField}>
-        <input id={id} type="text" inputMode="numeric" value={stStr} maxLength={2} autoComplete="off" onChange={onStoneChange} />
+        <input
+          id={id}
+          type="text"
+          inputMode="numeric"
+          value={stStr}
+          maxLength={2}
+          autoComplete="off"
+          onChange={onStoneChange}
+        />
         <div className={styles.weightUnit}>st</div>
       </div>
       <div className={styles.weightField}>
-        <input type="text" inputMode="decimal" value={lbStr} maxLength={4} autoComplete="off" onChange={onLbsChange} />
+        <input
+          type="text"
+          inputMode="decimal"
+          value={lbStr}
+          maxLength={4}
+          autoComplete="off"
+          onChange={onLbsChange}
+        />
         <div className={styles.weightUnit}>lb</div>
       </div>
     </div>
@@ -138,7 +166,16 @@ function WeightInputLb({ id, weight, onChange }: Props) {
   return (
     <div className={styles.weightInput}>
       <div className={styles.weightField}>
-        <input id={id} type="text" inputMode="decimal" className={styles.weightInputLb} value={lbStr} maxLength={5} autoComplete="off" onChange={onLbChange} />
+        <input
+          id={id}
+          type="text"
+          inputMode="decimal"
+          className={styles.weightInputLb}
+          value={lbStr}
+          maxLength={5}
+          autoComplete="off"
+          onChange={onLbChange}
+        />
         <div className={styles.weightUnit}>lb</div>
       </div>
     </div>

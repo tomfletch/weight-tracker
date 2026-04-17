@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useMemo } from 'react';
+import type React from 'react';
+import { createContext, useContext } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 export enum HeightUnit {
@@ -17,35 +18,38 @@ interface HeightContextInterface {
 const HeightContext = createContext<HeightContextInterface | null>(null);
 
 export function useHeightContext() {
-  return useContext(HeightContext)!;
+  const context = useContext(HeightContext);
+
+  if (!context) {
+    throw new Error('useHeightContext must be used within a HeightProvider');
+  }
+
+  return context;
 }
 
 interface Props {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export function HeightProvider({ children }: Props) {
-  const [heightUnit, setHeightUnit] = useLocalStorage('heightUnit', HeightUnit.CM);
+  const [heightUnit, setHeightUnit] = useLocalStorage(
+    'heightUnit',
+    HeightUnit.CM,
+  );
   const [height, setHeight] = useLocalStorage<number | null>('height', null);
 
-  const contextValue = useMemo(() => ({
-    heightUnit,
-    setHeightUnit,
-    height,
-    setHeight,
-  }), [
-    heightUnit,
-    setHeightUnit,
-    height,
-    setHeight,
-  ]);
-
   return (
-    <HeightContext.Provider value={contextValue}>
+    <HeightContext.Provider
+      value={{
+        heightUnit,
+        setHeightUnit,
+        height,
+        setHeight,
+      }}
+    >
       {children}
     </HeightContext.Provider>
   );
 }
-
 
 export default HeightContext;

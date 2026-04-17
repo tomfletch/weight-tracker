@@ -15,8 +15,8 @@
 .progressBar {
   flex-grow: 1;
   margin: 0 1rem;
-  background-color: #FAFAFA;
-  border: 1px solid #DDD;
+  background-color: #fafafa;
+  border: 1px solid #ddd;
   height: 25px;
   border-radius: 25px;
   overflow: hidden;
@@ -32,7 +32,6 @@
   background-color: #00c8ff;
   height: 100%;
   text-align: right;
-
 }
 
 .progressBarFill .value {

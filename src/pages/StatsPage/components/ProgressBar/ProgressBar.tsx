@@ -3,7 +3,6 @@ import { useWeightContext } from '../../../../context/WeightContext';
 import { formatWeight } from '../../../../utils/weights';
 import styles from './ProgressBar.module.css';
 
-
 function ProgressBar() {
   const { weightRecords, weightUnit, weightTargetKgs } = useWeightContext();
   const { accentColour } = useSettingsContext();
@@ -32,11 +31,23 @@ function ProgressBar() {
       <div className={styles.progressBarContainer}>
         <div className={styles.weight}>{startWeightStr}</div>
         <div className={styles.progressBar}>
-          <div className={styles.progressBarFill} style={{ width: `${weightChangePercent * 100}%`, backgroundColor: accentColour }}>
-            {weightChangePercent >= valueSideThreshold && <div className={styles.value}>{weightChangePercentStr}</div>}
+          <div
+            className={styles.progressBarFill}
+            style={{
+              width: `${weightChangePercent * 100}%`,
+              backgroundColor: accentColour,
+            }}
+          >
+            {weightChangePercent >= valueSideThreshold && (
+              <div className={styles.value}>{weightChangePercentStr}</div>
+            )}
           </div>
           <div className={styles.progressBarEmpty}>
-            {weightChangePercent < valueSideThreshold && <div className={styles.value} style={{ color: accentColour }}>{weightChangePercentStr}</div>}
+            {weightChangePercent < valueSideThreshold && (
+              <div className={styles.value} style={{ color: accentColour }}>
+                {weightChangePercentStr}
+              </div>
+            )}
           </div>
         </div>
         <div className={styles.weight}>{targetWeightStr}</div>

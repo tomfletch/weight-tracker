@@ -41,7 +41,7 @@ const showLabelPlugin = {
 Chart.register(...registerables);
 Chart.register(showLabelPlugin);
 
-export function createTooltip({ chart }: { chart: Chart}) {
+export function createTooltip({ chart }: { chart: Chart }) {
   // Tooltip Element
   let tooltipEl = document.getElementById('chartjsTooltip');
 
@@ -67,7 +67,7 @@ export function createTooltip({ chart }: { chart: Chart}) {
 
     let innerHtml = `<div class="date">${formatDate(date)}</div>`;
 
-    bodyLines.forEach((body, i) => {
+    bodyLines.forEach((body) => {
       innerHtml += `<div>${body}</div>`;
     });
 

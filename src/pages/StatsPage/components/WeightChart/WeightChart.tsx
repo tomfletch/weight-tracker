@@ -1,17 +1,20 @@
-import { Line } from 'react-chartjs-2';
-import { Chart, TooltipItem } from 'chart.js';
+import type { TooltipItem } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 import { useState } from 'react';
-import { WeightUnit, useWeightContext } from '../../../../context/WeightContext';
+import { Line } from 'react-chartjs-2';
+import { useSettingsContext } from '../../../../context/SettingsContext';
+import {
+  useWeightContext,
+  WeightUnit,
+} from '../../../../context/WeightContext';
+import { createTooltip } from '../../../../utils/chartjs';
+import { toISODate } from '../../../../utils/dates';
 import {
   convertKgToLb,
   formatKg,
   formatLb,
   formatLbAsStLb,
 } from '../../../../utils/weights';
-import { useSettingsContext } from '../../../../context/SettingsContext';
-import { formatDate, toISODate } from '../../../../utils/dates';
-import { createTooltip } from '../../../../utils/chartjs';
 import styles from './WeightChart.module.css';
 
 // const PERIODS = ['ALL', '1Y', '3M', '1M'];
@@ -36,7 +39,7 @@ function insertDate(newDate: string, dates: string[]) {
 function WeightChart() {
   const { weightRecords, weightTargetKgs, weightUnit } = useWeightContext();
   const { accentColour } = useSettingsContext();
-  const [period, setPeriod] = useState<typeof PERIODS[0]>(PERIODS[0]);
+  const [period, setPeriod] = useState<(typeof PERIODS)[0]>(PERIODS[0]);
 
   if (weightRecords.length === 0) {
     return <div>Not enough data</div>;
@@ -80,7 +83,7 @@ function WeightChart() {
     const weightRecord = weightRecords.find((wr) => wr.date === date);
     return weightRecord?.weightKgs || null;
   });
-  let targetWeights = dates.map((d, index) => {
+  let targetWeights = dates.map((d) => {
     if (d === startDateStr || d === endDateStr) {
       return weightTargetKgs;
     }
@@ -115,8 +118,12 @@ function WeightChart() {
   // let regressionWeightEnd = m*days[N-1] + b;
 
   if (weightUnit !== WeightUnit.KGS) {
-    weights = weights.map((weightKg) => weightKg && Math.round(convertKgToLb(weightKg) * 10) / 10);
-    targetWeights = targetWeights.map((weightKg) => weightKg && Math.round(convertKgToLb(weightKg) * 10) / 10);
+    weights = weights.map(
+      (weightKg) => weightKg && Math.round(convertKgToLb(weightKg) * 10) / 10,
+    );
+    targetWeights = targetWeights.map(
+      (weightKg) => weightKg && Math.round(convertKgToLb(weightKg) * 10) / 10,
+    );
 
     // regressionWeightStart = convertKgToLb(regressionWeightStart);
     // regressionWeightEnd = convertKgToLb(regressionWeightEnd);
@@ -239,10 +246,7 @@ function WeightChart() {
           </button>
         ))}
       </div>
-      <Line
-        data={chartData}
-        options={chartOptions}
-      />
+      <Line data={chartData} options={chartOptions} />
     </div>
   );
 }
