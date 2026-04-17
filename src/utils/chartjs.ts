@@ -59,7 +59,9 @@ export function createTooltip({ chart }: { chart: Chart }) {
     return;
   }
 
-  const date = new Date(chart.tooltip.dataPoints[0].parsed.x);
+  const parsedX = chart.tooltip.dataPoints[0].parsed.x;
+  if (parsedX === null) return;
+  const date = new Date(parsedX);
 
   // Set Text
   if (tooltipModel.body) {

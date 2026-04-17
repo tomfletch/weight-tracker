@@ -115,6 +115,7 @@ export function MovingAverageWeightChart() {
         position: 'nearest' as const,
         callbacks: {
           label(context: TooltipItem<'line'>) {
+            if (context.parsed.y === null) return '';
             if (weightUnit === WeightUnit.KGS) {
               return formatKg(context.parsed.y);
             }
