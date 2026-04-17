@@ -135,8 +135,8 @@ function HeightInputFtIn({ id, height, onChange }: Props) {
     const ft = parseInt(ftStr, 10);
     const inch = parseFloat(inStr);
 
-    const newWeightKg = convertFtInToM({ ft, inch });
-    onChange(newWeightKg);
+    const newHeight = convertFtInToM({ ft, inch });
+    onChange(newHeight);
   }, [isChanged, ftStr, inStr, onChange]);
 
   const onFtChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -176,7 +176,7 @@ function HeightInputFtIn({ id, height, onChange }: Props) {
   );
 }
 
-function WeightInput({ id, height, onChange }: Props) {
+function HeightInput({ id, height, onChange }: Props) {
   const { heightUnit } = useHeightContext();
 
   let InputComponent = HeightInputCm;
@@ -192,4 +192,4 @@ function WeightInput({ id, height, onChange }: Props) {
   return <InputComponent id={id} height={height} onChange={onChange} />;
 }
 
-export default WeightInput;
+export default HeightInput;
