@@ -7,6 +7,7 @@ import {
   formatDayth,
   getFirstOfMonth,
   MONTH_NAMES,
+  parseISODate,
   toISODate,
 } from '../../../../utils/dates';
 import { formatWeight } from '../../../../utils/weights';
@@ -29,9 +30,9 @@ function Timeline() {
 
   const reverseWeightRecords = [...weightRecords].reverse();
 
-  const firstMonth = getFirstOfMonth(new Date(weightRecords[0].date));
+  const firstMonth = getFirstOfMonth(parseISODate(weightRecords[0].date));
   const lastMonth = getFirstOfMonth(
-    new Date(weightRecords[weightRecords.length - 1].date),
+    parseISODate(weightRecords[weightRecords.length - 1].date),
   );
 
   let currentMonth = lastMonth;
@@ -39,7 +40,7 @@ function Timeline() {
   const months = [];
 
   const filterCurrentMonth = (weightRecord: WeightRecord): boolean => {
-    const weightRecordDate = new Date(weightRecord.date);
+    const weightRecordDate = parseISODate(weightRecord.date);
     return (
       weightRecordDate.getFullYear() === currentMonth.getFullYear() &&
       weightRecordDate.getMonth() === currentMonth.getMonth()

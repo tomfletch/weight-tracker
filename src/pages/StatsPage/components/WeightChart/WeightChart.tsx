@@ -8,7 +8,7 @@ import {
   WeightUnit,
 } from '../../../../context/WeightContext';
 import { createTooltip } from '../../../../utils/chartjs';
-import { toISODate } from '../../../../utils/dates';
+import { parseISODate, toISODate } from '../../../../utils/dates';
 import {
   convertKgToLb,
   formatKg,
@@ -50,7 +50,7 @@ function WeightChart() {
   const endDate = new Date();
   const endDateStr = toISODate(endDate);
 
-  const startDateALL = new Date(dates[0]);
+  const startDateALL = parseISODate(dates[0]);
 
   const startDate1Y = new Date();
   startDate1Y.setFullYear(endDate.getFullYear() - 1);

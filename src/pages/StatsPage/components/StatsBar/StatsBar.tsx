@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { subDays } from 'date-fns';
 import { useHeightContext } from '../../../../context/HeightContext';
 import { useWeightContext } from '../../../../context/WeightContext';
-import { daysBetween } from '../../../../utils/dates';
+import { daysBetween, parseISODate } from '../../../../utils/dates';
 import { formatWeight } from '../../../../utils/weights';
 import styles from './StatsBar.module.css';
 
@@ -42,7 +42,7 @@ function RateStatsWidget({
     useWeightContext();
 
   const lastWeightRecord = weightRecords[weightRecords.length - 1];
-  const lastWeightDate = new Date(lastWeightRecord.date);
+  const lastWeightDate = parseISODate(lastWeightRecord.date);
   const lastWeight = lastWeightRecord.weightKgs;
   const targetWeightDelta = weightTargetKgs && weightTargetKgs - lastWeight;
 
@@ -167,8 +167,10 @@ function BMIWidgetContent() {
 function StatsBar() {
   const { weightRecords } = useWeightContext();
 
-  const firstRecordDate = new Date(weightRecords[0].date);
-  const lastRecordDate = new Date(weightRecords[weightRecords.length - 1].date);
+  const firstRecordDate = parseISODate(weightRecords[0].date);
+  const lastRecordDate = parseISODate(
+    weightRecords[weightRecords.length - 1].date,
+  );
   const weekAgoDate = subDays(lastRecordDate, 7);
 
   return (

@@ -11,7 +11,7 @@ import {
   WeightUnit,
 } from '../../../../context/WeightContext';
 import { createTooltip } from '../../../../utils/chartjs';
-import { toISODate } from '../../../../utils/dates';
+import { parseISODate, toISODate } from '../../../../utils/dates';
 import {
   convertKgToLb,
   formatKg,
@@ -53,8 +53,8 @@ function MovingAverageDeltaChart() {
     return <div>Not enough data</div>;
   }
 
-  const firstDate = new Date(weightRecords[0].date);
-  const lastDate = new Date(weightRecords[weightRecords.length - 1].date);
+  const firstDate = parseISODate(weightRecords[0].date);
+  const lastDate = parseISODate(weightRecords[weightRecords.length - 1].date);
   const currentDate = new Date(firstDate.getTime());
 
   const dates = [];

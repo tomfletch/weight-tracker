@@ -1,7 +1,7 @@
 import type React from 'react';
 import { createContext, useContext } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { daysBetween } from '../utils/dates';
+import { daysBetween, parseISODate } from '../utils/dates';
 
 export const WeightUnit = {
   LBS: 'LBS',
@@ -80,7 +80,7 @@ export function WeightProvider({ children }: Props) {
     let nearestRecordAfter: WeightRecord | null = null;
 
     for (const weightRecord of weightRecords) {
-      const weightRecordDate = new Date(weightRecord.date);
+      const weightRecordDate = parseISODate(weightRecord.date);
 
       if (weightRecordDate.getTime() === date.getTime()) {
         return weightRecord.weightKgs;
@@ -89,7 +89,7 @@ export function WeightProvider({ children }: Props) {
       if (
         weightRecordDate < date &&
         (!nearestRecordBefore ||
-          weightRecordDate > new Date(nearestRecordBefore.date))
+          weightRecordDate > parseISODate(nearestRecordBefore.date))
       ) {
         nearestRecordBefore = weightRecord;
       }
@@ -97,7 +97,7 @@ export function WeightProvider({ children }: Props) {
       if (
         weightRecordDate > date &&
         (!nearestRecordAfter ||
-          weightRecordDate < new Date(nearestRecordAfter.date))
+          weightRecordDate < parseISODate(nearestRecordAfter.date))
       ) {
         nearestRecordAfter = weightRecord;
       }
@@ -107,8 +107,8 @@ export function WeightProvider({ children }: Props) {
       return null;
     }
 
-    const beforeDate = new Date(nearestRecordBefore.date);
-    const afterDate = new Date(nearestRecordAfter.date);
+    const beforeDate = parseISODate(nearestRecordBefore.date);
+    const afterDate = parseISODate(nearestRecordAfter.date);
 
     const deltaDays = daysBetween(beforeDate, afterDate);
     const targetDays = daysBetween(beforeDate, date);
