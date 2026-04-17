@@ -1,27 +1,38 @@
-import { faCalendarDays, faChartLine, faGear } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CSSProperties } from 'react';
-import { NavLink, Link } from 'react-router-dom';
-import { useSettingsContext } from '../../context/SettingsContext';
-import styles from './Header.module.css';
-import { ReactComponent as Logo } from '../../assets/logo.svg';
+import {
+  faCalendarDays,
+  faChartLine,
+  faGear,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { CSSProperties } from "react";
+import { Link, NavLink } from "react-router-dom";
+import logo from "../../assets/logo.svg";
+import { useSettingsContext } from "../../context/SettingsContext";
+import styles from "./Header.module.css";
 
 function Header() {
   const { accentColour } = useSettingsContext();
 
-  const isActiveClass = ({ isActive }: { isActive: boolean}): string | undefined => (
-    (isActive) ? styles.active : undefined
-  );
+  const isActiveClass = ({
+    isActive,
+  }: {
+    isActive: boolean;
+  }): string | undefined => (isActive ? styles.active : undefined);
 
-  const isActiveStyle = ({ isActive }: { isActive: boolean}): CSSProperties => (
-    (isActive) ? { color: accentColour } : {}
-  );
+  const isActiveStyle = ({ isActive }: { isActive: boolean }): CSSProperties =>
+    isActive ? { color: accentColour } : {};
 
   return (
     <header className={styles.header}>
       <h1>
         <Link to="/" className={styles.logo}>
-          <Logo className={styles.logoIcon} width="27" height="20" />
+          <img
+            className={styles.logoIcon}
+            src={logo}
+            width="27"
+            height="20"
+            alt=""
+          />
           <div className={styles.logoText}>Weight Tracker</div>
         </Link>
       </h1>
@@ -33,12 +44,20 @@ function Header() {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/history" className={isActiveClass} style={isActiveStyle}>
+            <NavLink
+              to="/history"
+              className={isActiveClass}
+              style={isActiveStyle}
+            >
               <FontAwesomeIcon icon={faCalendarDays} /> History
             </NavLink>
           </li>
           <li>
-            <NavLink to="/settings" className={isActiveClass} style={isActiveStyle}>
+            <NavLink
+              to="/settings"
+              className={isActiveClass}
+              style={isActiveStyle}
+            >
               <FontAwesomeIcon icon={faGear} /> Settings
             </NavLink>
           </li>
