@@ -52,3 +52,8 @@
   font-size: 2rem;
   padding: 1.5rem 0;
 }
+
+.emptyState {
+  padding: 0.75rem 0;
+  color: rgba(0, 0, 0, 0.6);
+}

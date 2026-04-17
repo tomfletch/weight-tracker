@@ -16,6 +16,17 @@ function Timeline() {
   const { weightRecords, weightUnit, deleteWeight } = useWeightContext();
   const { accentColour } = useSettingsContext();
 
+  if (weightRecords.length === 0) {
+    return (
+      <div
+        className={styles.timeline}
+        style={{ borderLeftColor: accentColour }}
+      >
+        <div className={styles.emptyState}>No weight entries yet.</div>
+      </div>
+    );
+  }
+
   const reverseWeightRecords = [...weightRecords].reverse();
 
   const firstMonth = getFirstOfMonth(new Date(weightRecords[0].date));
