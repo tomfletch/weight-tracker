@@ -2,11 +2,13 @@ import type React from 'react';
 import { createContext, useContext } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 
-export enum HeightUnit {
-  CM = 'CM',
-  FT_IN = 'FT_IN',
-  IN = 'IN',
-}
+export const HeightUnit = {
+  CM: 'CM',
+  FT_IN: 'FT_IN',
+  IN: 'IN',
+} as const;
+
+export type HeightUnit = (typeof HeightUnit)[keyof typeof HeightUnit];
 
 interface HeightContextInterface {
   heightUnit: HeightUnit;
@@ -32,7 +34,7 @@ interface Props {
 }
 
 export function HeightProvider({ children }: Props) {
-  const [heightUnit, setHeightUnit] = useLocalStorage(
+  const [heightUnit, setHeightUnit] = useLocalStorage<HeightUnit>(
     'heightUnit',
     HeightUnit.CM,
   );

@@ -3,11 +3,13 @@ import { createContext, useContext } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { daysBetween } from '../utils/dates';
 
-export enum WeightUnit {
-  LBS = 'LBS',
-  STONES_LBS = 'STONES_LBS',
-  KGS = 'KGS',
-}
+export const WeightUnit = {
+  LBS: 'LBS',
+  STONES_LBS: 'STONES_LBS',
+  KGS: 'KGS',
+} as const;
+
+export type WeightUnit = (typeof WeightUnit)[keyof typeof WeightUnit];
 
 export interface WeightRecord {
   date: string;
@@ -19,7 +21,7 @@ interface WeightContextInterface {
   setWeightUnit: (weightUnit: WeightUnit) => void;
   weightRecords: WeightRecord[];
   getInterpolatedWeight: (date: Date) => number | null;
-  addWeight: (weightRecort: WeightRecord) => void;
+  addWeight: (weightRecord: WeightRecord) => void;
   deleteWeight: (date: string) => void;
   weightTargetKgs: number | null;
   setWeightTargetKgs: (weightTarget: number) => void;
@@ -46,7 +48,7 @@ export function WeightProvider({ children }: Props) {
     'weightRecords',
     [],
   );
-  const [weightUnit, setWeightUnit] = useLocalStorage(
+  const [weightUnit, setWeightUnit] = useLocalStorage<WeightUnit>(
     'weightUnit',
     WeightUnit.STONES_LBS,
   );

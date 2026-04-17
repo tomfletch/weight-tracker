@@ -1,4 +1,4 @@
-import type { TooltipItem } from 'chart.js';
+import type { ChartOptions, TooltipItem } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 import { Line } from 'react-chartjs-2';
 import { useSettingsContext } from '../../../../context/SettingsContext';
@@ -102,7 +102,7 @@ function MovingAverageWeightChart() {
     ],
   };
 
-  const chartOptions = {
+  const chartOptions: ChartOptions<'line'> = {
     plugins: {
       legend: {
         display: false,

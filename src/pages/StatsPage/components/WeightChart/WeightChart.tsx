@@ -1,4 +1,4 @@
-import type { TooltipItem } from 'chart.js';
+import type { ChartOptions, TooltipItem } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 import { useState } from 'react';
 import { Line } from 'react-chartjs-2';
@@ -166,7 +166,7 @@ function WeightChart() {
     ],
   };
 
-  const chartOptions = {
+  const chartOptions: ChartOptions<'line'> = {
     plugins: {
       legend: {
         display: false,
