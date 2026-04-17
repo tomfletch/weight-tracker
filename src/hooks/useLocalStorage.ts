@@ -12,7 +12,7 @@ function setStorageValue(key: string, value: unknown): void {
   localStorage.setItem(key, JSON.stringify(value));
 }
 
-function useLocalStorage<T>(key: string, defaultValue: T) {
+export function useLocalStorage<T>(key: string, defaultValue: T) {
   const [value, setValue] = useState<T>(
     () => getStorageValue(key, defaultValue) as T,
   );
@@ -23,5 +23,3 @@ function useLocalStorage<T>(key: string, defaultValue: T) {
 
   return [value, setValue] as const;
 }
-
-export default useLocalStorage;

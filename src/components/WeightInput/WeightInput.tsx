@@ -182,7 +182,7 @@ function WeightInputLb({ id, weight, onChange }: Props) {
   );
 }
 
-function WeightInput({ id, weight, onChange }: Props) {
+export function WeightInput({ id, weight, onChange }: Props) {
   const { weightUnit } = useWeightContext();
 
   let InputComponent = WeightInputKg;
@@ -197,5 +197,3 @@ function WeightInput({ id, weight, onChange }: Props) {
 
   return <InputComponent id={id} weight={weight} onChange={onChange} />;
 }
-
-export default WeightInput;

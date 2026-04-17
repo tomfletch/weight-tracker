@@ -1,6 +1,6 @@
 import type React from 'react';
 import { createContext, useContext } from 'react';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 export const HeightUnit = {
   CM: 'CM',
@@ -53,5 +53,3 @@ export function HeightProvider({ children }: Props) {
     </HeightContext.Provider>
   );
 }
-
-export default HeightContext;

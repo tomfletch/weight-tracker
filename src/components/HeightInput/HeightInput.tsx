@@ -176,7 +176,7 @@ function HeightInputFtIn({ id, height, onChange }: Props) {
   );
 }
 
-function HeightInput({ id, height, onChange }: Props) {
+export function HeightInput({ id, height, onChange }: Props) {
   const { heightUnit } = useHeightContext();
 
   let InputComponent = HeightInputCm;
@@ -191,5 +191,3 @@ function HeightInput({ id, height, onChange }: Props) {
 
   return <InputComponent id={id} height={height} onChange={onChange} />;
 }
-
-export default HeightInput;

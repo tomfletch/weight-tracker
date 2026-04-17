@@ -18,7 +18,7 @@ import {
 const MOVING_AVERAGE_SIZE = 7;
 const MOVING_AVERAGE_OFFSET = (MOVING_AVERAGE_SIZE - 1) / 2;
 
-function MovingAverageWeightChart() {
+export function MovingAverageWeightChart() {
   const { weightRecords, getInterpolatedWeight, weightTargetKgs, weightUnit } =
     useWeightContext();
   const { accentColour } = useSettingsContext();
@@ -173,5 +173,3 @@ function MovingAverageWeightChart() {
     </div>
   );
 }
-
-export default MovingAverageWeightChart;

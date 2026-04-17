@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
-import HeightInput from '../../components/HeightInput/HeightInput';
-import WeightInput from '../../components/WeightInput/WeightInput';
+import { HeightInput } from '../../components/HeightInput/HeightInput';
+import { WeightInput } from '../../components/WeightInput/WeightInput';
 import { HeightUnit, useHeightContext } from '../../context/HeightContext';
 import { useSettingsContext } from '../../context/SettingsContext';
 import { useWeightContext, WeightUnit } from '../../context/WeightContext';
-import ColourSelect from './ColourSelect/ColourSelect';
+import { ColourSelect } from './ColourSelect/ColourSelect';
 import styles from './SettingsPage.module.css';
 
 const weightUnitOptions = [
@@ -19,7 +19,7 @@ const heightUnitOptions = [
   { key: HeightUnit.IN, name: 'Inches (in)' },
 ];
 
-function SettingsPage() {
+export function SettingsPage() {
   const { weightUnit, setWeightUnit, weightTargetKgs, setWeightTargetKgs } =
     useWeightContext();
   const { accentColour, setAccentColour } = useSettingsContext();
@@ -105,5 +105,3 @@ function SettingsPage() {
     </div>
   );
 }
-
-export default SettingsPage;

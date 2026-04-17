@@ -13,7 +13,7 @@ import {
 import { formatWeight } from '../../../../utils/weights';
 import styles from './Timeline.module.css';
 
-function Timeline() {
+export function Timeline() {
   const { weightRecords, weightUnit, deleteWeight } = useWeightContext();
   const { accentColour } = useSettingsContext();
 
@@ -98,5 +98,3 @@ function Timeline() {
     </div>
   );
 }
-
-export default Timeline;

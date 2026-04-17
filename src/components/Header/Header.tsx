@@ -10,7 +10,7 @@ import logo from '../../assets/logo.svg';
 import { useSettingsContext } from '../../context/SettingsContext';
 import styles from './Header.module.css';
 
-function Header() {
+export function Header() {
   const { accentColour } = useSettingsContext();
 
   const isActiveClass = ({
@@ -66,5 +66,3 @@ function Header() {
     </header>
   );
 }
-
-export default Header;

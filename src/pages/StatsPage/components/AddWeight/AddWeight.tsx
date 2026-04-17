@@ -2,19 +2,19 @@ import { faAdd } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type React from 'react';
 import { useState } from 'react';
+import { WeightInput } from '../../../../components/WeightInput/WeightInput';
 import { useSettingsContext } from '../../../../context/SettingsContext';
 import {
-  type WeightRecord,
   useWeightContext,
+  type WeightRecord,
 } from '../../../../context/WeightContext';
-import WeightInput from '../../../../components/WeightInput/WeightInput';
-import styles from './AddWeight.module.css';
 import { toISODate } from '../../../../utils/dates';
+import styles from './AddWeight.module.css';
 
 const today = new Date();
 const todayStr = toISODate(today);
 
-function AddWeight() {
+export function AddWeight() {
   const [date, setDate] = useState(todayStr);
   const [weight, setWeight] = useState<number | null>(null);
 
@@ -70,5 +70,3 @@ function AddWeight() {
     </div>
   );
 }
-
-export default AddWeight;

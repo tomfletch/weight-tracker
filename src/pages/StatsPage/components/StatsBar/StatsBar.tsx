@@ -164,7 +164,7 @@ function BMIWidgetContent() {
   );
 }
 
-function StatsBar() {
+export function StatsBar() {
   const { weightRecords } = useWeightContext();
 
   const firstRecordDate = parseISODate(weightRecords[0].date);
@@ -181,5 +181,3 @@ function StatsBar() {
     </div>
   );
 }
-
-export default StatsBar;

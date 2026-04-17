@@ -13,7 +13,7 @@ import {
 } from '../../../../utils/dates';
 import styles from './Calendar.module.css';
 
-function Calendar() {
+export function Calendar() {
   const today = new Date();
   const [currentMonth, setCurrentMonth] = useState(() =>
     getFirstOfMonth(today),
@@ -128,5 +128,3 @@ function Calendar() {
     </div>
   );
 }
-
-export default Calendar;

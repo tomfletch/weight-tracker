@@ -1,6 +1,6 @@
 import type React from 'react';
 import { createContext, useContext } from 'react';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 import { daysBetween, parseISODate } from '../utils/dates';
 
 export const WeightUnit = {
@@ -140,5 +140,3 @@ export function WeightProvider({ children }: Props) {
     </WeightContext.Provider>
   );
 }
-
-export default WeightContext;

@@ -36,7 +36,7 @@ function insertDate(newDate: string, dates: string[]) {
   }
 }
 
-function WeightChart() {
+export function WeightChart() {
   const { weightRecords, weightTargetKgs, weightUnit } = useWeightContext();
   const { accentColour } = useSettingsContext();
   const [period, setPeriod] = useState<(typeof PERIODS)[0]>(PERIODS[0]);
@@ -250,5 +250,3 @@ function WeightChart() {
     </div>
   );
 }
-
-export default WeightChart;

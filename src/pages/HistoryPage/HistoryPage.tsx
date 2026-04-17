@@ -1,8 +1,8 @@
+import { Calendar } from './components/Calendar/Calendar';
+import { Timeline } from './components/Timeline/Timeline';
 import styles from './HistoryPage.module.css';
-import Calendar from './components/Calendar/Calendar';
-import Timeline from './components/Timeline/Timeline';
 
-function History() {
+export function History() {
   return (
     <div className="pageContainer">
       <div className={styles.columns}>
@@ -16,5 +16,3 @@ function History() {
     </div>
   );
 }
-
-export default History;

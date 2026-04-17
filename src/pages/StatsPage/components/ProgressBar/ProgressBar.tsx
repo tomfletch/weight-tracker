@@ -3,7 +3,7 @@ import { useWeightContext } from '../../../../context/WeightContext';
 import { formatWeight } from '../../../../utils/weights';
 import styles from './ProgressBar.module.css';
 
-function ProgressBar() {
+export function ProgressBar() {
   const { weightRecords, weightUnit, weightTargetKgs } = useWeightContext();
   const { accentColour } = useSettingsContext();
 
@@ -59,5 +59,3 @@ function ProgressBar() {
     </div>
   );
 }
-
-export default ProgressBar;

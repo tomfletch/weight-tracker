@@ -8,7 +8,7 @@ import { useWeightContext } from '../../../../context/WeightContext';
 import { formatWeight } from '../../../../utils/weights';
 import styles from './StatsHeader.module.css';
 
-function StatsHeader() {
+export function StatsHeader() {
   const { weightRecords, weightUnit, weightTargetKgs } = useWeightContext();
   const { accentColour } = useSettingsContext();
 
@@ -59,5 +59,3 @@ function StatsHeader() {
     </>
   );
 }
-
-export default StatsHeader;

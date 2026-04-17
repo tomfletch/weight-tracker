@@ -22,7 +22,7 @@ import {
 const MOVING_AVERAGE_SIZE = 7;
 const MOVING_AVERAGE_OFFSET = (MOVING_AVERAGE_SIZE - 1) / 2;
 
-function MovingAverageDeltaChart() {
+export function MovingAverageDeltaChart() {
   const { weightRecords, getInterpolatedWeight, weightUnit } =
     useWeightContext();
   const { accentColour } = useSettingsContext();
@@ -179,5 +179,3 @@ function MovingAverageDeltaChart() {
     </div>
   );
 }
-
-export default MovingAverageDeltaChart;

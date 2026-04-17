@@ -1,6 +1,6 @@
 import type React from 'react';
 import { createContext, useContext } from 'react';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 import { THEME_COLOURS } from '../utils/colours';
 
 interface SettingsContextInterface {
@@ -45,5 +45,3 @@ export function SettingsProvider({ children }: Props) {
     </SettingsContext.Provider>
   );
 }
-
-export default SettingsContext;

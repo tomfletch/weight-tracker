@@ -7,7 +7,7 @@ interface Props {
   onChange: (value: string) => void;
 }
 
-function ColourSelect({ value, onChange }: Props) {
+export function ColourSelect({ value, onChange }: Props) {
   return (
     <div className={styles.colourSelect}>
       {THEME_COLOURS.map((colour) => (
@@ -31,5 +31,3 @@ function ColourSelect({ value, onChange }: Props) {
     </div>
   );
 }
-
-export default ColourSelect;
