@@ -11,6 +11,7 @@
     "preview": "vite preview",
     "typecheck": "tsc -b",
     "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
     "lint": "biome lint --write",
     "format": "biome format --write"
   },
@@ -37,6 +38,7 @@
   "devDependencies": {
     "@biomejs/biome": "^2.4.12",
     "@vitejs/plugin-react": "^6.0.1",
+    "@vitest/coverage-v8": "^4.1.4",
     "jsdom": "^29.0.2",
     "vite": "^8.0.8",
     "vitest": "^4.1.4"

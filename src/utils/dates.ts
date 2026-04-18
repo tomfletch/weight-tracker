@@ -44,7 +44,18 @@ export function parseISODate(dateStr: string): Date {
     Number.isInteger(parts[2])
   ) {
     const [year, month, day] = parts;
-    return new Date(year, month - 1, day);
+    const date = new Date(year, month - 1, day);
+
+    // Verify the date is valid by checking if the components match
+    if (
+      date.getFullYear() !== year ||
+      date.getMonth() !== month - 1 ||
+      date.getDate() !== day
+    ) {
+      throw new Error(`Invalid date string: ${dateStr}`);
+    }
+
+    return date;
   }
 
   throw new Error(`Invalid date string: ${dateStr}`);

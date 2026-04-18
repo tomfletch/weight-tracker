@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { Chart, registerables } from 'chart.js';
 import { formatDate } from './dates';
 
