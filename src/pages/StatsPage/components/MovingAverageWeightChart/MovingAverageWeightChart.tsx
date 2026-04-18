@@ -1,4 +1,4 @@
-import type { ChartOptions, TooltipItem } from 'chart.js';
+import type { ChartData, ChartOptions, TooltipItem } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 import { Line } from 'react-chartjs-2';
 import { useSettingsContext } from '../../../../context/SettingsContext';
@@ -78,7 +78,7 @@ export function MovingAverageWeightChart() {
     );
   }
 
-  const chartData = {
+  const chartData: ChartData<'line'> = {
     labels: dates,
     datasets: [
       {
@@ -87,7 +87,7 @@ export function MovingAverageWeightChart() {
         borderColor: accentColour,
         borderWidth: 1,
         backgroundColor: accentColour,
-        hitRadius: 500,
+        pointHitRadius: 500,
       },
       {
         label: 'Target Weight',
@@ -95,8 +95,8 @@ export function MovingAverageWeightChart() {
         borderColor: '#e65424',
         borderWidth: 1,
         pointRadius: 0,
-        hoverRadius: 0,
-        hitRadius: 0,
+        pointHoverRadius: 0,
+        pointHitRadius: 0,
         showLabel: true,
       },
     ],

@@ -1,4 +1,5 @@
 import type {
+  ChartData,
   ChartOptions,
   ScriptableScaleContext,
   TooltipItem,
@@ -89,7 +90,7 @@ export function MovingAverageDeltaChart() {
     );
   }
 
-  const chartData = {
+  const chartData: ChartData<'line'> = {
     labels: dates,
     datasets: [
       {
@@ -98,7 +99,7 @@ export function MovingAverageDeltaChart() {
         borderColor: accentColour,
         borderWidth: 1,
         backgroundColor: accentColour,
-        hitRadius: 500,
+        pointHitRadius: 500,
       },
     ],
   };
