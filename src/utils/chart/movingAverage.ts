@@ -1,4 +1,6 @@
+import type { WeightRecord } from '../../context/WeightContext';
 import { toISODate } from '../dates';
+import { interpolateWeightAtDate } from '../weightInterpolation';
 
 export const MOVING_AVERAGE_SIZE = 7;
 export const MOVING_AVERAGE_OFFSET = (MOVING_AVERAGE_SIZE - 1) / 2;
@@ -9,7 +11,7 @@ export const MOVING_AVERAGE_OFFSET = (MOVING_AVERAGE_SIZE - 1) / 2;
  */
 export function computeMovingAverage(
   date: Date,
-  getInterpolatedWeight: (date: Date) => number | null,
+  weightRecords: WeightRecord[],
 ): number | null {
   let sumWeight = 0;
 
@@ -23,7 +25,7 @@ export function computeMovingAverage(
       date.getMonth(),
       date.getDate() + offset,
     );
-    const weight = getInterpolatedWeight(offsetDate);
+    const weight = interpolateWeightAtDate(offsetDate, weightRecords);
     if (weight === null) return null;
     sumWeight += weight;
   }
@@ -38,7 +40,7 @@ export function computeMovingAverage(
 export function generateMovingAverageSeries(
   firstDate: Date,
   lastDate: Date,
-  getInterpolatedWeight: (date: Date) => number | null,
+  weightRecords: WeightRecord[],
   inclusive: boolean = true,
 ): { dates: string[]; weights: (number | null)[] } {
   const dates: string[] = [];
@@ -52,7 +54,7 @@ export function generateMovingAverageSeries(
 
   while (shouldContinue()) {
     dates.push(toISODate(currentDate));
-    weights.push(computeMovingAverage(currentDate, getInterpolatedWeight));
+    weights.push(computeMovingAverage(currentDate, weightRecords));
     currentDate.setDate(currentDate.getDate() + 1);
   }
 

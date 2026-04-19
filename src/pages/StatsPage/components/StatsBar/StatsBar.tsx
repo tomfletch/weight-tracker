@@ -7,6 +7,7 @@ import { subDays } from 'date-fns';
 import { useHeightContext } from '../../../../context/HeightContext';
 import { useWeightContext } from '../../../../context/WeightContext';
 import { daysBetween, parseISODate } from '../../../../utils/dates';
+import { interpolateWeightAtDate } from '../../../../utils/weightInterpolation';
 import { formatWeight } from '../../../../utils/weights';
 import styles from './StatsBar.module.css';
 
@@ -38,15 +39,14 @@ function RateStatsWidget({
   type: string;
   startDate: Date;
 }) {
-  const { weightRecords, getInterpolatedWeight, weightUnit, weightTargetKgs } =
-    useWeightContext();
+  const { weightRecords, weightUnit, weightTargetKgs } = useWeightContext();
 
   const lastWeightRecord = weightRecords[weightRecords.length - 1];
   const lastWeightDate = parseISODate(lastWeightRecord.date);
   const lastWeight = lastWeightRecord.weightKgs;
   const targetWeightDelta = weightTargetKgs && weightTargetKgs - lastWeight;
 
-  const startWeight = getInterpolatedWeight(startDate);
+  const startWeight = interpolateWeightAtDate(startDate, weightRecords);
 
   let currentRate = <>Unknown</>;
   let daysUntilTarget = null;

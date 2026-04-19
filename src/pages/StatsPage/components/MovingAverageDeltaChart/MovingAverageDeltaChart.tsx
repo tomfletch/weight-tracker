@@ -9,8 +9,7 @@ import { convertSeriesKgToDisplayUnit } from '../../../../utils/chart/weightUnit
 import { parseISODate, toISODate } from '../../../../utils/dates';
 
 export function MovingAverageDeltaChart() {
-  const { weightRecords, getInterpolatedWeight, weightUnit } =
-    useWeightContext();
+  const { weightRecords, weightUnit } = useWeightContext();
   const { accentColour } = useSettingsContext();
   const today = toISODate(new Date());
 
@@ -24,7 +23,7 @@ export function MovingAverageDeltaChart() {
   const { dates, weights } = generateMovingAverageSeries(
     firstDate,
     lastDate,
-    getInterpolatedWeight,
+    weightRecords,
     true,
   );
 

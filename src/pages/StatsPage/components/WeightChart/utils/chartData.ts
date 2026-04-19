@@ -5,11 +5,8 @@ import type {
 } from '../../../../../context/WeightContext';
 import { buildBaseLineChartOptions } from '../../../../../utils/chart/options';
 import { convertSeriesKgToDisplayUnit } from '../../../../../utils/chart/weightUnits';
-import {
-  daysBetween,
-  parseISODate,
-  toISODate,
-} from '../../../../../utils/dates';
+import { parseISODate, toISODate } from '../../../../../utils/dates';
+import { interpolateWeightAtDateString } from '../../../../../utils/weightInterpolation';
 
 export const CHART_PERIODS = [
   { key: 'ALL', label: 'All Time' },
@@ -35,52 +32,6 @@ function insertSortedUniqueDate(dates: string[], newDate: string) {
   if (dates[index] !== newDate) {
     dates.splice(index, 0, newDate);
   }
-}
-
-function getInterpolatedWeightKgs(
-  date: string,
-  weightRecords: WeightRecord[],
-): number | null {
-  const exact = weightRecords.find(
-    (weightRecord) => weightRecord.date === date,
-  );
-  if (exact) {
-    return exact.weightKgs;
-  }
-
-  let nearestRecordBefore: WeightRecord | null = null;
-  let nearestRecordAfter: WeightRecord | null = null;
-
-  for (const weightRecord of weightRecords) {
-    if (weightRecord.date < date) {
-      nearestRecordBefore = weightRecord;
-      continue;
-    }
-
-    if (weightRecord.date > date) {
-      nearestRecordAfter = weightRecord;
-      break;
-    }
-  }
-
-  if (!nearestRecordBefore || !nearestRecordAfter) {
-    return null;
-  }
-
-  const beforeDate = parseISODate(nearestRecordBefore.date);
-  const afterDate = parseISODate(nearestRecordAfter.date);
-  const targetDate = parseISODate(date);
-  const deltaDays = daysBetween(beforeDate, afterDate);
-
-  if (deltaDays === 0) {
-    return nearestRecordBefore.weightKgs;
-  }
-
-  const targetDays = daysBetween(beforeDate, targetDate);
-  const deltaWeight =
-    nearestRecordAfter.weightKgs - nearestRecordBefore.weightKgs;
-
-  return nearestRecordBefore.weightKgs + (deltaWeight / deltaDays) * targetDays;
 }
 
 function getPeriodStartDate(
@@ -160,7 +111,7 @@ export function getWeightChartData({
   insertSortedUniqueDate(dates, endDateStr);
 
   const weights = convertSeriesKgToDisplayUnit(
-    dates.map((date) => getInterpolatedWeightKgs(date, weightRecords)),
+    dates.map((date) => interpolateWeightAtDateString(date, weightRecords)),
     weightUnit,
   );
   const targetWeights = convertSeriesKgToDisplayUnit(

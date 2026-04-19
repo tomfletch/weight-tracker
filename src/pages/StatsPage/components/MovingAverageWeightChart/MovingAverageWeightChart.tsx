@@ -9,8 +9,7 @@ import { convertSeriesKgToDisplayUnit } from '../../../../utils/chart/weightUnit
 import { parseISODate, toISODate } from '../../../../utils/dates';
 
 export function MovingAverageWeightChart() {
-  const { weightRecords, getInterpolatedWeight, weightTargetKgs, weightUnit } =
-    useWeightContext();
+  const { weightRecords, weightTargetKgs, weightUnit } = useWeightContext();
   const { accentColour } = useSettingsContext();
   const today = toISODate(new Date());
 
@@ -24,7 +23,7 @@ export function MovingAverageWeightChart() {
   const { dates, weights } = generateMovingAverageSeries(
     firstDate,
     lastDate,
-    getInterpolatedWeight,
+    weightRecords,
     true,
   );
 

@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import type { WeightRecord } from '../../../src/context/WeightContext';
 import {
   computeMovingAverage,
   generateMovingAverageSeries,
@@ -18,99 +19,81 @@ describe('movingAverage utils', () => {
   });
 
   describe('computeMovingAverage', () => {
-    const weights: { [key: string]: number } = {
-      '2025-01-01': 70,
-      '2025-01-02': 71,
-      '2025-01-03': 72,
-      '2025-01-04': 73,
-      '2025-01-05': 74,
-      '2025-01-06': 75,
-      '2025-01-07': 76,
-      '2025-01-08': 77,
-      '2025-01-09': 78,
-      '2025-01-10': 79,
-    };
-
-    const mockGetInterpolatedWeight = (date: Date): number | null => {
-      const isoDate = date.toISOString().split('T')[0];
-      return weights[isoDate] ?? null;
-    };
+    const weightRecords: WeightRecord[] = [
+      { date: '2025-01-01', weightKgs: 70 },
+      { date: '2025-01-02', weightKgs: 71 },
+      { date: '2025-01-03', weightKgs: 72 },
+      { date: '2025-01-04', weightKgs: 73 },
+      { date: '2025-01-05', weightKgs: 74 },
+      { date: '2025-01-06', weightKgs: 75 },
+      { date: '2025-01-07', weightKgs: 76 },
+      { date: '2025-01-08', weightKgs: 77 },
+      { date: '2025-01-09', weightKgs: 78 },
+      { date: '2025-01-10', weightKgs: 79 },
+    ];
 
     it('should compute 7-day moving average correctly', () => {
       const date = new Date(2025, 0, 5); // 2025-01-05
-      const result = computeMovingAverage(date, mockGetInterpolatedWeight);
+      const result = computeMovingAverage(date, weightRecords);
       // Average of [71, 72, 73, 74, 75, 76, 77] for dates Jan 2-8 = 74
       expect(result).toBe(74);
     });
 
     it('should return null if any value in window is null', () => {
-      const getInterpolatedWithGap = (date: Date): number | null => {
-        const isoDate = date.toISOString().split('T')[0];
-        if (isoDate === '2025-01-05') return null;
-        return weights[isoDate] ?? null;
-      };
+      const recordsWithGap: WeightRecord[] = [
+        { date: '2025-01-01', weightKgs: 70 },
+        { date: '2025-01-02', weightKgs: 71 },
+        // Gap from 2025-01-03 to 2025-01-08 - interpolation will return null
+        { date: '2025-01-09', weightKgs: 78 },
+        { date: '2025-01-10', weightKgs: 79 },
+      ];
 
-      const date = new Date(2025, 0, 5);
-      const result = computeMovingAverage(date, getInterpolatedWithGap);
+      // Computing average at Jan 3 requires dates Jan 0-6
+      // Jan 1-2 are in records, but Jan 3-6 have no neighbors for interpolation
+      // So Jan 3 itself will return null from interpolation
+      const date = new Date(2025, 0, 3);
+      const result = computeMovingAverage(date, recordsWithGap);
       expect(result).toBeNull();
     });
 
     it('should return null at boundaries when insufficient data', () => {
-      const getInterpolatedWithLimited = (date: Date): number | null => {
-        const isoDate = date.toISOString().split('T')[0];
-        return weights[isoDate] ?? null;
-      };
-
       // Date before any available weight
       const earlyDate = new Date(2024, 11, 25);
-      const result = computeMovingAverage(
-        earlyDate,
-        getInterpolatedWithLimited,
-      );
+      const result = computeMovingAverage(earlyDate, weightRecords);
       expect(result).toBeNull();
     });
 
     it('should handle edge case with minimal data', () => {
-      const minimalWeights: { [key: string]: number } = {
-        '2025-01-01': 70,
-        '2025-01-02': 71,
-        '2025-01-03': 72,
-        '2025-01-04': 73,
-        '2025-01-05': 74,
-        '2025-01-06': 75,
-        '2025-01-07': 76,
-      };
-
-      const getMinimalInterpolated = (date: Date): number | null => {
-        const isoDate = date.toISOString().split('T')[0];
-        return minimalWeights[isoDate] ?? null;
-      };
+      const minimalRecords: WeightRecord[] = [
+        { date: '2025-01-01', weightKgs: 70 },
+        { date: '2025-01-02', weightKgs: 71 },
+        { date: '2025-01-03', weightKgs: 72 },
+        { date: '2025-01-04', weightKgs: 73 },
+        { date: '2025-01-05', weightKgs: 74 },
+        { date: '2025-01-06', weightKgs: 75 },
+        { date: '2025-01-07', weightKgs: 76 },
+      ];
 
       const date = new Date(2025, 0, 4); // 2025-01-04
-      const result = computeMovingAverage(date, getMinimalInterpolated);
+      const result = computeMovingAverage(date, minimalRecords);
       // Average of [70, 71, 72, 73, 74, 75, 76] = 73
       expect(result).toBe(73);
     });
   });
 
   describe('generateMovingAverageSeries', () => {
-    const weights: { [key: string]: number | null } = {
-      '2025-01-01': 70,
-      '2025-01-02': 71,
-      '2025-01-03': 72,
-      '2025-01-04': 73,
-      '2025-01-05': 74,
-      '2025-01-06': 75,
-      '2025-01-07': 76,
-      '2025-01-08': 77,
-      '2025-01-09': 78,
-      '2025-01-10': 79,
-    };
-
-    const mockGetInterpolatedWeight = (date: Date): number | null => {
-      const isoDate = date.toISOString().split('T')[0];
-      return weights[isoDate] ?? null;
-    };
+    const weightRecords: WeightRecord[] = [
+      { date: '2025-01-01', weightKgs: 70 },
+      { date: '2025-01-02', weightKgs: 71 },
+      { date: '2025-01-03', weightKgs: 72 },
+      { date: '2025-01-04', weightKgs: 73 },
+      { date: '2025-01-05', weightKgs: 74 },
+      { date: '2025-01-06', weightKgs: 75 },
+      { date: '2025-01-07', weightKgs: 76 },
+      { date: '2025-01-08', weightKgs: 77 },
+      { date: '2025-01-09', weightKgs: 78 },
+      { date: '2025-01-10', weightKgs: 79 },
+    ];
 
     it('should generate dates and moving averages', () => {
       const firstDate = new Date(2025, 0, 1);
@@ -119,7 +102,7 @@ describe('movingAverage utils', () => {
       const { dates, weights: averages } = generateMovingAverageSeries(
         firstDate,
         lastDate,
-        mockGetInterpolatedWeight,
+        weightRecords,
         true,
       );
 
@@ -136,14 +119,14 @@ describe('movingAverage utils', () => {
       const { dates: datesInclusive } = generateMovingAverageSeries(
         firstDate,
         lastDate,
-        mockGetInterpolatedWeight,
+        weightRecords,
         true,
       );
 
       const { dates: datesExclusive } = generateMovingAverageSeries(
         firstDate,
         lastDate,
-        mockGetInterpolatedWeight,
+        weightRecords,
         false,
       );
 
@@ -157,7 +140,7 @@ describe('movingAverage utils', () => {
       const { weights: averages } = generateMovingAverageSeries(
         new Date(2025, 0, 1),
         new Date(2025, 0, 10),
-        mockGetInterpolatedWeight,
+        weightRecords,
         true,
       );
 
@@ -179,7 +162,7 @@ describe('movingAverage utils', () => {
       const { dates } = generateMovingAverageSeries(
         firstDate,
         lastDate,
-        mockGetInterpolatedWeight,
+        weightRecords,
         true,
       );
 
@@ -203,7 +186,7 @@ describe('movingAverage utils', () => {
       const { dates, weights: averages } = generateMovingAverageSeries(
         date,
         date,
-        mockGetInterpolatedWeight,
+        weightRecords,
         true,
       );
 

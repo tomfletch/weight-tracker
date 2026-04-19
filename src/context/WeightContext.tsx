@@ -1,7 +1,6 @@
 import type React from 'react';
 import { createContext, useContext } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { daysBetween, parseISODate } from '../utils/dates';
 
 export const WeightUnit = {
   LBS: 'LBS',
@@ -20,7 +19,6 @@ interface WeightContextInterface {
   weightUnit: WeightUnit;
   setWeightUnit: (weightUnit: WeightUnit) => void;
   weightRecords: WeightRecord[];
-  getInterpolatedWeight: (date: Date) => number | null;
   addWeight: (weightRecord: WeightRecord) => void;
   deleteWeight: (date: string) => void;
   weightTargetKgs: number | null;
@@ -75,61 +73,12 @@ export function WeightProvider({ children }: Props) {
     );
   };
 
-  const getInterpolatedWeight = (date: Date): number | null => {
-    let nearestRecordBefore: WeightRecord | null = null;
-    let nearestRecordAfter: WeightRecord | null = null;
-
-    for (const weightRecord of weightRecords) {
-      const weightRecordDate = parseISODate(weightRecord.date);
-
-      if (weightRecordDate.getTime() === date.getTime()) {
-        return weightRecord.weightKgs;
-      }
-
-      if (
-        weightRecordDate < date &&
-        (!nearestRecordBefore ||
-          weightRecordDate > parseISODate(nearestRecordBefore.date))
-      ) {
-        nearestRecordBefore = weightRecord;
-      }
-
-      if (
-        weightRecordDate > date &&
-        (!nearestRecordAfter ||
-          weightRecordDate < parseISODate(nearestRecordAfter.date))
-      ) {
-        nearestRecordAfter = weightRecord;
-      }
-    }
-
-    if (!nearestRecordBefore || !nearestRecordAfter) {
-      return null;
-    }
-
-    const beforeDate = parseISODate(nearestRecordBefore.date);
-    const afterDate = parseISODate(nearestRecordAfter.date);
-
-    const deltaDays = daysBetween(beforeDate, afterDate);
-    const targetDays = daysBetween(beforeDate, date);
-
-    const deltaWeight =
-      nearestRecordAfter.weightKgs - nearestRecordBefore.weightKgs;
-    const targetDeltaWeight = (deltaWeight / deltaDays) * targetDays;
-
-    const interpolatedWeight =
-      nearestRecordBefore.weightKgs + targetDeltaWeight;
-
-    return interpolatedWeight;
-  };
-
   return (
     <WeightContext.Provider
       value={{
         weightUnit,
         setWeightUnit,
         weightRecords,
-        getInterpolatedWeight,
         addWeight,
         deleteWeight,
         weightTargetKgs,
