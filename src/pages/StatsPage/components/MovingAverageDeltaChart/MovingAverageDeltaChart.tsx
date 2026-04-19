@@ -1,27 +1,12 @@
-import type {
-  ChartData,
-  ChartOptions,
-  ScriptableScaleContext,
-  TooltipItem,
-} from 'chart.js';
+import type { ChartData, ChartOptions } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 import { Line } from 'react-chartjs-2';
 import { useSettingsContext } from '../../../../context/SettingsContext';
-import {
-  useWeightContext,
-  WeightUnit,
-} from '../../../../context/WeightContext';
-import { createTooltip } from '../../../../utils/chartjs';
+import { useWeightContext } from '../../../../context/WeightContext';
+import { generateMovingAverageSeries } from '../../../../utils/chart/movingAverage';
+import { buildBaseLineChartOptions } from '../../../../utils/chart/options';
+import { convertSeriesKgToDisplayUnit } from '../../../../utils/chart/weightUnits';
 import { parseISODate, toISODate } from '../../../../utils/dates';
-import {
-  convertKgToLb,
-  formatKg,
-  formatLb,
-  formatLbAsStLb,
-} from '../../../../utils/weights';
-
-const MOVING_AVERAGE_SIZE = 7;
-const MOVING_AVERAGE_OFFSET = (MOVING_AVERAGE_SIZE - 1) / 2;
 
 export function MovingAverageDeltaChart() {
   const { weightRecords, getInterpolatedWeight, weightUnit } =
@@ -29,73 +14,44 @@ export function MovingAverageDeltaChart() {
   const { accentColour } = useSettingsContext();
   const today = toISODate(new Date());
 
-  const getAverageWeight = (date: Date): number | null => {
-    let sumWeight = 0;
-
-    for (
-      let offset = -MOVING_AVERAGE_OFFSET;
-      offset <= MOVING_AVERAGE_OFFSET;
-      offset += 1
-    ) {
-      const offsetDate = new Date(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate() + offset,
-      );
-      const weight = getInterpolatedWeight(offsetDate);
-      if (weight === null) return null;
-      sumWeight += weight;
-    }
-
-    return sumWeight / MOVING_AVERAGE_SIZE;
-  };
-
   if (weightRecords.length === 0) {
     return <div>Not enough data</div>;
   }
 
   const firstDate = parseISODate(weightRecords[0].date);
   const lastDate = parseISODate(weightRecords[weightRecords.length - 1].date);
-  const currentDate = new Date(firstDate.getTime());
 
-  const dates = [];
-  const weights = [];
-  let weightChanges = [];
+  const { dates, weights } = generateMovingAverageSeries(
+    firstDate,
+    lastDate,
+    getInterpolatedWeight,
+    true,
+  );
 
-  while (currentDate < lastDate) {
-    dates.push(toISODate(currentDate));
-    weights.push(getAverageWeight(currentDate));
-
-    currentDate.setDate(currentDate.getDate() + 1);
-  }
-
-  for (let i = 0; i < weights.length - 1; i++) {
-    let delta = null;
-
-    if (i >= 7) {
-      const prevWeight = weights[i - 7];
-      const currentWeight = weights[i];
-
-      if (prevWeight && currentWeight) {
-        delta = currentWeight - prevWeight;
-      }
+  const deltaWeights = weights.map((current, index) => {
+    if (index === 0 || current === null) {
+      return null;
     }
 
-    weightChanges.push(delta);
-  }
+    const previous = weights[index - 1];
+    if (previous === null) {
+      return null;
+    }
 
-  if (weightUnit !== WeightUnit.KGS) {
-    weightChanges = weightChanges.map(
-      (weightKg) => weightKg && Math.round(convertKgToLb(weightKg) * 10) / 10,
-    );
-  }
+    return current - previous;
+  });
+
+  const displayDeltaWeights = convertSeriesKgToDisplayUnit(
+    deltaWeights,
+    weightUnit,
+  );
 
   const chartData: ChartData<'line'> = {
     labels: dates,
     datasets: [
       {
-        label: 'Moving Average Weekly Weight Change',
-        data: weightChanges,
+        label: 'Weight Delta',
+        data: displayDeltaWeights,
         borderColor: accentColour,
         borderWidth: 1,
         backgroundColor: accentColour,
@@ -104,76 +60,13 @@ export function MovingAverageDeltaChart() {
     ],
   };
 
-  const chartOptions: ChartOptions<'line'> = {
-    plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        enabled: false,
-        filter(tooltipItem: TooltipItem<'line'>) {
-          return tooltipItem.datasetIndex === 0;
-        },
-        position: 'nearest' as const,
-        callbacks: {
-          label(context: TooltipItem<'line'>) {
-            if (context.parsed.y === null) return '';
-            if (weightUnit === WeightUnit.KGS) {
-              return formatKg(context.parsed.y);
-            }
-            if (weightUnit === WeightUnit.LBS) {
-              return formatLb(context.parsed.y);
-            }
-            if (weightUnit === WeightUnit.STONES_LBS) {
-              return formatLbAsStLb(context.parsed.y);
-            }
-            return '';
-          },
-        },
-        external: createTooltip,
-      },
+  const chartOptions: ChartOptions<'line'> = buildBaseLineChartOptions({
+    weightUnit,
+    maxDate: today,
+    yAxisConfig: {
+      beginAtZero: true,
     },
-    interaction: {
-      mode: 'nearest' as const,
-      axis: 'x' as const,
-      intersect: true,
-    },
-    spanGaps: true,
-    clip: false,
-    scales: {
-      x: {
-        type: 'time' as const,
-        max: today,
-        time: {
-          unit: 'day' as const,
-        },
-      },
-      y: {
-        beginAtZero: true,
-        grid: {
-          color: (line: ScriptableScaleContext) =>
-            line.tick.value === 0 ? 'rgba(0, 0, 0, 0.4)' : 'rgba(0, 0, 0, 0.1)',
-        },
-        ticks: {
-          callback: (value: number | string): string => {
-            if (typeof value === 'number') {
-              if (weightUnit === WeightUnit.KGS) {
-                return formatKg(value, 1);
-              }
-              if (weightUnit === WeightUnit.LBS) {
-                return formatLb(value, 1);
-              }
-              if (weightUnit === WeightUnit.STONES_LBS) {
-                return formatLbAsStLb(value, 1);
-              }
-            }
-
-            return '';
-          },
-        },
-      },
-    },
-  };
+  });
 
   return (
     <div className="card">

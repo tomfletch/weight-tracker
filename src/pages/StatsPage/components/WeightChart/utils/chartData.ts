@@ -1,20 +1,15 @@
-import type { ChartData, ChartOptions, TooltipItem } from 'chart.js';
-import {
-  type WeightRecord,
+import type { ChartData, ChartOptions } from 'chart.js';
+import type {
+  WeightRecord,
   WeightUnit,
 } from '../../../../../context/WeightContext';
-import { createTooltip } from '../../../../../utils/chartjs';
+import { buildBaseLineChartOptions } from '../../../../../utils/chart/options';
+import { convertSeriesKgToDisplayUnit } from '../../../../../utils/chart/weightUnits';
 import {
   daysBetween,
   parseISODate,
   toISODate,
 } from '../../../../../utils/dates';
-import {
-  convertKgToLb,
-  formatKg,
-  formatLb,
-  formatLbAsStLb,
-} from '../../../../../utils/weights';
 
 export const CHART_PERIODS = [
   { key: 'ALL', label: 'All Time' },
@@ -131,19 +126,6 @@ export function getWeightChartDateRange({
   };
 }
 
-function convertSeriesToWeightUnit(
-  values: (number | null)[],
-  weightUnit: WeightUnit,
-): (number | null)[] {
-  if (weightUnit === WeightUnit.KGS) {
-    return values;
-  }
-
-  return values.map((weightKg) =>
-    weightKg === null ? null : Math.round(convertKgToLb(weightKg) * 10) / 10,
-  );
-}
-
 export function getWeightChartData({
   weightRecords,
   weightTargetKgs,
@@ -177,11 +159,11 @@ export function getWeightChartData({
   );
   insertSortedUniqueDate(dates, endDateStr);
 
-  const weights = convertSeriesToWeightUnit(
+  const weights = convertSeriesKgToDisplayUnit(
     dates.map((date) => getInterpolatedWeightKgs(date, weightRecords)),
     weightUnit,
   );
-  const targetWeights = convertSeriesToWeightUnit(
+  const targetWeights = convertSeriesKgToDisplayUnit(
     dates.map((date) =>
       date === startDateStr || date === endDateStr ? weightTargetKgs : null,
     ),
@@ -214,81 +196,15 @@ export function getWeightChartData({
   };
 }
 
-function formatWeightLabel(value: number, weightUnit: WeightUnit): string {
-  if (weightUnit === WeightUnit.KGS) {
-    return formatKg(value);
-  }
-  if (weightUnit === WeightUnit.LBS) {
-    return formatLb(value);
-  }
-  return formatLbAsStLb(value);
-}
-
-function formatWeightTick(value: number, weightUnit: WeightUnit): string {
-  if (weightUnit === WeightUnit.KGS) {
-    return formatKg(value, 0);
-  }
-  if (weightUnit === WeightUnit.LBS) {
-    return formatLb(value, 0);
-  }
-  return formatLbAsStLb(value, 0);
-}
-
 export function getWeightChartOptions(
   weightUnit: WeightUnit,
   dateRange: WeightChartDateRange,
 ): ChartOptions<'line'> {
   const { startDateStr, endDateStr } = dateRange;
 
-  return {
-    plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        enabled: false,
-        filter(tooltipItem: TooltipItem<'line'>) {
-          return tooltipItem.datasetIndex === 0;
-        },
-        position: 'nearest',
-        callbacks: {
-          label(context: TooltipItem<'line'>) {
-            if (context.parsed.y === null) {
-              return '';
-            }
-            return formatWeightLabel(context.parsed.y, weightUnit);
-          },
-        },
-        external: createTooltip,
-      },
-    },
-    interaction: {
-      mode: 'nearest',
-      axis: 'x',
-      intersect: true,
-    },
-    spanGaps: true,
-    clip: false,
-    scales: {
-      x: {
-        type: 'time',
-        min: startDateStr,
-        max: endDateStr,
-        time: {
-          unit: 'day',
-        },
-      },
-      y: {
-        ticks: {
-          callback: (value: number | string): string => {
-            if (typeof value !== 'number') {
-              return '';
-            }
-
-            return formatWeightTick(value, weightUnit);
-          },
-        },
-      },
-    },
-  };
+  return buildBaseLineChartOptions({
+    weightUnit,
+    minDate: startDateStr,
+    maxDate: endDateStr,
+  });
 }
