@@ -2,11 +2,11 @@ import type { ChartData, ChartOptions } from 'chart.js';
 import type {
   WeightRecord,
   WeightUnit,
-} from '../../../../../context/WeightContext';
-import { buildBaseLineChartOptions } from '../../../../../utils/chart/options';
-import { convertSeriesKgToDisplayUnit } from '../../../../../utils/chart/weightUnits';
-import { parseISODate, toISODate } from '../../../../../utils/dates';
-import { interpolateWeightAtDateString } from '../../../../../utils/weightInterpolation';
+} from '../../../../context/WeightContext';
+import { buildBaseLineChartOptions } from '../../../../utils/chart/options';
+import { convertSeriesKgToDisplayUnit } from '../../../../utils/chart/weightUnits';
+import { parseISODate, toISODate } from '../../../../utils/dates';
+import { interpolateWeightAtDateString } from '../../../../utils/weightInterpolation';
 
 export const CHART_PERIODS = [
   { key: 'ALL', label: 'All Time' },

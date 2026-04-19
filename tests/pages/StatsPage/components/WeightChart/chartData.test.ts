@@ -3,13 +3,13 @@ import { describe, expect, it } from 'vitest';
 import {
   type WeightRecord,
   WeightUnit,
-} from '../../../../../../src/context/WeightContext';
+} from '../../../../../src/context/WeightContext';
 import {
   CHART_PERIODS,
   getWeightChartData,
   getWeightChartDateRange,
   getWeightChartOptions,
-} from '../../../../../../src/pages/StatsPage/components/WeightChart/utils/chartData';
+} from '../../../../../src/pages/StatsPage/components/WeightChart/chartData';
 
 const weightRecords: WeightRecord[] = [
   { date: '2025-01-01', weightKgs: 100 },

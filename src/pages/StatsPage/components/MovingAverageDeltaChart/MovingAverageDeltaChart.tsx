@@ -3,69 +3,27 @@ import 'chartjs-adapter-date-fns';
 import { Line } from 'react-chartjs-2';
 import { useSettingsContext } from '../../../../context/SettingsContext';
 import { useWeightContext } from '../../../../context/WeightContext';
-import { generateMovingAverageSeries } from '../../../../utils/chart/movingAverage';
-import { buildBaseLineChartOptions } from '../../../../utils/chart/options';
-import { convertSeriesKgToDisplayUnit } from '../../../../utils/chart/weightUnits';
-import { parseISODate, toISODate } from '../../../../utils/dates';
+import {
+  getMovingAverageDeltaChartData,
+  getMovingAverageDeltaChartOptions,
+} from './chartData';
 
 export function MovingAverageDeltaChart() {
   const { weightRecords, weightUnit } = useWeightContext();
   const { accentColour } = useSettingsContext();
-  const today = toISODate(new Date());
 
   if (weightRecords.length === 0) {
     return <div>Not enough data</div>;
   }
 
-  const firstDate = parseISODate(weightRecords[0].date);
-  const lastDate = parseISODate(weightRecords[weightRecords.length - 1].date);
-
-  const { dates, weights } = generateMovingAverageSeries(
-    firstDate,
-    lastDate,
+  const chartData: ChartData<'line'> = getMovingAverageDeltaChartData({
     weightRecords,
-    true,
-  );
-
-  const deltaWeights = weights.map((current, index) => {
-    if (index === 0 || current === null) {
-      return null;
-    }
-
-    const previous = weights[index - 1];
-    if (previous === null) {
-      return null;
-    }
-
-    return current - previous;
+    weightUnit,
+    accentColour,
   });
 
-  const displayDeltaWeights = convertSeriesKgToDisplayUnit(
-    deltaWeights,
-    weightUnit,
-  );
-
-  const chartData: ChartData<'line'> = {
-    labels: dates,
-    datasets: [
-      {
-        label: 'Weight Delta',
-        data: displayDeltaWeights,
-        borderColor: accentColour,
-        borderWidth: 1,
-        backgroundColor: accentColour,
-        pointHitRadius: 500,
-      },
-    ],
-  };
-
-  const chartOptions: ChartOptions<'line'> = buildBaseLineChartOptions({
-    weightUnit,
-    maxDate: today,
-    yAxisConfig: {
-      beginAtZero: true,
-    },
-  });
+  const chartOptions: ChartOptions<'line'> =
+    getMovingAverageDeltaChartOptions(weightUnit);
 
   return (
     <div className="card">

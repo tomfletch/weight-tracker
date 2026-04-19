@@ -9,7 +9,7 @@ import {
   getWeightChartData,
   getWeightChartDateRange,
   getWeightChartOptions,
-} from './utils/chartData';
+} from './chartData';
 import styles from './WeightChart.module.css';
 
 export function WeightChart() {
