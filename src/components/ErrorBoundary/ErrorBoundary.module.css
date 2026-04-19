@@ -1,0 +1,42 @@
+.container {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  background-color: #eee;
+}
+
+.card {
+  width: min(36rem, 100%);
+  background-color: white;
+  border: 1px solid #e7e7e7;
+  border-radius: 3px;
+  padding: 2rem;
+}
+
+.card h1 {
+  margin: 0 0 1rem;
+  color: #222;
+  font-weight: normal;
+}
+
+.card p {
+  margin: 0 0 1.5rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+.reloadButton {
+  border: 1px solid #bbb;
+  border-radius: 3px;
+  padding: 0.6rem 0.6rem;
+  font-size: 1.6rem;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+  background-color: white;
+  color: #222;
+}
+
+.reloadButton:hover {
+  background-color: #f5f5f5;
+}
