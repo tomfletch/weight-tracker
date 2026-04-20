@@ -13,6 +13,12 @@ const LEGACY_KEYS = {
   weightUnit: 'weightUnit',
 } as const;
 
+function deleteLegacyKeys(): void {
+  for (const key of Object.values(LEGACY_KEYS)) {
+    localStorage.removeItem(key);
+  }
+}
+
 function tryParseStoredValue(raw: string | null): unknown {
   if (raw === null) {
     return null;
@@ -86,6 +92,7 @@ export function runLegacyLocalStorageToAppStoreMigration(): void {
 
   // If appStore already exists, this client has already moved over.
   if (localStorage.getItem(APP_STORE_KEY) !== null) {
+    deleteLegacyKeys();
     return;
   }
 
@@ -135,4 +142,5 @@ export function runLegacyLocalStorageToAppStoreMigration(): void {
   };
 
   localStorage.setItem(APP_STORE_KEY, JSON.stringify(persistedPayload));
+  deleteLegacyKeys();
 }
