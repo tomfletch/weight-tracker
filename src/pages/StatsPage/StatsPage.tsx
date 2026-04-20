@@ -1,4 +1,4 @@
-import { useWeightContext } from '../../context/WeightContext';
+import { useAppWeight } from '../../hooks/useAppWeight';
 import { AddWeight } from './components/AddWeight/AddWeight';
 import { MovingAverageDeltaChart } from './components/MovingAverageDeltaChart/MovingAverageDeltaChart';
 import { MovingAverageWeightChart } from './components/MovingAverageWeightChart/MovingAverageWeightChart';
@@ -8,7 +8,7 @@ import { StatsHeader } from './components/StatsHeader/StatsHeader';
 import { WeightChart } from './components/WeightChart/WeightChart';
 
 export function StatsPage() {
-  const { weightRecords } = useWeightContext();
+  const { weightRecords } = useAppWeight();
 
   return (
     <>

@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type React from 'react';
 import { useState } from 'react';
 import { WeightInput } from '../../../../components/WeightInput/WeightInput';
-import { useSettingsContext } from '../../../../context/SettingsContext';
-import { useWeightContext } from '../../../../context/WeightContext';
+import { useAppSettings } from '../../../../hooks/useAppSettings';
+import { useAppWeight } from '../../../../hooks/useAppWeight';
 import type { WeightRecord } from '../../../../types/weight';
 import { toISODate } from '../../../../utils/dates';
 import styles from './AddWeight.module.css';
@@ -16,8 +16,8 @@ export function AddWeight() {
   const [date, setDate] = useState(todayStr);
   const [weight, setWeight] = useState<number | null>(null);
 
-  const { addWeight } = useWeightContext();
-  const { accentColour } = useSettingsContext();
+  const { addWeight } = useAppWeight();
+  const { accentColour } = useAppSettings();
 
   const onWeightSubmit = (e: React.FormEvent) => {
     e.preventDefault();

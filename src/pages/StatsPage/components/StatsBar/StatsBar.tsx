@@ -4,8 +4,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { subDays } from 'date-fns';
-import { useHeightContext } from '../../../../context/HeightContext';
-import { useWeightContext } from '../../../../context/WeightContext';
+import { useAppHeight } from '../../../../hooks/useAppHeight';
+import { useAppWeight } from '../../../../hooks/useAppWeight';
 import { daysBetween, parseISODate } from '../../../../utils/dates';
 import { interpolateWeightAtDate } from '../../../../utils/weightInterpolation';
 import { formatWeight } from '../../../../utils/weights';
@@ -39,7 +39,7 @@ function RateStatsWidget({
   type: string;
   startDate: Date;
 }) {
-  const { weightRecords, weightUnit, weightTargetKgs } = useWeightContext();
+  const { weightRecords, weightUnit, weightTargetKgs } = useAppWeight();
 
   const lastWeightRecord = weightRecords[weightRecords.length - 1];
   const lastWeightDate = parseISODate(lastWeightRecord.date);
@@ -105,8 +105,8 @@ function BMIWidget() {
 }
 
 function BMIWidgetContent() {
-  const { weightRecords } = useWeightContext();
-  const { height } = useHeightContext();
+  const { weightRecords } = useAppWeight();
+  const { height } = useAppHeight();
 
   if (!height) {
     return <>Height not set</>;
@@ -165,7 +165,7 @@ function BMIWidgetContent() {
 }
 
 export function StatsBar() {
-  const { weightRecords } = useWeightContext();
+  const { weightRecords } = useAppWeight();
 
   const firstRecordDate = parseISODate(weightRecords[0].date);
   const lastRecordDate = parseISODate(

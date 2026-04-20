@@ -1,11 +1,11 @@
-import { useSettingsContext } from '../../../../context/SettingsContext';
-import { useWeightContext } from '../../../../context/WeightContext';
+import { useAppSettings } from '../../../../hooks/useAppSettings';
+import { useAppWeight } from '../../../../hooks/useAppWeight';
 import { formatWeight } from '../../../../utils/weights';
 import styles from './ProgressBar.module.css';
 
 export function ProgressBar() {
-  const { weightRecords, weightUnit, weightTargetKgs } = useWeightContext();
-  const { accentColour } = useSettingsContext();
+  const { weightRecords, weightUnit, weightTargetKgs } = useAppWeight();
+  const { accentColour } = useAppSettings();
 
   if (weightRecords.length === 0 || !weightTargetKgs) return null;
 

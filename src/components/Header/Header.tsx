@@ -7,11 +7,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { CSSProperties } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '../../assets/logo.svg';
-import { useSettingsContext } from '../../context/SettingsContext';
+import { useAppSettings } from '../../hooks/useAppSettings';
 import styles from './Header.module.css';
 
 export function Header() {
-  const { accentColour } = useSettingsContext();
+  const { accentColour } = useAppSettings();
 
   const isActiveClass = ({
     isActive,

@@ -1,6 +1,6 @@
 import type React from 'react';
 import { useEffect, useState } from 'react';
-import { useHeightContext } from '../../context/HeightContext';
+import { useAppHeight } from '../../hooks/useAppHeight';
 import { HeightUnit } from '../../types/height';
 import {
   convertCmToM,
@@ -178,7 +178,7 @@ function HeightInputFtIn({ id, height, onChange }: Props) {
 }
 
 export function HeightInput({ id, height, onChange }: Props) {
-  const { heightUnit } = useHeightContext();
+  const { heightUnit } = useAppHeight();
 
   let InputComponent = HeightInputCm;
 

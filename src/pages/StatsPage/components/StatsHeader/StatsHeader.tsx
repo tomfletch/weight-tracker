@@ -3,14 +3,14 @@ import {
   faLongArrowUp,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useSettingsContext } from '../../../../context/SettingsContext';
-import { useWeightContext } from '../../../../context/WeightContext';
+import { useAppSettings } from '../../../../hooks/useAppSettings';
+import { useAppWeight } from '../../../../hooks/useAppWeight';
 import { formatWeight } from '../../../../utils/weights';
 import styles from './StatsHeader.module.css';
 
 export function StatsHeader() {
-  const { weightRecords, weightUnit, weightTargetKgs } = useWeightContext();
-  const { accentColour } = useSettingsContext();
+  const { weightRecords, weightUnit, weightTargetKgs } = useAppWeight();
+  const { accentColour } = useAppSettings();
 
   const weightTargetStr = weightTargetKgs
     ? formatWeight(weightTargetKgs, weightUnit)

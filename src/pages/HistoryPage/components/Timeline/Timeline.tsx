@@ -1,5 +1,5 @@
-import { useSettingsContext } from '../../../../context/SettingsContext';
-import { useWeightContext } from '../../../../context/WeightContext';
+import { useAppSettings } from '../../../../hooks/useAppSettings';
+import { useAppWeight } from '../../../../hooks/useAppWeight';
 import type { WeightRecord } from '../../../../types/weight';
 import {
   formatDayth,
@@ -12,8 +12,8 @@ import { formatWeight } from '../../../../utils/weights';
 import styles from './Timeline.module.css';
 
 export function Timeline() {
-  const { weightRecords, weightUnit, deleteWeight } = useWeightContext();
-  const { accentColour } = useSettingsContext();
+  const { weightRecords, weightUnit, deleteWeight } = useAppWeight();
+  const { accentColour } = useAppSettings();
 
   if (weightRecords.length === 0) {
     return (

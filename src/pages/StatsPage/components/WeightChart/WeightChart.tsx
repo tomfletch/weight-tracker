@@ -1,8 +1,8 @@
 import 'chartjs-adapter-date-fns';
 import { useState } from 'react';
 import { Line } from 'react-chartjs-2';
-import { useSettingsContext } from '../../../../context/SettingsContext';
-import { useWeightContext } from '../../../../context/WeightContext';
+import { useAppSettings } from '../../../../hooks/useAppSettings';
+import { useAppWeight } from '../../../../hooks/useAppWeight';
 import {
   CHART_PERIODS,
   type ChartPeriod,
@@ -13,8 +13,8 @@ import {
 import styles from './WeightChart.module.css';
 
 export function WeightChart() {
-  const { weightRecords, weightTargetKgs, weightUnit } = useWeightContext();
-  const { accentColour } = useSettingsContext();
+  const { weightRecords, weightTargetKgs, weightUnit } = useAppWeight();
+  const { accentColour } = useAppSettings();
   const [period, setPeriod] = useState<ChartPeriod>(CHART_PERIODS[0]);
 
   if (weightRecords.length === 0) {

@@ -1,6 +1,6 @@
 import type React from 'react';
 import { useEffect, useState } from 'react';
-import { useWeightContext } from '../../context/WeightContext';
+import { useAppWeight } from '../../hooks/useAppWeight';
 import { WeightUnit } from '../../types/weight';
 import { toFixedNoZero } from '../../utils/numbers';
 import {
@@ -184,7 +184,7 @@ function WeightInputLb({ id, weight, onChange }: Props) {
 }
 
 export function WeightInput({ id, weight, onChange }: Props) {
-  const { weightUnit } = useWeightContext();
+  const { weightUnit } = useAppWeight();
 
   let InputComponent = WeightInputKg;
 

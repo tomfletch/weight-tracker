@@ -4,8 +4,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
-import { useSettingsContext } from '../../../../context/SettingsContext';
-import { useWeightContext } from '../../../../context/WeightContext';
+import { useAppSettings } from '../../../../hooks/useAppSettings';
+import { useAppWeight } from '../../../../hooks/useAppWeight';
 import {
   getFirstOfMonth,
   MONTH_NAMES,
@@ -19,8 +19,8 @@ export function Calendar() {
     getFirstOfMonth(today),
   );
 
-  const { weightRecords } = useWeightContext();
-  const { accentColour } = useSettingsContext();
+  const { weightRecords } = useAppWeight();
+  const { accentColour } = useAppSettings();
 
   const nextMonth = new Date(
     currentMonth.getFullYear(),

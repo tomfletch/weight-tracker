@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 import { HeightInput } from '../../components/HeightInput/HeightInput';
 import { WeightInput } from '../../components/WeightInput/WeightInput';
-import { useHeightContext } from '../../context/HeightContext';
-import { useSettingsContext } from '../../context/SettingsContext';
-import { useWeightContext } from '../../context/WeightContext';
+import { useAppHeight } from '../../hooks/useAppHeight';
+import { useAppSettings } from '../../hooks/useAppSettings';
+import { useAppWeight } from '../../hooks/useAppWeight';
 import {
   HeightUnit,
   type HeightUnit as HeightUnitType,
@@ -29,9 +29,9 @@ const heightUnitOptions = [
 
 export function SettingsPage() {
   const { weightUnit, setWeightUnit, weightTargetKgs, setWeightTargetKgs } =
-    useWeightContext();
-  const { accentColour, setAccentColour } = useSettingsContext();
-  const { heightUnit, setHeightUnit, height, setHeight } = useHeightContext();
+    useAppWeight();
+  const { accentColour, setAccentColour } = useAppSettings();
+  const { heightUnit, setHeightUnit, height, setHeight } = useAppHeight();
 
   const onTargetWeightChange = useCallback(
     (weight: number | null) => {
