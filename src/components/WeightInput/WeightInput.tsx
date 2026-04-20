@@ -1,6 +1,7 @@
 import type React from 'react';
 import { useEffect, useState } from 'react';
-import { WeightUnit, useWeightContext } from '../../context/WeightContext';
+import { useWeightContext } from '../../context/WeightContext';
+import { WeightUnit } from '../../types/weight';
 import { toFixedNoZero } from '../../utils/numbers';
 import {
   convertKgToLb,

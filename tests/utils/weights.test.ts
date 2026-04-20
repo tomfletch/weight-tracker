@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { WeightUnit } from '../../src/context/WeightContext';
+import { WeightUnit } from '../../src/types/weight';
 import {
   convertKgToLb,
   convertKgToStLb,

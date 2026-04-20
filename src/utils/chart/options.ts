@@ -1,5 +1,5 @@
 import type { ChartOptions, TooltipItem } from 'chart.js';
-import type { WeightUnit } from '../../context/WeightContext';
+import type { WeightUnit } from '../../types/weight';
 import { createTooltip } from '../chartjs';
 import { formatWeightValueByUnit } from './weightUnits';
 

@@ -1,4 +1,4 @@
-import type { WeightRecord } from '../context/WeightContext';
+import type { WeightRecord } from '../types/weight';
 import { daysBetween, parseISODate } from './dates';
 
 /**

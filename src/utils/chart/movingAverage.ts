@@ -1,4 +1,4 @@
-import type { WeightRecord } from '../../context/WeightContext';
+import type { WeightRecord } from '../../types/weight';
 import { toISODate } from '../dates';
 import { interpolateWeightAtDate } from '../weightInterpolation';
 

@@ -1,8 +1,5 @@
 import type { ChartData, ChartOptions } from 'chart.js';
-import type {
-  WeightRecord,
-  WeightUnit,
-} from '../../../../context/WeightContext';
+import type { WeightRecord, WeightUnit } from '../../../../types/weight';
 import { generateMovingAverageSeries } from '../../../../utils/chart/movingAverage';
 import { buildBaseLineChartOptions } from '../../../../utils/chart/options';
 import { convertSeriesKgToDisplayUnit } from '../../../../utils/chart/weightUnits';

@@ -1,4 +1,4 @@
-import { WeightUnit } from '../../context/WeightContext';
+import { WeightUnit } from '../../types/weight';
 import { convertKgToLb, formatKg, formatLb, formatLbAsStLb } from '../weights';
 
 /**

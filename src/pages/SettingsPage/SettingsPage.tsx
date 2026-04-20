@@ -1,9 +1,17 @@
 import { useCallback } from 'react';
 import { HeightInput } from '../../components/HeightInput/HeightInput';
 import { WeightInput } from '../../components/WeightInput/WeightInput';
-import { HeightUnit, useHeightContext } from '../../context/HeightContext';
+import { useHeightContext } from '../../context/HeightContext';
 import { useSettingsContext } from '../../context/SettingsContext';
-import { useWeightContext, WeightUnit } from '../../context/WeightContext';
+import { useWeightContext } from '../../context/WeightContext';
+import {
+  HeightUnit,
+  type HeightUnit as HeightUnitType,
+} from '../../types/height';
+import {
+  WeightUnit,
+  type WeightUnit as WeightUnitType,
+} from '../../types/weight';
 import { ColourSelect } from './ColourSelect/ColourSelect';
 import styles from './SettingsPage.module.css';
 
@@ -34,13 +42,13 @@ export function SettingsPage() {
   );
 
   const onWeightUnitChange = (weightUnitStr: string) => {
-    const newWeightUnit: WeightUnit =
+    const newWeightUnit: WeightUnitType =
       WeightUnit[weightUnitStr as keyof typeof WeightUnit];
     setWeightUnit(newWeightUnit);
   };
 
   const onHeightUnitChange = (heightUnitStr: string) => {
-    const newHeightUnit: HeightUnit =
+    const newHeightUnit: HeightUnitType =
       HeightUnit[heightUnitStr as keyof typeof HeightUnit];
     setHeightUnit(newHeightUnit);
   };

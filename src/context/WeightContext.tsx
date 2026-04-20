@@ -1,19 +1,7 @@
 import type React from 'react';
 import { createContext, useContext } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-
-export const WeightUnit = {
-  LBS: 'LBS',
-  STONES_LBS: 'STONES_LBS',
-  KGS: 'KGS',
-} as const;
-
-export type WeightUnit = (typeof WeightUnit)[keyof typeof WeightUnit];
-
-export interface WeightRecord {
-  date: string;
-  weightKgs: number;
-}
+import { type WeightRecord, WeightUnit } from '../types/weight';
 
 interface WeightContextInterface {
   weightUnit: WeightUnit;

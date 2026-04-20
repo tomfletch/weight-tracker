@@ -1,13 +1,10 @@
 import type { ChartData } from 'chart.js';
 import { describe, expect, it } from 'vitest';
 import {
-  type WeightRecord,
-  WeightUnit,
-} from '../../../../../src/context/WeightContext';
-import {
   getMovingAverageDeltaChartData,
   getMovingAverageDeltaChartOptions,
 } from '../../../../../src/pages/StatsPage/components/MovingAverageDeltaChart/chartData';
+import { type WeightRecord, WeightUnit } from '../../../../../src/types/weight';
 
 const weightRecords: WeightRecord[] = [
   { date: '2025-01-01', weightKgs: 100 },

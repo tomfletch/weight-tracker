@@ -1,4 +1,4 @@
-import { WeightUnit } from '../context/WeightContext';
+import { WeightUnit } from '../types/weight';
 
 const LB_PER_ST = 14;
 const LB_PER_KG = 2.20462;

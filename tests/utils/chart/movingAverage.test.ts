@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { WeightRecord } from '../../../src/context/WeightContext';
+import type { WeightRecord } from '../../../src/types/weight';
 import {
   computeMovingAverage,
   generateMovingAverageSeries,

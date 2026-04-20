@@ -1,8 +1,6 @@
 import { useSettingsContext } from '../../../../context/SettingsContext';
-import {
-  useWeightContext,
-  type WeightRecord,
-} from '../../../../context/WeightContext';
+import { useWeightContext } from '../../../../context/WeightContext';
+import type { WeightRecord } from '../../../../types/weight';
 import {
   formatDayth,
   getFirstOfMonth,

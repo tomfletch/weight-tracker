@@ -1,14 +1,7 @@
 import type React from 'react';
 import { createContext, useContext } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-
-export const HeightUnit = {
-  CM: 'CM',
-  FT_IN: 'FT_IN',
-  IN: 'IN',
-} as const;
-
-export type HeightUnit = (typeof HeightUnit)[keyof typeof HeightUnit];
+import { HeightUnit } from '../types/height';
 
 interface HeightContextInterface {
   heightUnit: HeightUnit;

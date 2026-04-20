@@ -4,10 +4,8 @@ import type React from 'react';
 import { useState } from 'react';
 import { WeightInput } from '../../../../components/WeightInput/WeightInput';
 import { useSettingsContext } from '../../../../context/SettingsContext';
-import {
-  useWeightContext,
-  type WeightRecord,
-} from '../../../../context/WeightContext';
+import { useWeightContext } from '../../../../context/WeightContext';
+import type { WeightRecord } from '../../../../types/weight';
 import { toISODate } from '../../../../utils/dates';
 import styles from './AddWeight.module.css';
 
