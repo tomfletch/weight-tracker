@@ -1,14 +1,3 @@
-function removeActionsFromStore() {
-  const store = JSON.parse(localStorage.getItem('appStore') || '{}');
-
-  const { actions, ...rest } = store.state;
-  store.state = rest;
-
-  localStorage.setItem('appStore', JSON.stringify(store));
-}
-
-removeActionsFromStore();
-
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
