@@ -29,7 +29,7 @@ describe('movingAverageDeltaChart chartData utils', () => {
       });
 
       expect(chartData.datasets).toHaveLength(1);
-      expect(chartData.datasets[0].label).toBe('Weight Delta');
+      expect(chartData.datasets[0].label).toBe('Weekly Weight Delta');
       expect(chartData.datasets[0].borderColor).toBe('#123456');
     });
 
@@ -68,6 +68,20 @@ describe('movingAverageDeltaChart chartData utils', () => {
       if (numericValues.length > 0) {
         expect(Math.abs(numericValues[0])).toBeGreaterThan(0);
       }
+    });
+
+    it('should express delta values as weekly change', () => {
+      const chartData = getMovingAverageDeltaChartData({
+        weightRecords,
+        weightUnit: WeightUnit.KGS,
+        accentColour: '#123456',
+      });
+
+      const numericValues = chartData.datasets[0].data.filter(
+        (value): value is number => value !== null,
+      );
+
+      expect(numericValues[0]).toBe(-7);
     });
   });
 

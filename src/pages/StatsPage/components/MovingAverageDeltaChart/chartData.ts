@@ -34,7 +34,8 @@ export function getMovingAverageDeltaChartData({
       return null;
     }
 
-    return current - previous;
+    const dailyDelta = current - previous;
+    return dailyDelta * 7;
   });
 
   const displayDeltaWeights = convertSeriesKgToDisplayUnit(
@@ -46,7 +47,7 @@ export function getMovingAverageDeltaChartData({
     labels: dates,
     datasets: [
       {
-        label: 'Weight Delta',
+        label: 'Weekly Weight Delta',
         data: displayDeltaWeights,
         borderColor: accentColour,
         borderWidth: 1,
