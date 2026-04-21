@@ -8,13 +8,13 @@ import { Link, NavLink } from 'react-router-dom';
 import logo from '~/assets/logo.svg';
 import styles from './Header.module.css';
 
-export function Header() {
-  const isActiveClass = ({
-    isActive,
-  }: {
-    isActive: boolean;
-  }): string | undefined => (isActive ? styles.active : undefined);
+const LINKS = [
+  { to: '/', label: 'Stats', icon: faChartLine },
+  { to: '/history', label: 'History', icon: faCalendarDays },
+  { to: '/settings', label: 'Settings', icon: faGear },
+];
 
+export function Header() {
   return (
     <header className={styles.header}>
       <h1>
@@ -31,21 +31,18 @@ export function Header() {
       </h1>
       <nav className={styles.mainNav}>
         <ul>
-          <li>
-            <NavLink to="/" className={isActiveClass}>
-              <FontAwesomeIcon icon={faChartLine} /> Stats
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/history" className={isActiveClass}>
-              <FontAwesomeIcon icon={faCalendarDays} /> History
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/settings" className={isActiveClass}>
-              <FontAwesomeIcon icon={faGear} /> Settings
-            </NavLink>
-          </li>
+          {LINKS.map(({ to, label, icon }) => (
+            <li key={to}>
+              <NavLink
+                to={to}
+                className={({ isActive }) =>
+                  isActive ? styles.active : undefined
+                }
+              >
+                <FontAwesomeIcon icon={icon} /> {label}
+              </NavLink>
+            </li>
+          ))}
         </ul>
       </nav>
     </header>
