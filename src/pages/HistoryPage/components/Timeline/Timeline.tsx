@@ -1,4 +1,3 @@
-import { useAppSettings } from '~/hooks/useAppSettings';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import type { WeightRecord } from '~/types/weight';
 import {
@@ -13,14 +12,10 @@ import styles from './Timeline.module.css';
 
 export function Timeline() {
   const { weightRecords, weightUnit, deleteWeight } = useAppWeight();
-  const { accentColour } = useAppSettings();
 
   if (weightRecords.length === 0) {
     return (
-      <div
-        className={styles.timeline}
-        style={{ borderLeftColor: accentColour }}
-      >
+      <div className={styles.timeline}>
         <div className={styles.emptyState}>No weight entries yet.</div>
       </div>
     );
@@ -67,15 +62,11 @@ export function Timeline() {
                 className={styles.deleteBtn}
                 type="button"
                 onClick={() => deleteWeight(weightRecord.date)}
-                style={{ color: accentColour }}
               >
                 &times;
               </button>
             </div>
-            <div
-              className={styles.dataDot}
-              style={{ backgroundColor: accentColour }}
-            />
+            <div className={styles.dataDot} />
           </div>
         ))}
       </div>
@@ -90,9 +81,5 @@ export function Timeline() {
     );
   }
 
-  return (
-    <div className={styles.timeline} style={{ borderLeftColor: accentColour }}>
-      {months}
-    </div>
-  );
+  return <div className={styles.timeline}>{months}</div>;
 }

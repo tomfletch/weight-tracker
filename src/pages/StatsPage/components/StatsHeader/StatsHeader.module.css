@@ -20,7 +20,7 @@
 
 .currentWeightContainer {
   color: white;
-  background-color: #00c8ff;
+  background-color: var(--accent-colour);
   width: 130px;
   height: 130px;
   border-radius: 100%;

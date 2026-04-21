@@ -3,6 +3,11 @@
   padding: 0;
 }
 
+:root {
+  /* Default accent colour. This is overridden by the user's chosen accent colour in the app settings */
+  --accent-colour: #00c8ff;
+}
+
 html {
   font-size: 62.5%;
 }

@@ -51,7 +51,7 @@ header {
 
 .mainNav a.active {
   /* font-weight: bold; */
-  color: #111;
+  color: var(--accent-colour);
 }
 
 @media (max-width: 600px) {

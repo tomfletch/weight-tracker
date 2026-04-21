@@ -3,14 +3,12 @@ import {
   faLongArrowUp,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useAppSettings } from '~/hooks/useAppSettings';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import { formatWeight } from '~/utils/weights';
 import styles from './StatsHeader.module.css';
 
 export function StatsHeader() {
   const { weightRecords, weightUnit, weightTargetKgs } = useAppWeight();
-  const { accentColour } = useAppSettings();
 
   const weightTargetStr = weightTargetKgs
     ? formatWeight(weightTargetKgs, weightUnit)
@@ -31,10 +29,7 @@ export function StatsHeader() {
   return (
     <>
       <div className={styles.ellipse} />
-      <div
-        className={styles.currentWeightContainer}
-        style={{ backgroundColor: accentColour }}
-      >
+      <div className={styles.currentWeightContainer}>
         <span className={styles.currentWeight}>{lastWeightStr}</span>
         <span className={styles.currentWeightLabel}>Current Weight</span>
       </div>

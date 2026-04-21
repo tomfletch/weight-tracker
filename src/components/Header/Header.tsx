@@ -4,23 +4,16 @@ import {
   faGear,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import type { CSSProperties } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '~/assets/logo.svg';
-import { useAppSettings } from '~/hooks/useAppSettings';
 import styles from './Header.module.css';
 
 export function Header() {
-  const { accentColour } = useAppSettings();
-
   const isActiveClass = ({
     isActive,
   }: {
     isActive: boolean;
   }): string | undefined => (isActive ? styles.active : undefined);
-
-  const isActiveStyle = ({ isActive }: { isActive: boolean }): CSSProperties =>
-    isActive ? { color: accentColour } : {};
 
   return (
     <header className={styles.header}>
@@ -39,25 +32,17 @@ export function Header() {
       <nav className={styles.mainNav}>
         <ul>
           <li>
-            <NavLink to="/" className={isActiveClass} style={isActiveStyle}>
+            <NavLink to="/" className={isActiveClass}>
               <FontAwesomeIcon icon={faChartLine} /> Stats
             </NavLink>
           </li>
           <li>
-            <NavLink
-              to="/history"
-              className={isActiveClass}
-              style={isActiveStyle}
-            >
+            <NavLink to="/history" className={isActiveClass}>
               <FontAwesomeIcon icon={faCalendarDays} /> History
             </NavLink>
           </li>
           <li>
-            <NavLink
-              to="/settings"
-              className={isActiveClass}
-              style={isActiveStyle}
-            >
+            <NavLink to="/settings" className={isActiveClass}>
               <FontAwesomeIcon icon={faGear} /> Settings
             </NavLink>
           </li>

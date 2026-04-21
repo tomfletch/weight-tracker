@@ -5,7 +5,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { Card } from '~/components/Card/Card';
-import { useAppSettings } from '~/hooks/useAppSettings';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import { getFirstOfMonth, MONTH_NAMES, toISODate } from '~/utils/dates';
 import styles from './Calendar.module.css';
@@ -17,7 +16,6 @@ export function Calendar() {
   );
 
   const { weightRecords } = useAppWeight();
-  const { accentColour } = useAppSettings();
 
   const nextMonth = new Date(
     currentMonth.getFullYear(),
@@ -73,12 +71,7 @@ export function Calendar() {
             <>
               {calendarDay.getDate()}
               <div
-                className={styles.dataDot}
-                style={{
-                  backgroundColor: dateHasWeightRecord(calendarDay)
-                    ? accentColour
-                    : 'transparent',
-                }}
+                className={`${styles.dataDot} ${dateHasWeightRecord(calendarDay) ? styles.hasData : ''}`}
               />
             </>
           )}

@@ -48,13 +48,17 @@
   padding: 0.8rem 0;
 }
 
-.calendarTable .futureDate {
+.futureDate {
   color: #ccc;
 }
 
-.calendarTable .dataDot {
+.dataDot {
   width: 5px;
   height: 5px;
   border-radius: 100%;
   margin: 0.2rem auto;
+}
+
+.dataDot.hasData {
+  background-color: var(--accent-colour);
 }

@@ -1,12 +1,10 @@
 import { Card } from '~/components/Card/Card';
-import { useAppSettings } from '~/hooks/useAppSettings';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import { formatWeight } from '~/utils/weights';
 import styles from './ProgressBar.module.css';
 
 export function ProgressBar() {
   const { weightRecords, weightUnit, weightTargetKgs } = useAppWeight();
-  const { accentColour } = useAppSettings();
 
   if (weightRecords.length === 0 || !weightTargetKgs) return null;
 
@@ -36,7 +34,6 @@ export function ProgressBar() {
             className={styles.progressBarFill}
             style={{
               width: `${weightChangePercent * 100}%`,
-              backgroundColor: accentColour,
             }}
           >
             {weightChangePercent >= valueSideThreshold && (
@@ -45,9 +42,7 @@ export function ProgressBar() {
           </div>
           <div className={styles.progressBarEmpty}>
             {weightChangePercent < valueSideThreshold && (
-              <div className={styles.value} style={{ color: accentColour }}>
-                {weightChangePercentStr}
-              </div>
+              <div className={styles.value}>{weightChangePercentStr}</div>
             )}
           </div>
         </div>

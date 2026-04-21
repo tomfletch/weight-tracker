@@ -62,7 +62,7 @@
 
 .addButton {
   float: right;
-  background-color: #00c8ff;
+  background-color: var(--accent-colour);
   border: none;
   width: 35px;
   height: 35px;

@@ -4,7 +4,6 @@ import type React from 'react';
 import { useState } from 'react';
 import { Card } from '~/components/Card/Card';
 import { WeightInput } from '~/components/WeightInput/WeightInput';
-import { useAppSettings } from '~/hooks/useAppSettings';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import type { WeightRecord } from '~/types/weight';
 import { toISODate } from '~/utils/dates';
@@ -18,7 +17,6 @@ export function AddWeight() {
   const [weight, setWeight] = useState<number | null>(null);
 
   const { addWeight } = useAppWeight();
-  const { accentColour } = useAppSettings();
 
   const onWeightSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,11 +55,7 @@ export function AddWeight() {
               />
             </div>
           </div>
-          <button
-            type="submit"
-            className={styles.addButton}
-            style={{ backgroundColor: accentColour }}
-          >
+          <button type="submit" className={styles.addButton}>
             <FontAwesomeIcon icon={faAdd} />
           </button>
         </form>
