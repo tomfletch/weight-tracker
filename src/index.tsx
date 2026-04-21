@@ -1,3 +1,12 @@
+function removeActionsFromStore() {
+  const { actions, ...store } = JSON.parse(
+    localStorage.getItem('appStore') || '{}',
+  );
+  localStorage.setItem('appStore', JSON.stringify(store));
+}
+
+removeActionsFromStore();
+
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
@@ -10,14 +19,6 @@ if (!rootElement) {
   throw new Error('Root element not found');
 }
 
-function removeActionsFromStore() {
-  const { actions, ...store } = JSON.parse(
-    localStorage.getItem('appStore') || '{}',
-  );
-  localStorage.setItem('appStore', JSON.stringify(store));
-}
-
-removeActionsFromStore();
 initDevMockDataHydration();
 
 createRoot(rootElement).render(
