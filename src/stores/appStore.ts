@@ -80,6 +80,10 @@ export const useAppStore = create<AppState>()(
     }),
     {
       name: 'appStore',
+      partialize: (state) => {
+        const { actions, ...persistedState } = state;
+        return persistedState;
+      },
     },
   ),
 );
