@@ -9,7 +9,7 @@ import {
   MONTH_NAMES_SHORT,
   parseISODate,
   toISODate,
-} from '../../src/utils/dates';
+} from '~/utils/dates';
 
 describe('dates utils', () => {
   describe('MONTH_NAMES_SHORT', () => {

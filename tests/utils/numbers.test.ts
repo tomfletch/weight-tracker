@@ -1,6 +1,6 @@
 /** biome-ignore-all lint/suspicious/noApproximativeNumericConstant: Test file */
 import { describe, expect, it } from 'vitest';
-import { toFixedNoZero } from '../../src/utils/numbers';
+import { toFixedNoZero } from '~/utils/numbers';
 
 describe('numbers utils', () => {
   describe('toFixedNoZero', () => {

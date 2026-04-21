@@ -1,5 +1,10 @@
-import { WeightUnit } from '../../types/weight';
-import { convertKgToLb, formatKg, formatLb, formatLbAsStLb } from '../weights';
+import { WeightUnit } from '~/types/weight';
+import {
+  convertKgToLb,
+  formatKg,
+  formatLb,
+  formatLbAsStLb,
+} from '~/utils/weights';
 
 /**
  * Format a single weight value for display based on weight unit.

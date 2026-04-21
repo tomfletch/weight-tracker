@@ -1,7 +1,7 @@
 import type React from 'react';
 import { useEffect, useState } from 'react';
-import { useAppHeight } from '../../hooks/useAppHeight';
-import { HeightUnit } from '../../types/height';
+import { useAppHeight } from '~/hooks/useAppHeight';
+import { HeightUnit } from '~/types/height';
 import {
   convertCmToM,
   convertFtInToM,
@@ -9,8 +9,8 @@ import {
   convertMToCm,
   convertMToFtIn,
   convertMToIn,
-} from '../../utils/height';
-import { toFixedNoZero } from '../../utils/numbers';
+} from '~/utils/height';
+import { toFixedNoZero } from '~/utils/numbers';
 import styles from './HeightInput.module.css';
 
 interface Props {

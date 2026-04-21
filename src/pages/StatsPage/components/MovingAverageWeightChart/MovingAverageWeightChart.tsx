@@ -1,8 +1,8 @@
 import type { ChartData, ChartOptions } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 import { Line } from 'react-chartjs-2';
-import { useAppSettings } from '../../../../hooks/useAppSettings';
-import { useAppWeight } from '../../../../hooks/useAppWeight';
+import { useAppSettings } from '~/hooks/useAppSettings';
+import { useAppWeight } from '~/hooks/useAppWeight';
 import {
   getMovingAverageWeightChartData,
   getMovingAverageWeightChartOptions,

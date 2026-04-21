@@ -4,6 +4,9 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [react()],
+  resolve: {
+    tsconfigPaths: true,
+  },
   test: {
     globals: true,
     environment: 'jsdom',

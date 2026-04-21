@@ -1,6 +1,6 @@
-import type { WeightRecord } from '../../types/weight';
-import { toISODate } from '../dates';
-import { interpolateWeightAtDate } from '../weightInterpolation';
+import type { WeightRecord } from '~/types/weight';
+import { toISODate } from '~/utils/dates';
+import { interpolateWeightAtDate } from '~/utils/weightInterpolation';
 
 export const MOVING_AVERAGE_SIZE = 7;
 export const MOVING_AVERAGE_OFFSET = (MOVING_AVERAGE_SIZE - 1) / 2;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { THEME_COLOURS } from '../../../utils/colours';
+import { THEME_COLOURS } from '~/utils/colours';
 import styles from './ColourSelect.module.css';
 
 interface Props {

@@ -1,4 +1,4 @@
-import { useAppWeight } from '../../hooks/useAppWeight';
+import { useAppWeight } from '~/hooks/useAppWeight';
 import { AddWeight } from './components/AddWeight/AddWeight';
 import { MovingAverageDeltaChart } from './components/MovingAverageDeltaChart/MovingAverageDeltaChart';
 import { MovingAverageWeightChart } from './components/MovingAverageWeightChart/MovingAverageWeightChart';

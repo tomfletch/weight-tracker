@@ -1,6 +1,6 @@
-import { useAppSettings } from '../../../../hooks/useAppSettings';
-import { useAppWeight } from '../../../../hooks/useAppWeight';
-import { formatWeight } from '../../../../utils/weights';
+import { useAppSettings } from '~/hooks/useAppSettings';
+import { useAppWeight } from '~/hooks/useAppWeight';
+import { formatWeight } from '~/utils/weights';
 import styles from './ProgressBar.module.css';
 
 export function ProgressBar() {

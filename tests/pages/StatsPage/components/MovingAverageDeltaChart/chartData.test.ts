@@ -3,8 +3,8 @@ import { describe, expect, it } from 'vitest';
 import {
   getMovingAverageDeltaChartData,
   getMovingAverageDeltaChartOptions,
-} from '../../../../../src/pages/StatsPage/components/MovingAverageDeltaChart/chartData';
-import { type WeightRecord, WeightUnit } from '../../../../../src/types/weight';
+} from '~/pages/StatsPage/components/MovingAverageDeltaChart/chartData';
+import { type WeightRecord, WeightUnit } from '~/types/weight';
 
 const weightRecords: WeightRecord[] = [
   { date: '2025-01-01', weightKgs: 100 },

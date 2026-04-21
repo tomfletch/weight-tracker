@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import type { WeightRecord } from '../../../src/types/weight';
+import type { WeightRecord } from '~/types/weight';
 import {
   computeMovingAverage,
   generateMovingAverageSeries,
   MOVING_AVERAGE_OFFSET,
   MOVING_AVERAGE_SIZE,
-} from '../../../src/utils/chart/movingAverage';
+} from '~/utils/chart/movingAverage';
 
 describe('movingAverage utils', () => {
   describe('MOVING_AVERAGE constants', () => {

@@ -1,9 +1,9 @@
 import type { ChartData, ChartOptions } from 'chart.js';
-import type { WeightRecord, WeightUnit } from '../../../../types/weight';
-import { generateMovingAverageSeries } from '../../../../utils/chart/movingAverage';
-import { buildBaseLineChartOptions } from '../../../../utils/chart/options';
-import { convertSeriesKgToDisplayUnit } from '../../../../utils/chart/weightUnits';
-import { parseISODate, toISODate } from '../../../../utils/dates';
+import type { WeightRecord, WeightUnit } from '~/types/weight';
+import { generateMovingAverageSeries } from '~/utils/chart/movingAverage';
+import { buildBaseLineChartOptions } from '~/utils/chart/options';
+import { convertSeriesKgToDisplayUnit } from '~/utils/chart/weightUnits';
+import { parseISODate, toISODate } from '~/utils/dates';
 
 export function getMovingAverageWeightChartData({
   weightRecords,

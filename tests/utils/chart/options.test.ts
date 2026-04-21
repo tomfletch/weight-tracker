@@ -7,8 +7,8 @@ import type {
   TooltipModel,
 } from 'chart.js';
 import { describe, expect, it } from 'vitest';
-import { WeightUnit } from '../../../src/types/weight';
-import { buildBaseLineChartOptions } from '../../../src/utils/chart/options';
+import { WeightUnit } from '~/types/weight';
+import { buildBaseLineChartOptions } from '~/utils/chart/options';
 
 function getYTickCallback(options: ChartOptions<'line'>) {
   const callback = options.scales?.y?.ticks?.callback;

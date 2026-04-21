@@ -1,4 +1,4 @@
-import { useAppStore } from '../stores/appStore';
+import { useAppStore } from '~/stores/appStore';
 
 export const useAppWeight = () => {
   const weightUnit = useAppStore((state) => state.weightUnit);

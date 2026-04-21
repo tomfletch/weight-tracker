@@ -1,14 +1,14 @@
 import type React from 'react';
 import { useEffect, useState } from 'react';
-import { useAppWeight } from '../../hooks/useAppWeight';
-import { WeightUnit } from '../../types/weight';
-import { toFixedNoZero } from '../../utils/numbers';
+import { useAppWeight } from '~/hooks/useAppWeight';
+import { WeightUnit } from '~/types/weight';
+import { toFixedNoZero } from '~/utils/numbers';
 import {
   convertKgToLb,
   convertKgToStLb,
   convertLbToKg,
   convertStLbToKg,
-} from '../../utils/weights';
+} from '~/utils/weights';
 import styles from './WeightInput.module.css';
 
 interface Props {

@@ -4,13 +4,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
-import { useAppSettings } from '../../../../hooks/useAppSettings';
-import { useAppWeight } from '../../../../hooks/useAppWeight';
-import {
-  getFirstOfMonth,
-  MONTH_NAMES,
-  toISODate,
-} from '../../../../utils/dates';
+import { useAppSettings } from '~/hooks/useAppSettings';
+import { useAppWeight } from '~/hooks/useAppWeight';
+import { getFirstOfMonth, MONTH_NAMES, toISODate } from '~/utils/dates';
 import styles from './Calendar.module.css';
 
 export function Calendar() {

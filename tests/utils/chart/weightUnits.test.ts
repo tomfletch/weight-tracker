@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { WeightUnit } from '../../../src/types/weight';
+import { WeightUnit } from '~/types/weight';
 import {
   convertSeriesKgToDisplayUnit,
   formatWeightValueByUnit,
-} from '../../../src/utils/chart/weightUnits';
+} from '~/utils/chart/weightUnits';
 
 describe('weightUnits utils', () => {
   describe('formatWeightValueByUnit', () => {

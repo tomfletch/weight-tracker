@@ -1,8 +1,8 @@
 import 'chartjs-adapter-date-fns';
 import { useState } from 'react';
 import { Line } from 'react-chartjs-2';
-import { useAppSettings } from '../../../../hooks/useAppSettings';
-import { useAppWeight } from '../../../../hooks/useAppWeight';
+import { useAppSettings } from '~/hooks/useAppSettings';
+import { useAppWeight } from '~/hooks/useAppWeight';
 import {
   CHART_PERIODS,
   type ChartPeriod,

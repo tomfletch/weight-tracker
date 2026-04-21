@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { WeightUnit } from '../../src/types/weight';
+import { WeightUnit } from '~/types/weight';
 import {
   convertKgToLb,
   convertKgToStLb,
@@ -12,7 +12,7 @@ import {
   formatLbAsStLb,
   formatStLb,
   formatWeight,
-} from '../../src/utils/weights';
+} from '~/utils/weights';
 
 describe('weights utils', () => {
   describe('convertLbToKg', () => {

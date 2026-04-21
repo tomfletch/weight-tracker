@@ -6,8 +6,8 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { CSSProperties } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import logo from '../../assets/logo.svg';
-import { useAppSettings } from '../../hooks/useAppSettings';
+import logo from '~/assets/logo.svg';
+import { useAppSettings } from '~/hooks/useAppSettings';
 import styles from './Header.module.css';
 
 export function Header() {

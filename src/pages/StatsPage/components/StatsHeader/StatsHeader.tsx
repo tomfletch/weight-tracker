@@ -3,9 +3,9 @@ import {
   faLongArrowUp,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useAppSettings } from '../../../../hooks/useAppSettings';
-import { useAppWeight } from '../../../../hooks/useAppWeight';
-import { formatWeight } from '../../../../utils/weights';
+import { useAppSettings } from '~/hooks/useAppSettings';
+import { useAppWeight } from '~/hooks/useAppWeight';
+import { formatWeight } from '~/utils/weights';
 import styles from './StatsHeader.module.css';
 
 export function StatsHeader() {

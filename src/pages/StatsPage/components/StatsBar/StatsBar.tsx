@@ -4,11 +4,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { subDays } from 'date-fns';
-import { useAppHeight } from '../../../../hooks/useAppHeight';
-import { useAppWeight } from '../../../../hooks/useAppWeight';
-import { daysBetween, parseISODate } from '../../../../utils/dates';
-import { interpolateWeightAtDate } from '../../../../utils/weightInterpolation';
-import { formatWeight } from '../../../../utils/weights';
+import { useAppHeight } from '~/hooks/useAppHeight';
+import { useAppWeight } from '~/hooks/useAppWeight';
+import { daysBetween, parseISODate } from '~/utils/dates';
+import { interpolateWeightAtDate } from '~/utils/weightInterpolation';
+import { formatWeight } from '~/utils/weights';
 import styles from './StatsBar.module.css';
 
 const BMI_NORMAL_MIN = 18.5;

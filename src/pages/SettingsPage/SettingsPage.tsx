@@ -1,17 +1,11 @@
 import { useCallback } from 'react';
-import { HeightInput } from '../../components/HeightInput/HeightInput';
-import { WeightInput } from '../../components/WeightInput/WeightInput';
-import { useAppHeight } from '../../hooks/useAppHeight';
-import { useAppSettings } from '../../hooks/useAppSettings';
-import { useAppWeight } from '../../hooks/useAppWeight';
-import {
-  HeightUnit,
-  type HeightUnit as HeightUnitType,
-} from '../../types/height';
-import {
-  WeightUnit,
-  type WeightUnit as WeightUnitType,
-} from '../../types/weight';
+import { HeightInput } from '~/components/HeightInput/HeightInput';
+import { WeightInput } from '~/components/WeightInput/WeightInput';
+import { useAppHeight } from '~/hooks/useAppHeight';
+import { useAppSettings } from '~/hooks/useAppSettings';
+import { useAppWeight } from '~/hooks/useAppWeight';
+import { HeightUnit, type HeightUnit as HeightUnitType } from '~/types/height';
+import { WeightUnit, type WeightUnit as WeightUnitType } from '~/types/weight';
 import { ColourSelect } from './ColourSelect/ColourSelect';
 import styles from './SettingsPage.module.css';
 

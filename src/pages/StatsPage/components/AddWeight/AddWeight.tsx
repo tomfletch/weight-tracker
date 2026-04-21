@@ -2,11 +2,11 @@ import { faAdd } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type React from 'react';
 import { useState } from 'react';
-import { WeightInput } from '../../../../components/WeightInput/WeightInput';
-import { useAppSettings } from '../../../../hooks/useAppSettings';
-import { useAppWeight } from '../../../../hooks/useAppWeight';
-import type { WeightRecord } from '../../../../types/weight';
-import { toISODate } from '../../../../utils/dates';
+import { WeightInput } from '~/components/WeightInput/WeightInput';
+import { useAppSettings } from '~/hooks/useAppSettings';
+import { useAppWeight } from '~/hooks/useAppWeight';
+import type { WeightRecord } from '~/types/weight';
+import { toISODate } from '~/utils/dates';
 import styles from './AddWeight.module.css';
 
 const today = new Date();

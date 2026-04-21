@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { HeightUnit } from '../types/height';
-import { type WeightRecord, WeightUnit } from '../types/weight';
-import { THEME_COLOURS } from '../utils/colours';
+import { HeightUnit } from '~/types/height';
+import { type WeightRecord, WeightUnit } from '~/types/weight';
+import { THEME_COLOURS } from '~/utils/colours';
 
 type AppState = {
   // Height

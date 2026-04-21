@@ -1,14 +1,14 @@
-import { useAppSettings } from '../../../../hooks/useAppSettings';
-import { useAppWeight } from '../../../../hooks/useAppWeight';
-import type { WeightRecord } from '../../../../types/weight';
+import { useAppSettings } from '~/hooks/useAppSettings';
+import { useAppWeight } from '~/hooks/useAppWeight';
+import type { WeightRecord } from '~/types/weight';
 import {
   formatDayth,
   getFirstOfMonth,
   MONTH_NAMES,
   parseISODate,
   toISODate,
-} from '../../../../utils/dates';
-import { formatWeight } from '../../../../utils/weights';
+} from '~/utils/dates';
+import { formatWeight } from '~/utils/weights';
 import styles from './Timeline.module.css';
 
 export function Timeline() {

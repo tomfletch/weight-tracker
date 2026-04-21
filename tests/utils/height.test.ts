@@ -7,7 +7,7 @@ import {
   convertMToCm,
   convertMToFtIn,
   convertMToIn,
-} from '../../src/utils/height';
+} from '~/utils/height';
 
 describe('height utils', () => {
   describe('convertCmToM', () => {

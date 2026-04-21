@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import type { WeightRecord } from '../../src/types/weight';
+import type { WeightRecord } from '~/types/weight';
 import {
   interpolateWeightAtDate,
   interpolateWeightAtDateString,
-} from '../../src/utils/weightInterpolation';
+} from '~/utils/weightInterpolation';
 
 describe('weightInterpolation utils', () => {
   const weightRecords: WeightRecord[] = [

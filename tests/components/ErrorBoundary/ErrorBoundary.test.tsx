@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { ErrorBoundary } from '../../../src/components/ErrorBoundary/ErrorBoundary';
+import { ErrorBoundary } from '~/components/ErrorBoundary/ErrorBoundary';
 
 const ThrowError = () => {
   throw new Error('Test error');
