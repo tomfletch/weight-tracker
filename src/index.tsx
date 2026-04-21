@@ -10,6 +10,14 @@ if (!rootElement) {
   throw new Error('Root element not found');
 }
 
+function removeActionsFromStore() {
+  const { actions, ...store } = JSON.parse(
+    localStorage.getItem('appStore') || '{}',
+  );
+  localStorage.setItem('appStore', JSON.stringify(store));
+}
+
+removeActionsFromStore();
 initDevMockDataHydration();
 
 createRoot(rootElement).render(
