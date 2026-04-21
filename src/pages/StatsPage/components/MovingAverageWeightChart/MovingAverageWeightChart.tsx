@@ -7,6 +7,7 @@ import {
   getMovingAverageWeightChartData,
   getMovingAverageWeightChartOptions,
 } from './chartData';
+import styles from './MovingAverageWeightChart.module.css';
 
 export function MovingAverageWeightChart() {
   const { weightRecords, weightTargetKgs, weightUnit } = useAppWeight();
@@ -28,6 +29,7 @@ export function MovingAverageWeightChart() {
 
   return (
     <div className="card">
+      <div className={styles.title}>Moving Average Weight</div>
       <Line data={chartData} options={chartOptions} />
     </div>
   );

@@ -7,6 +7,7 @@ import {
   getMovingAverageDeltaChartData,
   getMovingAverageDeltaChartOptions,
 } from './chartData';
+import styles from './MovingAverageDeltaChart.module.css';
 
 export function MovingAverageDeltaChart() {
   const { weightRecords, weightUnit } = useAppWeight();
@@ -27,6 +28,7 @@ export function MovingAverageDeltaChart() {
 
   return (
     <div className="card">
+      <div className={styles.title}>Moving Average Delta</div>
       <Line data={chartData} options={chartOptions} />
     </div>
   );
