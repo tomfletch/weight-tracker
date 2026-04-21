@@ -1,6 +1,7 @@
 import type { ErrorInfo, ReactNode } from 'react';
 import { Component } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Card } from '../Card/Card';
 import styles from './ErrorBoundary.module.css';
 
 type ErrorBoundaryProps = {
@@ -43,8 +44,8 @@ class ErrorBoundaryClass extends Component<
     if (this.state.hasError) {
       return (
         <main className={styles.container}>
-          <div className={styles.card}>
-            <h1>Something went wrong</h1>
+          <Card className={styles.errorCard}>
+            <Card.Title>Something went wrong</Card.Title>
             <p>
               The app ran into an unexpected error.
               <br />
@@ -57,7 +58,7 @@ class ErrorBoundaryClass extends Component<
             >
               Reload app
             </button>
-          </div>
+          </Card>
         </main>
       );
     }

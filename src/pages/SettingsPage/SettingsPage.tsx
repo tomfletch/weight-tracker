@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { Card } from '~/components/Card/Card';
 import { HeightInput } from '~/components/HeightInput/HeightInput';
 import { WeightInput } from '~/components/WeightInput/WeightInput';
 import { useAppHeight } from '~/hooks/useAppHeight';
@@ -48,9 +49,9 @@ export function SettingsPage() {
   };
 
   return (
-    <div className={`pageContainer ${styles.settingsPage}`}>
-      <div className="card">
-        <h2>Settings</h2>
+    <div className="pageContainer">
+      <Card>
+        <Card.Title>Settings</Card.Title>
         <div className={styles.field}>
           <label className={styles.label} htmlFor="weight-units">
             Weight Units
@@ -103,7 +104,7 @@ export function SettingsPage() {
           <span className={styles.label}>Theme Colour</span>
           <ColourSelect value={accentColour} onChange={setAccentColour} />
         </div>
-      </div>
+      </Card>
     </div>
   );
 }

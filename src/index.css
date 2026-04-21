@@ -21,13 +21,6 @@ body {
   max-width: 1000px;
 }
 
-.card {
-  background-color: white;
-  border: 1px solid #e7e7e7;
-  padding: 2rem;
-  margin-bottom: 2rem;
-}
-
 #chartjsTooltip {
   position: relative;
   display: flex;

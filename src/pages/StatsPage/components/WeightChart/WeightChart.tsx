@@ -1,6 +1,7 @@
 import 'chartjs-adapter-date-fns';
 import { useState } from 'react';
 import { Line } from 'react-chartjs-2';
+import { Card } from '~/components/Card/Card';
 import { useAppSettings } from '~/hooks/useAppSettings';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import {
@@ -37,7 +38,7 @@ export function WeightChart() {
   const chartOptions = getWeightChartOptions(weightUnit, dateRange);
 
   return (
-    <div className="card">
+    <Card>
       <div className={styles.tabs}>
         {CHART_PERIODS.map((p) => (
           <button
@@ -51,6 +52,6 @@ export function WeightChart() {
         ))}
       </div>
       <Line data={chartData} options={chartOptions} />
-    </div>
+    </Card>
   );
 }

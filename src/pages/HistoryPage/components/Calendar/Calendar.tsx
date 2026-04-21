@@ -4,6 +4,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
+import { Card } from '~/components/Card/Card';
 import { useAppSettings } from '~/hooks/useAppSettings';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import { getFirstOfMonth, MONTH_NAMES, toISODate } from '~/utils/dates';
@@ -90,7 +91,7 @@ export function Calendar() {
   }
 
   return (
-    <div className={`card ${styles.calendar}`}>
+    <Card className={styles.calendar}>
       <div className={styles.header}>
         <button type="button" className={styles.arrow} onClick={onPrevMonth}>
           <FontAwesomeIcon icon={faChevronLeft} />
@@ -121,6 +122,6 @@ export function Calendar() {
         </thead>
         <tbody>{calendarRows}</tbody>
       </table>
-    </div>
+    </Card>
   );
 }

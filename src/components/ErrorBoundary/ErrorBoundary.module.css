@@ -6,21 +6,11 @@
   background-color: #eee;
 }
 
-.card {
+.errorCard {
   width: min(36rem, 100%);
-  background-color: white;
-  border: 1px solid #e7e7e7;
-  border-radius: 3px;
-  padding: 2rem;
 }
 
-.card h1 {
-  margin: 0 0 1rem;
-  color: #222;
-  font-weight: normal;
-}
-
-.card p {
+.errorCard p {
   margin: 0 0 1.5rem;
   color: #555;
   line-height: 1.5;

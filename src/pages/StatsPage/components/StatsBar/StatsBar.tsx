@@ -4,6 +4,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { subDays } from 'date-fns';
+import { Card } from '~/components/Card/Card';
 import { useAppHeight } from '~/hooks/useAppHeight';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import { daysBetween, parseISODate } from '~/utils/dates';
@@ -87,20 +88,20 @@ function RateStatsWidget({
   }
 
   return (
-    <div className={`card ${styles.statsWidget}`}>
-      <div className={styles.title}>{type} Rate</div>
+    <Card className={styles.statsWidget}>
+      <Card.Title>{type} Rate</Card.Title>
       <p>{currentRate}</p>
       {daysUntilTarget && <p>Days until target: {daysUntilTarget}</p>}
-    </div>
+    </Card>
   );
 }
 
 function BMIWidget() {
   return (
-    <div className={`card ${styles.statsWidget}`}>
-      <div className={styles.title}>BMI</div>
+    <Card className={styles.statsWidget}>
+      <Card.Title>BMI</Card.Title>
       <BMIWidgetContent />
-    </div>
+    </Card>
   );
 }
 

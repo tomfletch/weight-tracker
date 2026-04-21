@@ -1,13 +1,13 @@
 import type { ChartData, ChartOptions } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 import { Line } from 'react-chartjs-2';
+import { Card } from '~/components/Card/Card';
 import { useAppSettings } from '~/hooks/useAppSettings';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import {
   getMovingAverageWeightChartData,
   getMovingAverageWeightChartOptions,
 } from './chartData';
-import styles from './MovingAverageWeightChart.module.css';
 
 export function MovingAverageWeightChart() {
   const { weightRecords, weightTargetKgs, weightUnit } = useAppWeight();
@@ -28,9 +28,9 @@ export function MovingAverageWeightChart() {
     getMovingAverageWeightChartOptions(weightUnit);
 
   return (
-    <div className="card">
-      <div className={styles.title}>Moving Average Weight</div>
+    <Card>
+      <Card.Title>Moving Average Weight</Card.Title>
       <Line data={chartData} options={chartOptions} />
-    </div>
+    </Card>
   );
 }

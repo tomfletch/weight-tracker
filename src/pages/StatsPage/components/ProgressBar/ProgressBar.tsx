@@ -1,3 +1,4 @@
+import { Card } from '~/components/Card/Card';
 import { useAppSettings } from '~/hooks/useAppSettings';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import { formatWeight } from '~/utils/weights';
@@ -27,7 +28,7 @@ export function ProgressBar() {
   const valueSideThreshold = 0.5;
 
   return (
-    <div className="card">
+    <Card>
       <div className={styles.progressBarContainer}>
         <div className={styles.weight}>{startWeightStr}</div>
         <div className={styles.progressBar}>
@@ -56,6 +57,6 @@ export function ProgressBar() {
         <span>Start Weight</span>
         <span>Target Weight</span>
       </div>
-    </div>
+    </Card>
   );
 }

@@ -2,6 +2,7 @@ import { faAdd } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type React from 'react';
 import { useState } from 'react';
+import { Card } from '~/components/Card/Card';
 import { WeightInput } from '~/components/WeightInput/WeightInput';
 import { useAppSettings } from '~/hooks/useAppSettings';
 import { useAppWeight } from '~/hooks/useAppWeight';
@@ -33,7 +34,7 @@ export function AddWeight() {
 
   return (
     <div className={styles.addWeightContainer}>
-      <div className={`card ${styles.addWeight}`}>
+      <Card className={styles.addWeight}>
         <form onSubmit={onWeightSubmit}>
           <div className={styles.formFields}>
             <div className={`${styles.field} ${styles.dateSection}`}>
@@ -64,7 +65,7 @@ export function AddWeight() {
             <FontAwesomeIcon icon={faAdd} />
           </button>
         </form>
-      </div>
+      </Card>
     </div>
   );
 }

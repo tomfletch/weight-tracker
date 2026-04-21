@@ -1,13 +1,13 @@
 import type { ChartData, ChartOptions } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 import { Line } from 'react-chartjs-2';
+import { Card } from '~/components/Card/Card';
 import { useAppSettings } from '~/hooks/useAppSettings';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import {
   getMovingAverageDeltaChartData,
   getMovingAverageDeltaChartOptions,
 } from './chartData';
-import styles from './MovingAverageDeltaChart.module.css';
 
 export function MovingAverageDeltaChart() {
   const { weightRecords, weightUnit } = useAppWeight();
@@ -27,9 +27,9 @@ export function MovingAverageDeltaChart() {
     getMovingAverageDeltaChartOptions(weightUnit);
 
   return (
-    <div className="card">
-      <div className={styles.title}>Moving Average Delta</div>
+    <Card>
+      <Card.Title>Moving Average Delta</Card.Title>
       <Line data={chartData} options={chartOptions} />
-    </div>
+    </Card>
   );
 }

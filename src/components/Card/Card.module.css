@@ -1,4 +1,11 @@
-.title {
+.card {
+  background-color: white;
+  border: 1px solid #e7e7e7;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.cardTitle {
   font-size: 1.6rem;
   line-height: 1;
   border-bottom: 1px solid #ddd;
