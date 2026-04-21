@@ -1,12 +1,13 @@
 .statsBar {
-  display: flex;
-  column-gap: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
 }
 
 .statsWidget {
-  flex-basis: 0;
-  flex-grow: 1;
   font-size: 1.4rem;
+  margin-bottom: 0;
 }
 
 .statsWidget p {
@@ -91,6 +92,10 @@
 
 @media (max-width: 600px) {
   .statsBar {
-    flex-direction: column;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .bmiWidget {
+    grid-column: 1 / -1;
   }
 }
