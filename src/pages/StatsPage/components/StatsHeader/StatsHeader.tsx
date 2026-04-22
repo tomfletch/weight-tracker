@@ -44,6 +44,9 @@ export function StatsHeader() {
             {weightChangeStr}
             {weightChange !== 0 && (
               <FontAwesomeIcon
+                aria-label={
+                  weightChange > 0 ? 'Weight increasing' : 'Weight decreasing'
+                }
                 icon={weightChange > 0 ? faLongArrowUp : faLongArrowDown}
                 className={styles.weightChangeIcon}
               />

@@ -86,13 +86,19 @@ export function Calendar() {
   return (
     <Card className={styles.calendar}>
       <div className={styles.header}>
-        <button type="button" className={styles.arrow} onClick={onPrevMonth}>
+        <button
+          aria-label="Previous month"
+          type="button"
+          className={styles.arrow}
+          onClick={onPrevMonth}
+        >
           <FontAwesomeIcon icon={faChevronLeft} />
         </button>
         <div className={styles.month}>
           {month} {year}
         </div>
         <button
+          aria-label="Next month"
           type="button"
           className={styles.arrow}
           onClick={onNextMonth}

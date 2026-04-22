@@ -42,6 +42,7 @@ export function RateStatsWidget({ type, startDate }: RateStatsWidgetProps) {
     if (kgPerWeek !== 0) {
       icon = (
         <FontAwesomeIcon
+          aria-label={kgPerWeek > 0 ? 'Weight increasing' : 'Weight decreasing'}
           icon={kgPerWeek > 0 ? faLongArrowUp : faLongArrowDown}
           className={styles.weightChangeIcon}
         />
