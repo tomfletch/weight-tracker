@@ -55,8 +55,12 @@ export function AddWeight() {
               />
             </div>
           </div>
-          <button type="submit" className={styles.addButton}>
-            <FontAwesomeIcon aria-label="Add weight" icon={faAdd} />
+          <button
+            type="submit"
+            aria-label="Add weight"
+            className={styles.addButton}
+          >
+            <FontAwesomeIcon icon={faAdd} />
           </button>
         </form>
       </Card>
