@@ -21,15 +21,24 @@ export function ProgressBar() {
   let weightChangePercent = weightChangeProgress / weightChangeTarget;
   weightChangePercent = Math.max(0, Math.min(1, weightChangePercent));
 
-  const weightChangePercentStr = `${Math.round(weightChangePercent * 100)}%`;
+  const percentageValue = Math.round(weightChangePercent * 100);
 
   const valueSideThreshold = 0.5;
+
+  const progressLabel = `Weight loss progress: ${percentageValue}% from ${startWeightStr} to ${targetWeightStr}`;
 
   return (
     <Card>
       <div className={styles.progressBarContainer}>
         <div className={styles.weight}>{startWeightStr}</div>
-        <div className={styles.progressBar}>
+        <div
+          className={styles.progressBar}
+          role="progressbar"
+          aria-label={progressLabel}
+          aria-valuenow={percentageValue}
+          aria-valuemin={0}
+          aria-valuemax={100}
+        >
           <div
             className={styles.progressBarFill}
             style={{
@@ -37,12 +46,16 @@ export function ProgressBar() {
             }}
           >
             {weightChangePercent >= valueSideThreshold && (
-              <div className={styles.value}>{weightChangePercentStr}</div>
+              <div className={styles.value} aria-hidden="true">
+                {percentageValue}%
+              </div>
             )}
           </div>
           <div className={styles.progressBarEmpty}>
             {weightChangePercent < valueSideThreshold && (
-              <div className={styles.value}>{weightChangePercentStr}</div>
+              <div className={styles.value} aria-hidden="true">
+                {percentageValue}%
+              </div>
             )}
           </div>
         </div>
