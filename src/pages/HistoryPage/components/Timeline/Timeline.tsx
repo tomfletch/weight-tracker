@@ -1,6 +1,9 @@
+import { faRemove } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import type { WeightRecord } from '~/types/weight';
 import {
+  formatDateStr,
   formatDayth,
   getFirstOfMonth,
   MONTH_NAMES,
@@ -62,8 +65,9 @@ export function Timeline() {
                 className={styles.deleteBtn}
                 type="button"
                 onClick={() => deleteWeight(weightRecord.date)}
+                title={`Delete weight record for ${formatDateStr(weightRecord.date)}`}
               >
-                &times;
+                <FontAwesomeIcon icon={faRemove} />
               </button>
             </div>
             <div className={styles.dataDot} />
