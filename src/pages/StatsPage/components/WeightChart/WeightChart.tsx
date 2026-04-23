@@ -51,7 +51,11 @@ export function WeightChart() {
           </button>
         ))}
       </div>
-      <Line data={chartData} options={chartOptions} />
+      <Line
+        aria-label="A chart showing weight data over time"
+        data={chartData}
+        options={chartOptions}
+      />
     </Card>
   );
 }

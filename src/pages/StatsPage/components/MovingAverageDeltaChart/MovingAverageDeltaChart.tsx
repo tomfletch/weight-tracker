@@ -28,8 +28,17 @@ export function MovingAverageDeltaChart() {
 
   return (
     <Card>
-      <Card.Title>Moving Average Delta</Card.Title>
-      <Line data={chartData} options={chartOptions} />
+      <Card.Title>Weight Change (7 Day Average)</Card.Title>
+      <p>
+        Shows how your 7-day average weight is changing over time. Negative
+        values mean loss, positive values mean gain, helping highlight trends
+        while smoothing daily swings.
+      </p>
+      <Line
+        aria-label="A chart showing change in moving average weight over time"
+        data={chartData}
+        options={chartOptions}
+      />
     </Card>
   );
 }

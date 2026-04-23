@@ -29,8 +29,17 @@ export function MovingAverageWeightChart() {
 
   return (
     <Card>
-      <Card.Title>Moving Average Weight</Card.Title>
-      <Line data={chartData} options={chartOptions} />
+      <Card.Title>Weight Trend (7 Day Average)</Card.Title>
+      <p>
+        Shows your weight trend using a 7-day moving average, smoothing daily
+        fluctuations. Each point averages the 3 days before and after. Your
+        target weight is included for reference.
+      </p>
+      <Line
+        aria-label="A chart showing moving average weight over time"
+        data={chartData}
+        options={chartOptions}
+      />
     </Card>
   );
 }
