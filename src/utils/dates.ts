@@ -1,3 +1,13 @@
+export const DAY_NAMES = [
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday',
+];
+
 export const MONTH_NAMES_SHORT = [
   'Jan',
   'Feb',

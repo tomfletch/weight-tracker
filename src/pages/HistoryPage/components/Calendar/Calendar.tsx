@@ -6,7 +6,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { Card } from '~/components/Card/Card';
 import { useAppWeight } from '~/hooks/useAppWeight';
-import { getFirstOfMonth, MONTH_NAMES, toISODate } from '~/utils/dates';
+import {
+  DAY_NAMES,
+  getFirstOfMonth,
+  MONTH_NAMES,
+  toISODate,
+} from '~/utils/dates';
 import styles from './Calendar.module.css';
 
 export function Calendar() {
@@ -110,13 +115,11 @@ export function Calendar() {
       <table className={styles.calendarTable}>
         <thead>
           <tr>
-            <th>M</th>
-            <th>T</th>
-            <th>W</th>
-            <th>T</th>
-            <th>F</th>
-            <th>S</th>
-            <th>S</th>
+            {DAY_NAMES.map((dayName) => (
+              <th key={dayName} aria-label={dayName} title={dayName}>
+                {dayName.charAt(0)}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>{calendarRows}</tbody>
