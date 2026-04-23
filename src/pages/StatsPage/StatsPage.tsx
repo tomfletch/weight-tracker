@@ -12,6 +12,7 @@ export function StatsPage() {
 
   return (
     <>
+      <h1 className="visuallyHidden">Stats</h1>
       <StatsHeader />
       <div className="pageContainer">
         <AddWeight />

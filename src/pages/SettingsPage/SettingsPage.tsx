@@ -51,7 +51,7 @@ export function SettingsPage() {
   return (
     <div className="pageContainer">
       <Card>
-        <Card.Title>Settings</Card.Title>
+        <Card.Title as="h1">Settings</Card.Title>
         <div className={styles.field}>
           <label className={styles.label} htmlFor="weight-units">
             Weight Units
