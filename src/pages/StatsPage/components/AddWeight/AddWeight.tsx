@@ -1,8 +1,9 @@
-import { faAdd } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type React from 'react';
 import { useState } from 'react';
 import { Card } from '~/components/Card/Card';
+import { IconButton } from '~/components/IconButton/IconButton';
 import { WeightInput } from '~/components/WeightInput/WeightInput';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import type { WeightRecord } from '~/types/weight';
@@ -55,13 +56,12 @@ export function AddWeight() {
               />
             </div>
           </div>
-          <button
+          <IconButton
             type="submit"
-            aria-label="Add weight"
+            label="Add weight"
             className={styles.addButton}
-          >
-            <FontAwesomeIcon icon={faAdd} />
-          </button>
+            icon={<FontAwesomeIcon icon={faPlus} />}
+          />
         </form>
       </Card>
     </div>

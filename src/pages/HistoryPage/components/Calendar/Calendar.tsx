@@ -5,6 +5,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { Card } from '~/components/Card/Card';
+import { IconButton } from '~/components/IconButton/IconButton';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import {
   DAY_NAMES,
@@ -91,26 +92,20 @@ export function Calendar() {
   return (
     <Card className={styles.calendar}>
       <div className={styles.header}>
-        <button
-          aria-label="Previous month"
-          type="button"
-          className={styles.arrow}
+        <IconButton
+          icon={<FontAwesomeIcon icon={faChevronLeft} />}
+          label="Previous month"
           onClick={onPrevMonth}
-        >
-          <FontAwesomeIcon icon={faChevronLeft} />
-        </button>
+        />
         <div className={styles.month}>
           {month} {year}
         </div>
-        <button
-          aria-label="Next month"
-          type="button"
-          className={styles.arrow}
+        <IconButton
+          icon={<FontAwesomeIcon icon={faChevronRight} />}
+          label="Next month"
           onClick={onNextMonth}
           disabled={nextMonth > today}
-        >
-          <FontAwesomeIcon icon={faChevronRight} />
-        </button>
+        />
       </div>
       <table className={styles.calendarTable}>
         <thead>

@@ -61,25 +61,16 @@
 }
 
 .addButton {
+  --icon-colour: white;
+  --icon-background: var(--accent-colour);
+  --icon-background-hover: rgb(from var(--accent-colour) r g b / 80%);
+
   float: right;
-  background-color: var(--accent-colour);
   border: none;
   width: 35px;
   height: 35px;
   border-radius: 100%;
-  color: white;
   font-size: 20px;
   cursor: pointer;
   position: relative;
-}
-
-.addButton:hover::after {
-  content: "";
-  background-color: rgba(0, 0, 0, 0.1);
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 100%;
 }

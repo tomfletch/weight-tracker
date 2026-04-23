@@ -1,0 +1,48 @@
+.iconButton {
+  --icon-colour: inherit;
+  --icon-background: transparent;
+  --icon-background-hover: rgba(0, 0, 0, 0.1);
+
+  position: relative;
+  border: none;
+  padding: 5px;
+  color: var(--icon-colour);
+  background-color: var(--icon-background);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.iconButton:disabled {
+  cursor: default;
+  color: #ccc;
+}
+
+.iconButton:hover:not(:disabled),
+.iconButton:focus-visible:not(:disabled) {
+  background-color: var(--icon-background-hover);
+}
+
+.tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 5px;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  border-radius: 3px;
+  white-space: nowrap;
+  font-size: 1.4rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.1s ease-in-out;
+}
+
+.tooltip.show {
+  opacity: 1;
+}
+
+.iconButton:disabled .tooltip {
+  opacity: 0;
+}
