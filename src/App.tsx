@@ -19,13 +19,15 @@ export function App() {
         style={{ '--accent-colour': accentColour } as CSSProperties}
       >
         <Header />
-        <ErrorBoundary>
-          <Routes>
-            <Route path="/" element={<StatsPage />} />
-            <Route path="/history" element={<History />} />
-            <Route path="/settings" element={<SettingsPage />} />
-          </Routes>
-        </ErrorBoundary>
+        <main>
+          <ErrorBoundary>
+            <Routes>
+              <Route path="/" element={<StatsPage />} />
+              <Route path="/history" element={<History />} />
+              <Route path="/settings" element={<SettingsPage />} />
+            </Routes>
+          </ErrorBoundary>
+        </main>
       </div>
     </Router>
   );

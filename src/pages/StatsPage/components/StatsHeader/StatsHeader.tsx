@@ -27,7 +27,7 @@ export function StatsHeader() {
   }
 
   return (
-    <>
+    <div className={styles.statsHeader}>
       <div className={styles.ellipse} />
       <div className={styles.currentWeightContainer}>
         <span className={styles.currentWeight}>{lastWeightStr}</span>
@@ -54,6 +54,6 @@ export function StatsHeader() {
           </span>
         </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -43,7 +43,7 @@ class ErrorBoundaryClass extends Component<
   public render() {
     if (this.state.hasError) {
       return (
-        <main className={styles.container}>
+        <div className={styles.container}>
           <Card className={styles.errorCard}>
             <Card.Title>Something went wrong</Card.Title>
             <p>
@@ -59,7 +59,7 @@ class ErrorBoundaryClass extends Component<
               Reload app
             </button>
           </Card>
-        </main>
+        </div>
       );
     }
 
