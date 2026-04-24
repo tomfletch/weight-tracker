@@ -1,12 +1,16 @@
+import { useId } from 'react';
 import { Card } from '~/components/Card/Card';
 import { useAppHeight } from '~/hooks/useAppHeight';
 import { useAppWeight } from '~/hooks/useAppWeight';
+import {
+  BMI_NORMAL_MAX,
+  BMI_NORMAL_MIN,
+  BMI_OVERWEIGHT_MAX,
+  calculateBMI,
+  getBMICategory,
+} from '~/utils/bmi';
 import { limit, map } from '~/utils/math';
 import styles from './StatsBar.module.css';
-
-const BMI_NORMAL_MIN = 18.5;
-const BMI_NORMAL_MAX = 25;
-const BMI_OVERWEIGHT_MAX = 30;
 
 export function BMIWidget() {
   return (
@@ -21,12 +25,14 @@ function BMIWidgetContent() {
   const { weightRecords } = useAppWeight();
   const { height } = useAppHeight();
 
+  const bmiDescriptionId = useId();
+
   if (!height) {
     return <>Height not set</>;
   }
 
   const weight = weightRecords[weightRecords.length - 1].weightKgs;
-  const bmi = weight / (height * height);
+  const bmi = calculateBMI(weight, height);
 
   const barMin = BMI_NORMAL_MIN - 1;
   const barMax = BMI_OVERWEIGHT_MAX + 1;
@@ -42,7 +48,12 @@ function BMIWidgetContent() {
   const overweightMid = mapBar((BMI_NORMAL_MAX + BMI_OVERWEIGHT_MAX) / 2);
 
   return (
-    <div className={styles.bmiBar}>
+    <div
+      className={styles.bmiBar}
+      role="img"
+      aria-label={`Your BMI is ${bmi.toFixed(1)}, which is considered ${getBMICategory(bmi)}.`}
+      aria-describedby={bmiDescriptionId}
+    >
       <div className={styles.bmiContainer}>
         <div className={styles.bmi} style={{ left: `${position}%` }}>
           {bmi.toFixed(1)}
@@ -72,6 +83,19 @@ function BMIWidgetContent() {
       <div className={styles.labels}>
         <div style={{ left: `${normalMid}%` }}>Healthy</div>
         <div style={{ left: `${overweightMid}%` }}>Overweight</div>
+      </div>
+      <div id={bmiDescriptionId} className="visuallyHidden">
+        <p>BMI categories:</p>
+        <ul>
+          <li>Underweight: less than {BMI_NORMAL_MIN}</li>
+          <li>
+            Healthy: between {BMI_NORMAL_MIN} and {BMI_NORMAL_MAX}
+          </li>
+          <li>
+            Overweight: between {BMI_NORMAL_MAX} and {BMI_OVERWEIGHT_MAX}
+          </li>
+          <li>Obese: greater than {BMI_OVERWEIGHT_MAX}</li>
+        </ul>
       </div>
     </div>
   );
