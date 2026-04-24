@@ -111,7 +111,12 @@ export function Calendar() {
         <thead>
           <tr>
             {DAY_NAMES.map((dayName) => (
-              <th key={dayName} aria-label={dayName} title={dayName}>
+              <th
+                key={dayName}
+                aria-label={dayName}
+                title={dayName}
+                scope="col"
+              >
                 {dayName.charAt(0)}
               </th>
             ))}
