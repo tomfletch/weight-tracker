@@ -1,7 +1,8 @@
 import 'chartjs-adapter-date-fns';
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Card } from '~/components/Card/Card';
+import { TabList } from '~/components/TabList/TabList';
 import { useAppSettings } from '~/hooks/useAppSettings';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import {
@@ -11,12 +12,14 @@ import {
   getWeightChartDateRange,
   getWeightChartOptions,
 } from './chartData';
-import styles from './WeightChart.module.css';
 
 export function WeightChart() {
+  const weightChartId = useId();
   const { weightRecords, weightTargetKgs, weightUnit } = useAppWeight();
   const { accentColour } = useAppSettings();
-  const [period, setPeriod] = useState<ChartPeriod>(CHART_PERIODS[0]);
+  const [selectedPeriod, setSelectedPeriod] = useState<ChartPeriod>(
+    CHART_PERIODS[0],
+  );
 
   if (weightRecords.length === 0) {
     return <div>Not enough data</div>;
@@ -24,7 +27,7 @@ export function WeightChart() {
 
   const dateRange = getWeightChartDateRange({
     weightRecords,
-    periodKey: period.key,
+    periodKey: selectedPeriod.key,
   });
 
   const chartData = getWeightChartData({
@@ -39,19 +42,20 @@ export function WeightChart() {
 
   return (
     <Card>
-      <div className={styles.tabs}>
-        {CHART_PERIODS.map((p) => (
-          <button
-            key={p.key}
-            type="button"
-            className={`${styles.tab} ${p.key === period.key ? styles.active : ''}`}
-            onClick={() => setPeriod(p)}
+      <TabList>
+        {CHART_PERIODS.map((period) => (
+          <TabList.Tab
+            key={period.key}
+            isActive={period.key === selectedPeriod.key}
+            onSelect={() => setSelectedPeriod(period)}
+            controls={weightChartId}
           >
-            {p.label}
-          </button>
+            {period.label}
+          </TabList.Tab>
         ))}
-      </div>
+      </TabList>
       <Line
+        id={weightChartId}
         aria-label="A chart showing weight data over time"
         data={chartData}
         options={chartOptions}
