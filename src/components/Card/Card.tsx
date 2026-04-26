@@ -6,7 +6,11 @@ type CardProps = {
 };
 
 export function Card({ children, className }: CardProps) {
-  return <div className={`${styles.card} ${className || ''}`}>{children}</div>;
+  return (
+    <section className={`${styles.card} ${className || ''}`}>
+      {children}
+    </section>
+  );
 }
 
 type CardTitleProps = {
