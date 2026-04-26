@@ -51,6 +51,7 @@ export function getMovingAverageWeightChartData({
         data: displayTargetWeights,
         borderColor: '#e65424',
         borderWidth: 1,
+        borderDash: [4, 2],
         pointRadius: 0,
         pointHoverRadius: 0,
         pointHitRadius: 0,
