@@ -1,6 +1,6 @@
 import type { ChartOptions, TooltipItem } from 'chart.js';
 import type { WeightUnit } from '~/types/weight';
-import { createTooltip } from '~/utils/chartjs';
+import { createTooltip } from './createTooltip';
 import { formatWeightValueByUnit } from './weightUnits';
 
 export interface BaseChartOptionsInput {

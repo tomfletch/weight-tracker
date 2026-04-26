@@ -7,7 +7,7 @@ import './index.css';
 import { History } from './pages/HistoryPage/HistoryPage';
 import { SettingsPage } from './pages/SettingsPage/SettingsPage';
 import { StatsPage } from './pages/StatsPage/StatsPage';
-import './utils/chartjs';
+import './utils/chart/chartjs';
 
 export function App() {
   const { accentColour } = useAppSettings();

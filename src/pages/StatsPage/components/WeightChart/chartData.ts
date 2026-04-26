@@ -128,6 +128,7 @@ export function getWeightChartData({
         borderWidth: 1,
         backgroundColor: accentColour,
         pointHitRadius: 500,
+        fill: true,
       },
       {
         label: 'Target Weight',

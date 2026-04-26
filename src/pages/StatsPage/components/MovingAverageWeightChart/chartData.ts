@@ -45,6 +45,7 @@ export function getMovingAverageWeightChartData({
         borderWidth: 1,
         backgroundColor: accentColour,
         pointHitRadius: 500,
+        fill: true,
       },
       {
         label: 'Target Weight',
