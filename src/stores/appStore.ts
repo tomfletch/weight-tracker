@@ -46,7 +46,7 @@ export const useAppStore = create<AppState>()(
       weightTargetKgs: null,
 
       // Settings
-      accentColour: THEME_COLOURS[0],
+      accentColour: THEME_COLOURS[0].value,
 
       actions: {
         // Height
