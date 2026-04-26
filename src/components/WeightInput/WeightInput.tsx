@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import { WeightUnit } from '~/types/weight';
 import { toFixedNoZero } from '~/utils/numbers';
@@ -78,6 +78,7 @@ function WeightInputKg({ weight, onChange, label, labelClassName }: Props) {
 
 function WeightInputStLb({ weight, onChange, label, labelClassName }: Props) {
   const id = useId();
+  const firstInputRef = useRef<HTMLInputElement>(null);
 
   const [isChanged, setIsChanged] = useState(false);
 
@@ -125,6 +126,7 @@ function WeightInputStLb({ weight, onChange, label, labelClassName }: Props) {
     <div className={styles.weightInput}>
       <div className={styles.weightField}>
         <input
+          ref={firstInputRef}
           id={`${id}-stone`}
           type="text"
           inputMode="numeric"
@@ -159,7 +161,13 @@ function WeightInputStLb({ weight, onChange, label, labelClassName }: Props) {
   if (label) {
     return (
       <>
-        <div className={labelClassName} aria-hidden="true">
+        <div
+          className={labelClassName}
+          aria-hidden="true"
+          onClick={() => {
+            firstInputRef.current?.focus();
+          }}
+        >
           {label}
         </div>
         <fieldset className="inputFieldset">

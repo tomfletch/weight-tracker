@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { useAppHeight } from '~/hooks/useAppHeight';
 import { HeightUnit } from '~/types/height';
 import {
@@ -138,6 +138,7 @@ function HeightInputIn({ height, onChange, label, labelClassName }: Props) {
 
 function HeightInputFtIn({ height, onChange, label, labelClassName }: Props) {
   const id = useId();
+  const firstInputRef = useRef<HTMLInputElement>(null);
 
   const [isChanged, setIsChanged] = useState(false);
 
@@ -184,6 +185,7 @@ function HeightInputFtIn({ height, onChange, label, labelClassName }: Props) {
   const inputContent = (
     <div className={styles.heightInput}>
       <input
+        ref={firstInputRef}
         id={`${id}-feet`}
         type="text"
         inputMode="numeric"
@@ -215,7 +217,13 @@ function HeightInputFtIn({ height, onChange, label, labelClassName }: Props) {
   if (label) {
     return (
       <>
-        <div className={labelClassName} aria-hidden="true">
+        <div
+          className={labelClassName}
+          aria-hidden="true"
+          onClick={() => {
+            firstInputRef.current?.focus();
+          }}
+        >
           {label}
         </div>
         <fieldset className="inputFieldset">
