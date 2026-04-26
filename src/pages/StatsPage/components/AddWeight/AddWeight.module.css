@@ -35,7 +35,7 @@
     flex-direction: column;
   }
 
-  .addWeight label {
+  .addWeight .label {
     width: 60px;
     text-align: left;
   }
@@ -47,7 +47,7 @@
   flex-grow: 1;
 }
 
-.addWeight label {
+.addWeight .label {
   margin-right: 0.5rem;
 }
 

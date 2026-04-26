@@ -17,7 +17,7 @@
 .ellipse::after {
   display: block;
   position: absolute;
-  background-color: #ddd;
+  background-color: #e4e8ec;
   border-radius: 100%;
   margin-top: -100px;
   margin-left: -25%;

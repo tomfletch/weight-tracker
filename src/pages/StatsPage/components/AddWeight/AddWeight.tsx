@@ -51,7 +51,7 @@ export function AddWeight() {
               <WeightInput
                 weight={weight}
                 onChange={(newWeight) => setWeight(newWeight)}
-                label="Weight"
+                label="Weight:"
                 labelClassName={styles.label}
               />
             </div>
