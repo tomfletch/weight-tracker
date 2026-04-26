@@ -2,6 +2,8 @@
   position: relative;
   padding: 2rem;
   padding-bottom: 0;
+
+  --ellipse-colour: #e4e8ec;
 }
 
 .ellipse {
@@ -17,7 +19,7 @@
 .ellipse::after {
   display: block;
   position: absolute;
-  background-color: #e4e8ec;
+  background-color: var(--ellipse-colour);
   border-radius: 100%;
   margin-top: -100px;
   margin-left: -25%;
@@ -33,7 +35,7 @@
   height: 130px;
   border-radius: 100%;
   margin: auto;
-  border: 5px solid #eee;
+  border: 5px solid var(--ellipse-colour);
   display: flex;
   flex-direction: column;
   align-items: center;
