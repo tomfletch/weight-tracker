@@ -69,13 +69,11 @@ export function SettingsPage() {
           </select>
         </div>
         <div className={styles.field}>
-          <label className={styles.label} htmlFor="target-weight">
-            Target Weight
-          </label>
           <WeightInput
-            id="target-weight"
             weight={weightTargetKgs}
             onChange={onTargetWeightChange}
+            label="Target Weight"
+            labelClassName={styles.label}
           />
         </div>
         <div className={styles.field}>
@@ -95,10 +93,12 @@ export function SettingsPage() {
           </select>
         </div>
         <div className={styles.field}>
-          <label className={styles.label} htmlFor="height">
-            Height
-          </label>
-          <HeightInput id="height" height={height} onChange={setHeight} />
+          <HeightInput
+            height={height}
+            onChange={setHeight}
+            label="Height"
+            labelClassName={styles.label}
+          />
         </div>
         <div className={styles.field}>
           <span className={styles.label}>Theme Colour</span>

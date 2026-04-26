@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import { WeightUnit } from '~/types/weight';
 import { toFixedNoZero } from '~/utils/numbers';
@@ -12,12 +12,14 @@ import {
 import styles from './WeightInput.module.css';
 
 interface Props {
-  id: string;
   weight: number | null;
   onChange: (weight: number | null) => void;
+  label?: string;
+  labelClassName?: string;
 }
 
-function WeightInputKg({ id, weight, onChange }: Props) {
+function WeightInputKg({ weight, onChange, label, labelClassName }: Props) {
+  const id = useId();
   let initialKgStr = '';
 
   if (weight) {
@@ -45,26 +47,39 @@ function WeightInputKg({ id, weight, onChange }: Props) {
     setIsChanged(true);
   };
 
+  const inputAriaLabel = label ? `${label} - Kilograms` : 'Kilograms';
+
   return (
-    <div className={styles.weightInput}>
-      <div className={styles.weightField}>
-        <input
-          id={id}
-          type="text"
-          inputMode="decimal"
-          className={styles.weightInputKg}
-          value={kgStr}
-          maxLength={5}
-          autoComplete="off"
-          onChange={onKgChange}
-        />
-        <div className={styles.weightUnit}>kg</div>
+    <>
+      {label && (
+        <label htmlFor={id} className={labelClassName}>
+          {label}
+        </label>
+      )}
+      <div className={styles.weightInput}>
+        <div className={styles.weightField}>
+          <input
+            id={id}
+            type="text"
+            inputMode="decimal"
+            className={styles.weightInputKg}
+            value={kgStr}
+            maxLength={5}
+            autoComplete="off"
+            onChange={onKgChange}
+            aria-label={inputAriaLabel}
+          />
+          <div className={styles.weightUnit} aria-hidden="true">
+            kg
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
-function WeightInputStLb({ id, weight, onChange }: Props) {
+function WeightInputStLb({ weight, onChange, label, labelClassName }: Props) {
+  const id = useId();
   let initialStStr = '';
   let initialLbStr = '';
 
@@ -105,36 +120,63 @@ function WeightInputStLb({ id, weight, onChange }: Props) {
     setIsChanged(true);
   };
 
-  return (
+  const stoneLabel = label ? `${label} - Stone` : 'Stone';
+  const poundsLabel = label ? `${label} - Pounds` : 'Pounds';
+
+  const inputContent = (
     <div className={styles.weightInput}>
       <div className={styles.weightField}>
         <input
-          id={id}
+          id={`${id}-stone`}
           type="text"
           inputMode="numeric"
           value={stStr}
           maxLength={2}
           autoComplete="off"
           onChange={onStoneChange}
+          aria-label={stoneLabel}
         />
-        <div className={styles.weightUnit}>st</div>
+        <div className={styles.weightUnit} aria-hidden="true">
+          st
+        </div>
       </div>
       <div className={styles.weightField}>
         <input
+          id={`${id}-pounds`}
           type="text"
           inputMode="decimal"
           value={lbStr}
           maxLength={4}
           autoComplete="off"
           onChange={onLbsChange}
+          aria-label={poundsLabel}
         />
-        <div className={styles.weightUnit}>lb</div>
+        <div className={styles.weightUnit} aria-hidden="true">
+          lb
+        </div>
       </div>
     </div>
   );
+
+  if (label) {
+    return (
+      <>
+        <div className={labelClassName} aria-hidden="true">
+          {label}
+        </div>
+        <fieldset className="inputFieldset">
+          <legend className="visuallyHidden">{label}</legend>
+          {inputContent}
+        </fieldset>
+      </>
+    );
+  }
+
+  return inputContent;
 }
 
-function WeightInputLb({ id, weight, onChange }: Props) {
+function WeightInputLb({ weight, onChange, label, labelClassName }: Props) {
+  const id = useId();
   let initialLbStr = '';
 
   if (weight) {
@@ -164,26 +206,43 @@ function WeightInputLb({ id, weight, onChange }: Props) {
     setIsChanged(true);
   };
 
+  const inputAriaLabel = label ? `${label} - Pounds` : 'Pounds';
+
   return (
-    <div className={styles.weightInput}>
-      <div className={styles.weightField}>
-        <input
-          id={id}
-          type="text"
-          inputMode="decimal"
-          className={styles.weightInputLb}
-          value={lbStr}
-          maxLength={5}
-          autoComplete="off"
-          onChange={onLbChange}
-        />
-        <div className={styles.weightUnit}>lb</div>
+    <>
+      {label && (
+        <label htmlFor={id} className={labelClassName}>
+          {label}
+        </label>
+      )}
+      <div className={styles.weightInput}>
+        <div className={styles.weightField}>
+          <input
+            id={id}
+            type="text"
+            inputMode="decimal"
+            className={styles.weightInputLb}
+            value={lbStr}
+            maxLength={5}
+            autoComplete="off"
+            onChange={onLbChange}
+            aria-label={inputAriaLabel}
+          />
+          <div className={styles.weightUnit} aria-hidden="true">
+            lb
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
-export function WeightInput({ id, weight, onChange }: Props) {
+export function WeightInput({
+  weight,
+  onChange,
+  label,
+  labelClassName,
+}: Props) {
   const { weightUnit } = useAppWeight();
 
   let InputComponent = WeightInputKg;
@@ -196,5 +255,12 @@ export function WeightInput({ id, weight, onChange }: Props) {
     InputComponent = WeightInputLb;
   }
 
-  return <InputComponent id={id} weight={weight} onChange={onChange} />;
+  return (
+    <InputComponent
+      weight={weight}
+      onChange={onChange}
+      label={label}
+      labelClassName={labelClassName}
+    />
+  );
 }

@@ -48,11 +48,11 @@ export function AddWeight() {
               />
             </div>
             <div className={styles.field}>
-              <label htmlFor="weight-input">Weight:</label>
               <WeightInput
-                id="weight-input"
                 weight={weight}
                 onChange={(newWeight) => setWeight(newWeight)}
+                label="Weight"
+                labelClassName={styles.label}
               />
             </div>
           </div>

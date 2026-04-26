@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { useAppHeight } from '~/hooks/useAppHeight';
 import { HeightUnit } from '~/types/height';
 import {
@@ -14,12 +14,14 @@ import { toFixedNoZero } from '~/utils/numbers';
 import styles from './HeightInput.module.css';
 
 interface Props {
-  id: string;
   height: number | null;
   onChange: (height: number | null) => void;
+  label?: string;
+  labelClassName?: string;
 }
 
-function HeightInputCm({ id, height, onChange }: Props) {
+function HeightInputCm({ height, onChange, label, labelClassName }: Props) {
+  const id = useId();
   let initialStr = '';
 
   if (height) {
@@ -49,23 +51,36 @@ function HeightInputCm({ id, height, onChange }: Props) {
     setIsChanged(true);
   };
 
+  const inputAriaLabel = label ? `${label} - Centimeters` : 'Centimeters';
+
   return (
-    <div className={styles.heightInput}>
-      <input
-        id={id}
-        type="text"
-        inputMode="decimal"
-        value={heightStr}
-        maxLength={5}
-        autoComplete="off"
-        onChange={onCmChange}
-      />
-      <div className={styles.heightUnit}>cm</div>
-    </div>
+    <>
+      {label && (
+        <label htmlFor={id} className={labelClassName}>
+          {label}
+        </label>
+      )}
+      <div className={styles.heightInput}>
+        <input
+          id={id}
+          type="text"
+          inputMode="decimal"
+          value={heightStr}
+          maxLength={5}
+          autoComplete="off"
+          onChange={onCmChange}
+          aria-label={inputAriaLabel}
+        />
+        <div className={styles.heightUnit} aria-hidden="true">
+          cm
+        </div>
+      </div>
+    </>
   );
 }
 
-function HeightInputIn({ id, height, onChange }: Props) {
+function HeightInputIn({ height, onChange, label, labelClassName }: Props) {
+  const id = useId();
   let initialStr = '';
 
   if (height) {
@@ -95,23 +110,36 @@ function HeightInputIn({ id, height, onChange }: Props) {
     setIsChanged(true);
   };
 
+  const inputAriaLabel = label ? `${label} - Inches` : 'Inches';
+
   return (
-    <div className={styles.heightInput}>
-      <input
-        id={id}
-        type="text"
-        inputMode="decimal"
-        value={heightStr}
-        maxLength={5}
-        autoComplete="off"
-        onChange={onInChange}
-      />
-      <div className={styles.heightUnit}>in</div>
-    </div>
+    <>
+      {label && (
+        <label htmlFor={id} className={labelClassName}>
+          {label}
+        </label>
+      )}
+      <div className={styles.heightInput}>
+        <input
+          id={id}
+          type="text"
+          inputMode="decimal"
+          value={heightStr}
+          maxLength={5}
+          autoComplete="off"
+          onChange={onInChange}
+          aria-label={inputAriaLabel}
+        />
+        <div className={styles.heightUnit} aria-hidden="true">
+          in
+        </div>
+      </div>
+    </>
   );
 }
 
-function HeightInputFtIn({ id, height, onChange }: Props) {
+function HeightInputFtIn({ height, onChange, label, labelClassName }: Props) {
+  const id = useId();
   let initialFtStr = '';
   let initialInStr = '';
 
@@ -152,32 +180,63 @@ function HeightInputFtIn({ id, height, onChange }: Props) {
     setIsChanged(true);
   };
 
-  return (
+  const feetLabel = label ? `${label} - Feet` : 'Feet';
+  const inchesLabel = label ? `${label} - Inches` : 'Inches';
+
+  const inputContent = (
     <div className={styles.heightInput}>
       <input
-        id={id}
+        id={`${id}-feet`}
         type="text"
         inputMode="numeric"
         value={ftStr}
         maxLength={2}
         autoComplete="off"
         onChange={onFtChange}
+        aria-label={feetLabel}
       />
-      <div className={styles.heightUnit}>ft</div>
+      <div className={styles.heightUnit} aria-hidden="true">
+        ft
+      </div>
       <input
+        id={`${id}-inches`}
         type="text"
         inputMode="decimal"
         value={inStr}
         maxLength={4}
         autoComplete="off"
         onChange={onInChange}
+        aria-label={inchesLabel}
       />
-      <div className={styles.heightUnit}>in</div>
+      <div className={styles.heightUnit} aria-hidden="true">
+        in
+      </div>
     </div>
   );
+
+  if (label) {
+    return (
+      <>
+        <div className={labelClassName} aria-hidden="true">
+          {label}
+        </div>
+        <fieldset className="inputFieldset">
+          <legend className="visuallyHidden">{label}</legend>
+          {inputContent}
+        </fieldset>
+      </>
+    );
+  }
+
+  return inputContent;
 }
 
-export function HeightInput({ id, height, onChange }: Props) {
+export function HeightInput({
+  height,
+  onChange,
+  label,
+  labelClassName,
+}: Props) {
   const { heightUnit } = useAppHeight();
 
   let InputComponent = HeightInputCm;
@@ -190,5 +249,12 @@ export function HeightInput({ id, height, onChange }: Props) {
     InputComponent = HeightInputFtIn;
   }
 
-  return <InputComponent id={id} height={height} onChange={onChange} />;
+  return (
+    <InputComponent
+      height={height}
+      onChange={onChange}
+      label={label}
+      labelClassName={labelClassName}
+    />
+  );
 }
