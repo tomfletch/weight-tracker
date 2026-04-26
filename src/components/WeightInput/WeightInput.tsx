@@ -20,14 +20,12 @@ interface Props {
 
 function WeightInputKg({ weight, onChange, label, labelClassName }: Props) {
   const id = useId();
-  let initialKgStr = '';
-
-  if (weight) {
-    initialKgStr = toFixedNoZero(weight, 1);
-  }
 
   const [isChanged, setIsChanged] = useState(false);
-  const [kgStr, setKgStr] = useState(initialKgStr);
+  const [kgStr, setKgStr] = useState(() => {
+    if (!weight) return '';
+    return toFixedNoZero(weight, 1);
+  });
 
   useEffect(() => {
     if (!isChanged) return;
@@ -80,18 +78,18 @@ function WeightInputKg({ weight, onChange, label, labelClassName }: Props) {
 
 function WeightInputStLb({ weight, onChange, label, labelClassName }: Props) {
   const id = useId();
-  let initialStStr = '';
-  let initialLbStr = '';
-
-  if (weight) {
-    const { st, lb } = convertKgToStLb(weight);
-    initialStStr = st.toString();
-    initialLbStr = toFixedNoZero(lb, 1);
-  }
 
   const [isChanged, setIsChanged] = useState(false);
-  const [stStr, setStStr] = useState(initialStStr);
-  const [lbStr, setLbStr] = useState(initialLbStr);
+
+  const initialWeightStLb = weight ? convertKgToStLb(weight) : null;
+  const [stStr, setStStr] = useState(() => {
+    if (!initialWeightStLb) return '';
+    return initialWeightStLb.st.toString();
+  });
+  const [lbStr, setLbStr] = useState(() => {
+    if (!initialWeightStLb) return '';
+    return toFixedNoZero(initialWeightStLb.lb, 1);
+  });
 
   useEffect(() => {
     if (!isChanged) return;
@@ -177,15 +175,13 @@ function WeightInputStLb({ weight, onChange, label, labelClassName }: Props) {
 
 function WeightInputLb({ weight, onChange, label, labelClassName }: Props) {
   const id = useId();
-  let initialLbStr = '';
-
-  if (weight) {
-    const lb = convertKgToLb(weight);
-    initialLbStr = toFixedNoZero(lb, 1);
-  }
 
   const [isChanged, setIsChanged] = useState(false);
-  const [lbStr, setLbStr] = useState(initialLbStr);
+  const [lbStr, setLbStr] = useState(() => {
+    if (!weight) return '';
+    const lb = convertKgToLb(weight);
+    return toFixedNoZero(lb, 1);
+  });
 
   useEffect(() => {
     if (!isChanged) return;

@@ -22,15 +22,14 @@ interface Props {
 
 function HeightInputCm({ height, onChange, label, labelClassName }: Props) {
   const id = useId();
-  let initialStr = '';
-
-  if (height) {
-    const heightCm = convertMToCm(height);
-    initialStr = toFixedNoZero(heightCm, 1);
-  }
 
   const [isChanged, setIsChanged] = useState(false);
-  const [heightStr, setHeightStr] = useState(initialStr);
+  const [heightStr, setHeightStr] = useState(() => {
+    if (!height) return '';
+
+    const heightCm = convertMToCm(height);
+    return toFixedNoZero(heightCm, 1);
+  });
 
   useEffect(() => {
     if (!isChanged) return;
@@ -81,15 +80,14 @@ function HeightInputCm({ height, onChange, label, labelClassName }: Props) {
 
 function HeightInputIn({ height, onChange, label, labelClassName }: Props) {
   const id = useId();
-  let initialStr = '';
-
-  if (height) {
-    const heightIn = convertMToIn(height);
-    initialStr = toFixedNoZero(heightIn, 1);
-  }
 
   const [isChanged, setIsChanged] = useState(false);
-  const [heightStr, setHeightStr] = useState(initialStr);
+  const [heightStr, setHeightStr] = useState(() => {
+    if (!height) return '';
+
+    const heightIn = convertMToIn(height);
+    return toFixedNoZero(heightIn, 1);
+  });
 
   useEffect(() => {
     if (!isChanged) return;
@@ -140,18 +138,18 @@ function HeightInputIn({ height, onChange, label, labelClassName }: Props) {
 
 function HeightInputFtIn({ height, onChange, label, labelClassName }: Props) {
   const id = useId();
-  let initialFtStr = '';
-  let initialInStr = '';
-
-  if (height) {
-    const { ft, inch } = convertMToFtIn(height);
-    initialFtStr = ft.toString();
-    initialInStr = toFixedNoZero(inch, 1);
-  }
 
   const [isChanged, setIsChanged] = useState(false);
-  const [ftStr, setFtStr] = useState(initialFtStr);
-  const [inStr, setInStr] = useState(initialInStr);
+
+  const initialHeightFtIn = height ? convertMToFtIn(height) : null;
+  const [ftStr, setFtStr] = useState(() => {
+    if (!initialHeightFtIn) return '';
+    return initialHeightFtIn.ft.toString();
+  });
+  const [inStr, setInStr] = useState(() => {
+    if (!initialHeightFtIn) return '';
+    return toFixedNoZero(initialHeightFtIn.inch, 1);
+  });
 
   useEffect(() => {
     if (!isChanged) return;
