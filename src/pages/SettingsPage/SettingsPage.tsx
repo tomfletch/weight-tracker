@@ -100,10 +100,15 @@ export function SettingsPage() {
             labelClassName={styles.label}
           />
         </div>
-        <div className={styles.field}>
-          <span className={styles.label}>Theme Colour</span>
-          <ColourSelect value={accentColour} onChange={setAccentColour} />
-        </div>
+        <fieldset className="inputFieldset">
+          <legend className="visuallyHidden">Theme Colour</legend>
+          <div className={styles.field}>
+            <span className={styles.label} aria-hidden="true">
+              Theme Colour
+            </span>
+            <ColourSelect value={accentColour} onChange={setAccentColour} />
+          </div>
+        </fieldset>
       </Card>
     </div>
   );
