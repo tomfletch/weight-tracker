@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import styles from './App.module.css';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
 import { Header } from './components/Header/Header';
 import { useAppSettings } from './hooks/useAppSettings';
@@ -18,8 +19,11 @@ export function App() {
         className="App"
         style={{ '--accent-colour': accentColour } as CSSProperties}
       >
+        <a href="#main-content" className={styles.skipToContent}>
+          Skip to content
+        </a>
         <Header />
-        <main>
+        <main id="main-content">
           <ErrorBoundary>
             <Routes>
               <Route path="/" element={<StatsPage />} />
