@@ -25,7 +25,7 @@ const heightUnitOptions = [
 export function SettingsPage() {
   const { weightUnit, setWeightUnit, weightTargetKgs, setWeightTargetKgs } =
     useAppWeight();
-  const { accentColour, setAccentColour } = useAppSettings();
+  const { theme, setTheme } = useAppSettings();
   const { heightUnit, setHeightUnit, height, setHeight } = useAppHeight();
 
   const onTargetWeightChange = useCallback(
@@ -101,12 +101,12 @@ export function SettingsPage() {
           />
         </div>
         <fieldset className="inputFieldset">
-          <legend className="visuallyHidden">Theme Colour</legend>
+          <legend className="visuallyHidden">Theme</legend>
           <div className={styles.field}>
             <span className={styles.label} aria-hidden="true">
-              Theme Colour
+              Theme
             </span>
-            <ColourSelect value={accentColour} onChange={setAccentColour} />
+            <ColourSelect value={theme} onChange={setTheme} />
           </div>
         </fieldset>
       </Card>

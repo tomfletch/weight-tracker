@@ -2,7 +2,7 @@ import type { ChartData, ChartOptions } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 import { Line } from 'react-chartjs-2';
 import { Card } from '~/components/Card/Card';
-import { useAppSettings } from '~/hooks/useAppSettings';
+import { useAppTheme } from '~/hooks/useAppTheme';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import {
   getMovingAverageDeltaChartData,
@@ -11,7 +11,7 @@ import {
 
 export function MovingAverageDeltaChart() {
   const { weightRecords, weightUnit } = useAppWeight();
-  const { accentColour } = useAppSettings();
+  const { accentColour } = useAppTheme();
 
   if (weightRecords.length === 0) {
     return <div>Not enough data</div>;

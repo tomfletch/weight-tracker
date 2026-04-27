@@ -21,7 +21,7 @@ function getRequiredLabels(chartData: ChartData<'line'>) {
 
 describe('movingAverageDeltaChart chartData utils', () => {
   describe('getMovingAverageDeltaChartData', () => {
-    it('should build single dataset with expected label and accent color', () => {
+    it('should build single dataset with expected label and theme color', () => {
       const chartData = getMovingAverageDeltaChartData({
         weightRecords,
         weightUnit: WeightUnit.KGS,

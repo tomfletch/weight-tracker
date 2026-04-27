@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { HeightUnit } from '~/types/height';
 import { type WeightRecord, WeightUnit } from '~/types/weight';
-import { THEME_COLOURS } from '~/utils/colours';
+import { DEFAULT_THEME, normaliseTheme, type Theme } from '~/utils/colours';
 
 type AppState = {
   // Height
@@ -15,7 +15,7 @@ type AppState = {
   weightTargetKgs: number | null;
 
   // Settings
-  accentColour: string;
+  theme: Theme;
 
   actions: {
     // Height
@@ -29,7 +29,7 @@ type AppState = {
     setWeightTargetKgs: (weightTarget: number) => void;
 
     // Settings
-    setAccentColour: (accentColour: string) => void;
+    setTheme: (theme: Theme) => void;
   };
 };
 
@@ -46,7 +46,7 @@ export const useAppStore = create<AppState>()(
       weightTargetKgs: null,
 
       // Settings
-      accentColour: THEME_COLOURS[0].value,
+      theme: DEFAULT_THEME,
 
       actions: {
         // Height
@@ -75,7 +75,7 @@ export const useAppStore = create<AppState>()(
         setWeightTargetKgs: (weightTargetKgs) => set({ weightTargetKgs }),
 
         // Settings
-        setAccentColour: (accentColour) => set({ accentColour }),
+        setTheme: (theme) => set({ theme: normaliseTheme(theme) }),
       },
     }),
     {

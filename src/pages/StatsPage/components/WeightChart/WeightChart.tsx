@@ -3,7 +3,7 @@ import { useId, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Card } from '~/components/Card/Card';
 import { TabList } from '~/components/TabList/TabList';
-import { useAppSettings } from '~/hooks/useAppSettings';
+import { useAppTheme } from '~/hooks/useAppTheme';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import {
   CHART_PERIODS,
@@ -16,7 +16,7 @@ import {
 export function WeightChart() {
   const weightChartId = useId();
   const { weightRecords, weightTargetKgs, weightUnit } = useAppWeight();
-  const { accentColour } = useAppSettings();
+  const { accentColour } = useAppTheme();
   const [selectedPeriod, setSelectedPeriod] = useState<ChartPeriod>(
     CHART_PERIODS[0],
   );

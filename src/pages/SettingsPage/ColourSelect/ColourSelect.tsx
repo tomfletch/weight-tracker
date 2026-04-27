@@ -1,21 +1,26 @@
 import { useId } from 'react';
-import { THEME_COLOURS, type ThemeColour } from '~/utils/colours';
+import {
+  getThemeColours,
+  THEMES,
+  type Theme,
+  type ThemeOption,
+} from '~/utils/colours';
 import styles from './ColourSelect.module.css';
 
 type ColourSelectProps = {
-  value: string;
-  onChange: (value: string) => void;
+  value: Theme;
+  onChange: (value: Theme) => void;
 };
 
 export function ColourSelect({ value, onChange }: ColourSelectProps) {
   return (
     <div className={styles.colourSelect}>
-      {THEME_COLOURS.map((colour) => (
+      {THEMES.map((theme) => (
         <ColourSelectOption
-          key={colour.name}
-          colour={colour}
-          isSelected={colour.value === value}
-          onSelect={() => onChange(colour.value)}
+          key={theme.name}
+          theme={theme}
+          isSelected={theme.value === value}
+          onSelect={() => onChange(theme.value)}
         />
       ))}
     </div>
@@ -23,13 +28,13 @@ export function ColourSelect({ value, onChange }: ColourSelectProps) {
 }
 
 type ColourSelectOptionProps = {
-  colour: ThemeColour;
+  theme: ThemeOption;
   isSelected: boolean;
   onSelect: () => void;
 };
 
 function ColourSelectOption({
-  colour,
+  theme,
   isSelected,
   onSelect,
 }: ColourSelectOptionProps) {
@@ -41,15 +46,15 @@ function ColourSelectOption({
         id={id}
         className={styles.colourInput}
         type="radio"
-        name="colour"
+        name="theme"
         checked={isSelected}
         onChange={onSelect}
       />
       <label
         htmlFor={id}
         className={styles.colourLabel}
-        style={{ backgroundColor: colour.value }}
-        aria-label={`Color ${colour.name}`}
+        style={{ backgroundColor: getThemeColours(theme.value).accentColour }}
+        aria-label={`Theme ${theme.name}`}
       />
     </>
   );
