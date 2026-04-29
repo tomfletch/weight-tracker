@@ -1,7 +1,7 @@
 export const THEMES = [
-  { name: 'Blue', value: 'blue', colours: { accentColour: '#00c8ff' } },
-  { name: 'Pink', value: 'pink', colours: { accentColour: '#ff70a9' } },
-  { name: 'Green', value: 'green', colours: { accentColour: '#2bc356' } },
+  { name: 'Blue', value: 'blue', colours: { accentColour: '#0078c8' } },
+  { name: 'Pink', value: 'pink', colours: { accentColour: '#df0072' } },
+  { name: 'Green', value: 'green', colours: { accentColour: '#00892a' } },
 ] as const;
 
 export type Theme = (typeof THEMES)[number]['value'];
