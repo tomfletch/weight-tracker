@@ -31,6 +31,10 @@ p {
   max-width: 1000px;
 }
 
+.textLight {
+  color: #555;
+}
+
 .visuallyHidden {
   position: absolute;
   width: 1px;

@@ -30,10 +30,9 @@ export function MovingAverageWeightChart() {
   return (
     <Card>
       <Card.Title>Weight Trend (7 Day Average)</Card.Title>
-      <p>
+      <p className="textLight">
         Shows your weight trend using a 7-day moving average, smoothing daily
-        fluctuations. Each point averages the 3 days before and after. Your
-        target weight is included for reference.
+        fluctuations.
       </p>
       <Line
         aria-label="A chart showing moving average weight over time"

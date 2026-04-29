@@ -6,10 +6,8 @@
 }
 
 .cardTitle {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 600;
   line-height: 1;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 1rem;
   margin-bottom: 1rem;
 }
