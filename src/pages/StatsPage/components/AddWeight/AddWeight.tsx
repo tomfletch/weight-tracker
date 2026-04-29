@@ -37,7 +37,9 @@ export function AddWeight() {
         <form onSubmit={onWeightSubmit}>
           <div className={styles.formFields}>
             <div className={`${styles.field} ${styles.dateSection}`}>
-              <label htmlFor="date-input">Date:</label>
+              <label htmlFor="date-input" className={styles.label}>
+                Date:
+              </label>
               <input
                 id="date-input"
                 type="date"
