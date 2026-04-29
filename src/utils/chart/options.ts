@@ -9,6 +9,7 @@ export interface BaseChartOptionsInput {
   minDate?: string;
   yAxisConfig?: {
     beginAtZero?: boolean;
+    precision?: number;
   };
 }
 
@@ -20,6 +21,7 @@ export function buildBaseLineChartOptions(
   input: BaseChartOptionsInput,
 ): ChartOptions<'line'> {
   const { weightUnit, maxDate, minDate, yAxisConfig = {} } = input;
+  const { beginAtZero = false, precision = 0 } = yAxisConfig;
 
   const defaultTooltipLabel = (context: TooltipItem<'line'>) => {
     if (context.parsed.y === null) {
@@ -62,16 +64,17 @@ export function buildBaseLineChartOptions(
         },
       },
       y: {
-        ...(yAxisConfig.beginAtZero && { beginAtZero: true }),
+        beginAtZero,
         grid: {
           color: (line) => (line.tick.value === 0 ? '#d3d3d3' : '#f0f0f0'),
         },
         ticks: {
+          precision,
           callback: (value: number | string): string => {
             if (typeof value !== 'number') {
               return '';
             }
-            return formatWeightValueByUnit(value, weightUnit, 0);
+            return formatWeightValueByUnit(value, weightUnit, precision);
           },
         },
       },

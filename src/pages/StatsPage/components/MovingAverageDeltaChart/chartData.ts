@@ -67,6 +67,7 @@ export function getMovingAverageDeltaChartOptions(
     maxDate,
     yAxisConfig: {
       beginAtZero: true,
+      precision: 1,
     },
   });
 }
