@@ -51,8 +51,8 @@ export function getMovingAverageDeltaChartData({
         data: displayDeltaWeights,
         borderColor: accentColour,
         borderWidth: 1,
-        backgroundColor: accentColour,
         pointHitRadius: 500,
+        pointBackgroundColor: accentColour,
       },
     ],
   };

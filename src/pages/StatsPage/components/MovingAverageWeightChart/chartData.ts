@@ -43,8 +43,8 @@ export function getMovingAverageWeightChartData({
         data: displayWeights,
         borderColor: accentColour,
         borderWidth: 1,
-        backgroundColor: accentColour,
         pointHitRadius: 500,
+        pointBackgroundColor: accentColour,
         fill: true,
       },
       {
