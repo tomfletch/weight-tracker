@@ -34,10 +34,14 @@ describe('chartData utils', () => {
     });
 
     it('should have descriptive labels for each period', () => {
-      expect(CHART_PERIODS[0].label).toBe('All Time');
-      expect(CHART_PERIODS[1].label).toBe('1 Year');
-      expect(CHART_PERIODS[2].label).toBe('3 Months');
-      expect(CHART_PERIODS[3].label).toBe('1 Month');
+      expect(CHART_PERIODS[0].label).toBe('All');
+      expect(CHART_PERIODS[0].longLabel).toBe('All Time');
+      expect(CHART_PERIODS[1].label).toBe('1Y');
+      expect(CHART_PERIODS[1].longLabel).toBe('1 Year');
+      expect(CHART_PERIODS[2].label).toBe('3M');
+      expect(CHART_PERIODS[2].longLabel).toBe('3 Months');
+      expect(CHART_PERIODS[3].label).toBe('1M');
+      expect(CHART_PERIODS[3].longLabel).toBe('1 Month');
     });
   });
 

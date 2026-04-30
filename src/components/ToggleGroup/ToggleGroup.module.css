@@ -1,0 +1,33 @@
+.toggleGroup {
+  display: flex;
+}
+
+.toggleGroupItem {
+  cursor: pointer;
+  padding: 0.5rem 1.5rem;
+  background-color: transparent;
+  border: 1px solid #ccc;
+}
+
+.toggleGroupItem:not(:first-child) {
+  border-left: none;
+}
+
+.toggleGroupItem:first-child {
+  border-radius: 8px 0 0 8px;
+}
+
+.toggleGroupItem:last-child {
+  border-radius: 0 8px 8px 0;
+}
+
+.toggleGroupItem[aria-checked="true"] {
+  background-color: var(--accent-colour);
+  color: white;
+  border-color: var(--accent-colour);
+}
+
+.toggleGroupItem:focus-visible {
+  outline: 2px solid var(--accent-colour);
+  outline-offset: 2px;
+}

@@ -1,8 +1,8 @@
 import 'chartjs-adapter-date-fns';
-import { useId, useState } from 'react';
+import { useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Card } from '~/components/Card/Card';
-import { TabList } from '~/components/TabList/TabList';
+import { ToggleGroup } from '~/components/ToggleGroup/ToggleGroup';
 import { useAppTheme } from '~/hooks/useAppTheme';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import {
@@ -12,9 +12,9 @@ import {
   getWeightChartDateRange,
   getWeightChartOptions,
 } from './chartData';
+import styles from './WeightChart.module.css';
 
 export function WeightChart() {
-  const weightChartId = useId();
   const { weightRecords, weightTargetKgs, weightUnit } = useAppWeight();
   const { accentColour } = useAppTheme();
   const [selectedPeriod, setSelectedPeriod] = useState<ChartPeriod>(
@@ -42,20 +42,29 @@ export function WeightChart() {
 
   return (
     <Card>
-      <TabList>
-        {CHART_PERIODS.map((period) => (
-          <TabList.Tab
-            key={period.key}
-            isActive={period.key === selectedPeriod.key}
-            onSelect={() => setSelectedPeriod(period)}
-            controls={weightChartId}
-          >
-            {period.label}
-          </TabList.Tab>
-        ))}
-      </TabList>
+      <div className={styles.header}>
+        <h2>Your Progress</h2>
+        <ToggleGroup
+          value={selectedPeriod.key}
+          onValueChange={(value) => {
+            const newPeriod = CHART_PERIODS.find((p) => p.key === value);
+            if (newPeriod) {
+              setSelectedPeriod(newPeriod);
+            }
+          }}
+        >
+          {CHART_PERIODS.map((period) => (
+            <ToggleGroup.Item
+              key={period.key}
+              value={period.key}
+              aria-label={period.longLabel}
+            >
+              {period.label}
+            </ToggleGroup.Item>
+          ))}
+        </ToggleGroup>
+      </div>
       <Line
-        id={weightChartId}
         aria-label="A chart showing weight data over time"
         data={chartData}
         options={chartOptions}

@@ -6,10 +6,10 @@ import { parseISODate, toISODate } from '~/utils/dates';
 import { interpolateWeightAtDateString } from '~/utils/weightInterpolation';
 
 export const CHART_PERIODS = [
-  { key: 'ALL', label: 'All Time' },
-  { key: '1Y', label: '1 Year' },
-  { key: '3M', label: '3 Months' },
-  { key: '1M', label: '1 Month' },
+  { key: 'ALL', label: 'All', longLabel: 'All Time' },
+  { key: '1Y', label: '1Y', longLabel: '1 Year' },
+  { key: '3M', label: '3M', longLabel: '3 Months' },
+  { key: '1M', label: '1M', longLabel: '1 Month' },
 ] as const;
 
 export type ChartPeriod = (typeof CHART_PERIODS)[number];
