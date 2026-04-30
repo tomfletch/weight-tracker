@@ -45,6 +45,7 @@ export function WeightChart() {
       <div className={styles.header}>
         <h2>Your Progress</h2>
         <ToggleGroup
+          label="Select chart period"
           value={selectedPeriod.key}
           onValueChange={(value) => {
             const newPeriod = CHART_PERIODS.find((p) => p.key === value);
@@ -57,7 +58,7 @@ export function WeightChart() {
             <ToggleGroup.Item
               key={period.key}
               value={period.key}
-              aria-label={period.longLabel}
+              label={period.longLabel}
             >
               {period.label}
             </ToggleGroup.Item>

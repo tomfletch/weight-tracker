@@ -12,6 +12,8 @@ type ToggleGroupContextValue = {
   onSelect: (value: string) => void;
   selectNext: () => void;
   selectPrevious: () => void;
+  selectFirst: () => void;
+  selectLast: () => void;
   registerValue: (value: string, element: HTMLElement | null) => () => void;
 };
 
@@ -68,15 +70,39 @@ export function ToggleGroupContextProvider({
     focusValue(previousValue);
   }, [values, value, onValueChange, focusValue]);
 
+  const selectFirst = useCallback(() => {
+    if (values.length === 0) return;
+    const firstValue = values[0];
+    onValueChange(firstValue);
+    focusValue(firstValue);
+  }, [values, onValueChange, focusValue]);
+
+  const selectLast = useCallback(() => {
+    if (values.length === 0) return;
+    const lastValue = values[values.length - 1];
+    onValueChange(lastValue);
+    focusValue(lastValue);
+  }, [values, onValueChange, focusValue]);
+
   const contextValue: ToggleGroupContextValue = useMemo(
     () => ({
       selectedValue: value,
       onSelect: onValueChange,
       selectNext,
       selectPrevious,
+      selectFirst,
+      selectLast,
       registerValue,
     }),
-    [value, onValueChange, selectNext, selectPrevious, registerValue],
+    [
+      value,
+      onValueChange,
+      selectNext,
+      selectPrevious,
+      selectFirst,
+      selectLast,
+      registerValue,
+    ],
   );
 
   return (
