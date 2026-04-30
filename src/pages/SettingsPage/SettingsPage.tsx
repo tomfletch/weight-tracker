@@ -1,3 +1,11 @@
+import {
+  faBullseye,
+  faPaintBrush,
+  faRuler,
+  faRulerVertical,
+  faWeightScale,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useCallback } from 'react';
 import { Card } from '~/components/Card/Card';
 import { HeightInput } from '~/components/HeightInput/HeightInput';
@@ -50,63 +58,110 @@ export function SettingsPage() {
 
   return (
     <div className="pageContainer">
+      <header className={styles.header}>
+        <h1>Settings</h1>
+        <p className="textLight">Customise your preferences and goals.</p>
+      </header>
       <Card>
-        <Card.Title as="h1">Settings</Card.Title>
         <div className={styles.field}>
-          <label className={styles.label} htmlFor="weight-units">
-            Weight Units
-          </label>
-          <select
-            id="weight-units"
-            value={weightUnit}
-            onChange={(e) => onWeightUnitChange(e.target.value)}
-          >
-            {weightUnitOptions.map((option) => (
-              <option key={option.key} value={option.key}>
-                {option.name}
-              </option>
-            ))}
-          </select>
+          <div className={styles.icon} aria-hidden={true}>
+            <FontAwesomeIcon icon={faWeightScale} fontSize={30} />
+          </div>
+          <div className={styles.labelContainer}>
+            <label className={styles.label} htmlFor="weight-units">
+              Weight Units
+            </label>
+            <p className={styles.labelDescription}>
+              Select the units you want to use for weight.
+            </p>
+          </div>
+          <div className={styles.inputContainer}>
+            <select
+              id="weight-units"
+              value={weightUnit}
+              onChange={(e) => onWeightUnitChange(e.target.value)}
+            >
+              {weightUnitOptions.map((option) => (
+                <option key={option.key} value={option.key}>
+                  {option.name}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         <div className={styles.field}>
+          <div className={styles.icon} aria-hidden={true}>
+            <FontAwesomeIcon icon={faBullseye} fontSize={30} />
+          </div>
           <WeightInput
             weight={weightTargetKgs}
             onChange={onTargetWeightChange}
             label="Target Weight"
             labelClassName={styles.label}
+            labelDescription="Set your goal weight."
+            labelDescriptionClassName={styles.labelDescription}
+            labelContainerClassName={styles.labelContainer}
+            inputContainerClassName={styles.inputContainer}
           />
         </div>
         <div className={styles.field}>
-          <label className={styles.label} htmlFor="height-units">
-            Height Units
-          </label>
-          <select
-            id="height-units"
-            value={heightUnit}
-            onChange={(e) => onHeightUnitChange(e.target.value)}
-          >
-            {heightUnitOptions.map((option) => (
-              <option key={option.key} value={option.key}>
-                {option.name}
-              </option>
-            ))}
-          </select>
+          <div className={styles.icon} aria-hidden={true}>
+            <FontAwesomeIcon icon={faRuler} fontSize={30} />
+          </div>
+          <div className={styles.labelContainer}>
+            <label className={styles.label} htmlFor="height-units">
+              Height Units
+            </label>
+            <p className={styles.labelDescription}>
+              Select the units you want to use for height.
+            </p>
+          </div>
+          <div className={styles.inputContainer}>
+            <select
+              id="height-units"
+              value={heightUnit}
+              onChange={(e) => onHeightUnitChange(e.target.value)}
+            >
+              {heightUnitOptions.map((option) => (
+                <option key={option.key} value={option.key}>
+                  {option.name}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         <div className={styles.field}>
+          <div className={styles.icon} aria-hidden={true}>
+            <FontAwesomeIcon icon={faRulerVertical} fontSize={30} />
+          </div>
           <HeightInput
             height={height}
             onChange={setHeight}
             label="Height"
             labelClassName={styles.label}
+            labelDescription="Enter your height for BMI calculations."
+            labelDescriptionClassName={styles.labelDescription}
+            labelContainerClassName={styles.labelContainer}
+            inputContainerClassName={styles.inputContainer}
           />
         </div>
         <fieldset className="inputFieldset">
           <legend className="visuallyHidden">Theme</legend>
           <div className={styles.field}>
-            <span className={styles.label} aria-hidden="true">
-              Theme
-            </span>
-            <ColourSelect value={theme} onChange={setTheme} />
+            <div className={styles.icon} aria-hidden={true}>
+              <FontAwesomeIcon icon={faPaintBrush} fontSize={30} />
+            </div>
+            <div className={styles.labelContainer}>
+              <span className={styles.label} aria-hidden="true">
+                Theme
+              </span>
+              <p className={styles.labelDescription}>
+                Choose a colour theme for the app.
+              </p>
+            </div>
+            <div className={styles.inputContainer}>
+              <ColourSelect value={theme} onChange={setTheme} />
+            </div>
           </div>
         </fieldset>
       </Card>

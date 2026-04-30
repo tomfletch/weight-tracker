@@ -1,21 +1,59 @@
+.header {
+  margin-bottom: 2rem;
+}
+
 .field {
-  display: flex;
-  align-items: baseline;
-  margin-bottom: 1.5rem;
+  display: grid;
+  grid-template-columns: 50px 200px 1fr;
+  align-items: center;
+  gap: 2rem;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #eee;
+}
+
+.field:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 @media (max-width: 600px) {
   .field {
-    flex-direction: column;
-    gap: 0.5rem;
+    grid-template-columns: 50px 1fr;
     margin-bottom: 2rem;
+    row-gap: 1rem;
+  }
+
+  .icon {
+    grid-row: span 2;
+  }
+
+  .inputContainer {
+    grid-column: 2 / -1;
   }
 }
 
-.field .label {
-  display: inline-block;
-  width: 150px;
+.icon {
+  border-radius: 100%;
+  background-color: var(--accent-colour);
+  opacity: 0.5;
+  color: rgb(255 255 255 / 0.9);
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+}
+
+.label {
+  display: block;
+  font-weight: 600;
   margin-bottom: 0.25rem;
+}
+
+.labelDescription {
+  color: #555;
+  margin: 0;
 }
 
 .field input,

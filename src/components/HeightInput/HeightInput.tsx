@@ -18,9 +18,22 @@ interface Props {
   onChange: (height: number | null) => void;
   label?: string;
   labelClassName?: string;
+  labelDescription?: string;
+  labelDescriptionClassName?: string;
+  labelContainerClassName?: string;
+  inputContainerClassName?: string;
 }
 
-function HeightInputCm({ height, onChange, label, labelClassName }: Props) {
+function HeightInputCm({
+  height,
+  onChange,
+  label,
+  labelClassName,
+  labelDescription,
+  labelDescriptionClassName,
+  labelContainerClassName,
+  inputContainerClassName,
+}: Props) {
   const id = useId();
 
   const [isChanged, setIsChanged] = useState(false);
@@ -55,11 +68,20 @@ function HeightInputCm({ height, onChange, label, labelClassName }: Props) {
   return (
     <>
       {label && (
-        <label htmlFor={id} className={labelClassName}>
-          {label}
-        </label>
+        <div className={labelContainerClassName}>
+          <label htmlFor={id} className={labelClassName}>
+            {label}
+          </label>
+          {labelDescription && (
+            <p className={labelDescriptionClassName}>{labelDescription}</p>
+          )}
+        </div>
       )}
-      <div className={styles.heightInput}>
+      <div
+        className={[styles.heightInput, inputContainerClassName]
+          .filter(Boolean)
+          .join(' ')}
+      >
         <input
           id={id}
           type="text"
@@ -78,7 +100,16 @@ function HeightInputCm({ height, onChange, label, labelClassName }: Props) {
   );
 }
 
-function HeightInputIn({ height, onChange, label, labelClassName }: Props) {
+function HeightInputIn({
+  height,
+  onChange,
+  label,
+  labelClassName,
+  labelDescription,
+  labelDescriptionClassName,
+  labelContainerClassName,
+  inputContainerClassName,
+}: Props) {
   const id = useId();
 
   const [isChanged, setIsChanged] = useState(false);
@@ -113,11 +144,20 @@ function HeightInputIn({ height, onChange, label, labelClassName }: Props) {
   return (
     <>
       {label && (
-        <label htmlFor={id} className={labelClassName}>
-          {label}
-        </label>
+        <div className={labelContainerClassName}>
+          <label htmlFor={id} className={labelClassName}>
+            {label}
+          </label>
+          {labelDescription && (
+            <p className={labelDescriptionClassName}>{labelDescription}</p>
+          )}
+        </div>
       )}
-      <div className={styles.heightInput}>
+      <div
+        className={[styles.heightInput, inputContainerClassName]
+          .filter(Boolean)
+          .join(' ')}
+      >
         <input
           id={id}
           type="text"
@@ -136,7 +176,16 @@ function HeightInputIn({ height, onChange, label, labelClassName }: Props) {
   );
 }
 
-function HeightInputFtIn({ height, onChange, label, labelClassName }: Props) {
+function HeightInputFtIn({
+  height,
+  onChange,
+  label,
+  labelClassName,
+  labelDescription,
+  labelDescriptionClassName,
+  labelContainerClassName,
+  inputContainerClassName,
+}: Props) {
   const id = useId();
   const firstInputRef = useRef<HTMLInputElement>(null);
 
@@ -217,16 +266,25 @@ function HeightInputFtIn({ height, onChange, label, labelClassName }: Props) {
   if (label) {
     return (
       <>
-        <div
-          className={labelClassName}
-          aria-hidden="true"
-          onClick={() => {
-            firstInputRef.current?.focus();
-          }}
-        >
-          {label}
+        <div className={labelContainerClassName}>
+          <div
+            className={labelClassName}
+            aria-hidden="true"
+            onClick={() => {
+              firstInputRef.current?.focus();
+            }}
+          >
+            {label}
+          </div>
+          {labelDescription && (
+            <p className={labelDescriptionClassName}>{labelDescription}</p>
+          )}
         </div>
-        <fieldset className="inputFieldset">
+        <fieldset
+          className={['inputFieldset', inputContainerClassName]
+            .filter(Boolean)
+            .join(' ')}
+        >
           <legend className="visuallyHidden">{label}</legend>
           {inputContent}
         </fieldset>
@@ -242,6 +300,10 @@ export function HeightInput({
   onChange,
   label,
   labelClassName,
+  labelDescription,
+  labelDescriptionClassName,
+  labelContainerClassName,
+  inputContainerClassName,
 }: Props) {
   const { heightUnit } = useAppHeight();
 
@@ -261,6 +323,10 @@ export function HeightInput({
       onChange={onChange}
       label={label}
       labelClassName={labelClassName}
+      labelDescription={labelDescription}
+      labelDescriptionClassName={labelDescriptionClassName}
+      labelContainerClassName={labelContainerClassName}
+      inputContainerClassName={inputContainerClassName}
     />
   );
 }

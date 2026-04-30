@@ -16,9 +16,22 @@ interface Props {
   onChange: (weight: number | null) => void;
   label?: string;
   labelClassName?: string;
+  labelDescription?: string;
+  labelDescriptionClassName?: string;
+  labelContainerClassName?: string;
+  inputContainerClassName?: string;
 }
 
-function WeightInputKg({ weight, onChange, label, labelClassName }: Props) {
+function WeightInputKg({
+  weight,
+  onChange,
+  label,
+  labelClassName,
+  labelDescription,
+  labelDescriptionClassName,
+  labelContainerClassName,
+  inputContainerClassName,
+}: Props) {
   const id = useId();
 
   const [isChanged, setIsChanged] = useState(false);
@@ -50,11 +63,20 @@ function WeightInputKg({ weight, onChange, label, labelClassName }: Props) {
   return (
     <>
       {label && (
-        <label htmlFor={id} className={labelClassName}>
-          {label}
-        </label>
+        <div className={labelContainerClassName}>
+          <label htmlFor={id} className={labelClassName}>
+            {label}
+          </label>
+          {labelDescription && (
+            <p className={labelDescriptionClassName}>{labelDescription}</p>
+          )}
+        </div>
       )}
-      <div className={styles.weightInput}>
+      <div
+        className={[styles.weightInput, inputContainerClassName]
+          .filter(Boolean)
+          .join(' ')}
+      >
         <div className={styles.weightField}>
           <input
             id={id}
@@ -76,7 +98,16 @@ function WeightInputKg({ weight, onChange, label, labelClassName }: Props) {
   );
 }
 
-function WeightInputStLb({ weight, onChange, label, labelClassName }: Props) {
+function WeightInputStLb({
+  weight,
+  onChange,
+  label,
+  labelClassName,
+  labelDescription,
+  labelDescriptionClassName,
+  labelContainerClassName,
+  inputContainerClassName,
+}: Props) {
   const id = useId();
   const firstInputRef = useRef<HTMLInputElement>(null);
 
@@ -161,16 +192,25 @@ function WeightInputStLb({ weight, onChange, label, labelClassName }: Props) {
   if (label) {
     return (
       <>
-        <div
-          className={labelClassName}
-          aria-hidden="true"
-          onClick={() => {
-            firstInputRef.current?.focus();
-          }}
-        >
-          {label}
+        <div className={labelContainerClassName}>
+          <div
+            className={labelClassName}
+            aria-hidden="true"
+            onClick={() => {
+              firstInputRef.current?.focus();
+            }}
+          >
+            {label}
+          </div>
+          {labelDescription && (
+            <p className={labelDescriptionClassName}>{labelDescription}</p>
+          )}
         </div>
-        <fieldset className="inputFieldset">
+        <fieldset
+          className={['inputFieldset', inputContainerClassName]
+            .filter(Boolean)
+            .join(' ')}
+        >
           <legend className="visuallyHidden">{label}</legend>
           {inputContent}
         </fieldset>
@@ -181,7 +221,16 @@ function WeightInputStLb({ weight, onChange, label, labelClassName }: Props) {
   return inputContent;
 }
 
-function WeightInputLb({ weight, onChange, label, labelClassName }: Props) {
+function WeightInputLb({
+  weight,
+  onChange,
+  label,
+  labelClassName,
+  labelDescription,
+  labelDescriptionClassName,
+  labelContainerClassName,
+  inputContainerClassName,
+}: Props) {
   const id = useId();
 
   const [isChanged, setIsChanged] = useState(false);
@@ -215,11 +264,20 @@ function WeightInputLb({ weight, onChange, label, labelClassName }: Props) {
   return (
     <>
       {label && (
-        <label htmlFor={id} className={labelClassName}>
-          {label}
-        </label>
+        <div className={labelContainerClassName}>
+          <label htmlFor={id} className={labelClassName}>
+            {label}
+          </label>
+          {labelDescription && (
+            <p className={labelDescriptionClassName}>{labelDescription}</p>
+          )}
+        </div>
       )}
-      <div className={styles.weightInput}>
+      <div
+        className={[styles.weightInput, inputContainerClassName]
+          .filter(Boolean)
+          .join(' ')}
+      >
         <div className={styles.weightField}>
           <input
             id={id}
@@ -246,6 +304,10 @@ export function WeightInput({
   onChange,
   label,
   labelClassName,
+  labelDescription,
+  labelDescriptionClassName,
+  labelContainerClassName,
+  inputContainerClassName,
 }: Props) {
   const { weightUnit } = useAppWeight();
 
@@ -265,6 +327,10 @@ export function WeightInput({
       onChange={onChange}
       label={label}
       labelClassName={labelClassName}
+      labelDescription={labelDescription}
+      labelDescriptionClassName={labelDescriptionClassName}
+      labelContainerClassName={labelContainerClassName}
+      inputContainerClassName={inputContainerClassName}
     />
   );
 }
