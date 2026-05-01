@@ -15,6 +15,7 @@
   margin-right: 1rem;
   vertical-align: middle;
   border-radius: var(--border-radius);
+  cursor: pointer;
 }
 
 .colourSelect .colourInput:focus-visible + .colourLabel {
