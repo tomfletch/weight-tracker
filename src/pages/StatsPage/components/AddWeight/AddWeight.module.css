@@ -62,7 +62,6 @@
   --icon-background: var(--colour-accent);
   --icon-background-hover: rgb(from var(--colour-accent) r g b / 80%);
 
-  float: right;
   border: none;
   width: 35px;
   height: 35px;
