@@ -28,6 +28,6 @@
 }
 
 .toggleGroupItem:focus-visible {
-  outline: 2px solid var(--colour-accent);
-  outline-offset: 2px;
+  outline: var(--focus-outline-width) solid var(--colour-accent);
+  outline-offset: var(--focus-outline-offset);
 }
