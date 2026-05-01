@@ -1,6 +1,5 @@
 .textInput,
 .selectInput {
-  font-family: Arial, Helvetica, sans-serif;
   color: inherit;
   background-color: var(--colour-surface);
   border: 1px solid var(--colour-border);
