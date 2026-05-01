@@ -55,7 +55,7 @@
 }
 
 @media (max-width: 600px) {
-  header {
+  .header {
     flex-direction: column;
     gap: 1rem;
   }
