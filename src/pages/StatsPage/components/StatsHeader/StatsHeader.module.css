@@ -33,7 +33,7 @@
   background-color: var(--colour-accent);
   width: 130px;
   height: 130px;
-  border-radius: 100%;
+  border-radius: var(--border-radius-circle);
   margin: auto;
   border: 5px solid var(--ellipse-colour);
   display: flex;

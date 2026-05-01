@@ -28,7 +28,7 @@
   border: none;
   font-weight: bold;
   color: var(--colour-accent);
-  border-radius: 2px;
+  border-radius: var(--border-radius);
   padding: 5px;
   cursor: pointer;
 }
@@ -44,7 +44,7 @@
   background-color: var(--colour-accent);
   left: calc(-2rem - 3px);
   top: calc(50% - 4px);
-  border-radius: 100%;
+  border-radius: var(--border-radius-circle);
 }
 
 .month {

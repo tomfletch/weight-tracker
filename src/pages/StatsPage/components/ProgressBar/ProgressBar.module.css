@@ -18,7 +18,7 @@
   background-color: var(--colour-surface);
   border: 1px solid var(--colour-border);
   height: 25px;
-  border-radius: 25px;
+  border-radius: var(--border-radius-circle);
   overflow: hidden;
   display: flex;
   align-items: center;

@@ -35,7 +35,7 @@
 }
 
 .icon {
-  border-radius: 100%;
+  border-radius: var(--border-radius-circle);
   background-color: var(--colour-accent);
   opacity: 0.5;
   color: rgb(255 255 255 / 0.9);

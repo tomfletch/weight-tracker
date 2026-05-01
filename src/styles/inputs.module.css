@@ -4,7 +4,7 @@
   color: inherit;
   background-color: var(--colour-surface);
   border: 1px solid var(--colour-border);
-  border-radius: 3px;
+  border-radius: var(--border-radius);
 }
 
 .textInput:focus,

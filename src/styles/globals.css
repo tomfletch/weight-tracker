@@ -6,6 +6,8 @@
   --colour-bg: #f5fafe;
   --colour-surface: #fff;
   --colour-border: #ddd;
+  --border-radius: 4px;
+  --border-radius-circle: 999px;
 }
 
 html {

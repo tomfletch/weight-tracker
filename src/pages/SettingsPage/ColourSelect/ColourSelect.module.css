@@ -14,7 +14,7 @@
   height: 30px;
   margin-right: 1rem;
   vertical-align: middle;
-  border: 2px solid transparent;
+  border-radius: var(--border-radius);
 }
 
 .colourSelect .colourInput:focus-visible + .colourLabel {
@@ -30,7 +30,7 @@
   display: block;
   width: 16px;
   height: 16px;
-  border-radius: 50%;
+  border-radius: var(--border-radius-circle);
   border: 2px solid var(--colour-surface);
   background-color: var(--colour-accent);
   color: white;
