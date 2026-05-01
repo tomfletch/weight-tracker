@@ -13,6 +13,7 @@ import { WeightInput } from '~/components/WeightInput/WeightInput';
 import { useAppHeight } from '~/hooks/useAppHeight';
 import { useAppSettings } from '~/hooks/useAppSettings';
 import { useAppWeight } from '~/hooks/useAppWeight';
+import inputStyles from '~/styles/inputs.module.css';
 import { HeightUnit, type HeightUnit as HeightUnitType } from '~/types/height';
 import { WeightUnit, type WeightUnit as WeightUnitType } from '~/types/weight';
 import { ColourSelect } from './ColourSelect/ColourSelect';
@@ -78,6 +79,7 @@ export function SettingsPage() {
           <div className={styles.inputContainer}>
             <select
               id="weight-units"
+              className={inputStyles.selectInput}
               value={weightUnit}
               onChange={(e) => onWeightUnitChange(e.target.value)}
             >
@@ -119,6 +121,7 @@ export function SettingsPage() {
           <div className={styles.inputContainer}>
             <select
               id="height-units"
+              className={inputStyles.selectInput}
               value={heightUnit}
               onChange={(e) => onHeightUnitChange(e.target.value)}
             >

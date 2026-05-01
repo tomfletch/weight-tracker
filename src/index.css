@@ -24,6 +24,13 @@ p {
   margin-bottom: 1rem;
 }
 
+input,
+button,
+select,
+textarea {
+  font: inherit;
+}
+
 .pageContainer {
   position: relative;
   margin-inline: auto;

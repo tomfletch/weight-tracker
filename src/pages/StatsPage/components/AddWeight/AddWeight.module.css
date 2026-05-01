@@ -54,10 +54,7 @@
 .addWeight input {
   height: 22px;
   font-size: 1.4rem;
-  font-family: Arial, Helvetica, sans-serif;
   padding: 0 0.4rem;
-  border: 1px solid #bbb;
-  border-radius: 3px;
 }
 
 .addButton {

@@ -6,6 +6,7 @@ import { Card } from '~/components/Card/Card';
 import { IconButton } from '~/components/IconButton/IconButton';
 import { WeightInput } from '~/components/WeightInput/WeightInput';
 import { useAppWeight } from '~/hooks/useAppWeight';
+import inputStyles from '~/styles/inputs.module.css';
 import type { WeightRecord } from '~/types/weight';
 import { toISODate } from '~/utils/dates';
 import styles from './AddWeight.module.css';
@@ -46,7 +47,7 @@ export function AddWeight() {
                 value={date}
                 max={todayStr}
                 onChange={(e) => setDate(e.target.value)}
-                className={styles.dateInput}
+                className={inputStyles.textInput}
               />
             </div>
             <div className={styles.field}>

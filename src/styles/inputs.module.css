@@ -1,0 +1,36 @@
+.textInput,
+.selectInput {
+  font-family: Arial, Helvetica, sans-serif;
+  color: inherit;
+  background-color: #fff;
+  border: 1px solid #bbb;
+  border-radius: 3px;
+}
+
+.textInput:focus,
+.selectInput:focus {
+  outline: none;
+}
+
+.textInput:focus-visible,
+.selectInput:focus-visible {
+  border-color: var(--accent-colour);
+  outline: 2px solid var(--accent-colour);
+  outline-offset: 1px;
+}
+
+.compoundInput {
+  display: flex;
+  gap: 1rem;
+}
+
+.compoundField {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.numberInput {
+  width: 45px;
+  text-align: right;
+}

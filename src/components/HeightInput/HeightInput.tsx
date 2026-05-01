@@ -1,6 +1,7 @@
 import type React from 'react';
 import { useEffect, useId, useRef, useState } from 'react';
 import { useAppHeight } from '~/hooks/useAppHeight';
+import inputStyles from '~/styles/inputs.module.css';
 import { HeightUnit } from '~/types/height';
 import {
   convertCmToM,
@@ -11,7 +12,6 @@ import {
   convertMToIn,
 } from '~/utils/height';
 import { toFixedNoZero } from '~/utils/numbers';
-import styles from './HeightInput.module.css';
 
 interface Props {
   height: number | null;
@@ -78,22 +78,23 @@ function HeightInputCm({
         </div>
       )}
       <div
-        className={[styles.heightInput, inputContainerClassName]
+        className={[inputStyles.compoundInput, inputContainerClassName]
           .filter(Boolean)
           .join(' ')}
       >
-        <input
-          id={id}
-          type="text"
-          inputMode="decimal"
-          value={heightStr}
-          maxLength={5}
-          autoComplete="off"
-          onChange={onCmChange}
-          aria-label={inputAriaLabel}
-        />
-        <div className={styles.heightUnit} aria-hidden="true">
-          cm
+        <div className={inputStyles.compoundField}>
+          <input
+            id={id}
+            className={`${inputStyles.textInput} ${inputStyles.numberInput}`}
+            type="text"
+            inputMode="decimal"
+            value={heightStr}
+            maxLength={5}
+            autoComplete="off"
+            onChange={onCmChange}
+            aria-label={inputAriaLabel}
+          />
+          <div aria-hidden="true">cm</div>
         </div>
       </div>
     </>
@@ -154,22 +155,23 @@ function HeightInputIn({
         </div>
       )}
       <div
-        className={[styles.heightInput, inputContainerClassName]
+        className={[inputStyles.compoundInput, inputContainerClassName]
           .filter(Boolean)
           .join(' ')}
       >
-        <input
-          id={id}
-          type="text"
-          inputMode="decimal"
-          value={heightStr}
-          maxLength={5}
-          autoComplete="off"
-          onChange={onInChange}
-          aria-label={inputAriaLabel}
-        />
-        <div className={styles.heightUnit} aria-hidden="true">
-          in
+        <div className={inputStyles.compoundField}>
+          <input
+            id={id}
+            className={`${inputStyles.textInput} ${inputStyles.numberInput}`}
+            type="text"
+            inputMode="decimal"
+            value={heightStr}
+            maxLength={5}
+            autoComplete="off"
+            onChange={onInChange}
+            aria-label={inputAriaLabel}
+          />
+          <div aria-hidden="true">in</div>
         </div>
       </div>
     </>
@@ -232,33 +234,35 @@ function HeightInputFtIn({
   const inchesLabel = label ? `${label} - Inches` : 'Inches';
 
   const inputContent = (
-    <div className={styles.heightInput}>
-      <input
-        ref={firstInputRef}
-        id={`${id}-feet`}
-        type="text"
-        inputMode="numeric"
-        value={ftStr}
-        maxLength={2}
-        autoComplete="off"
-        onChange={onFtChange}
-        aria-label={feetLabel}
-      />
-      <div className={styles.heightUnit} aria-hidden="true">
-        ft
+    <div className={inputStyles.compoundInput}>
+      <div className={inputStyles.compoundField}>
+        <input
+          ref={firstInputRef}
+          id={`${id}-feet`}
+          className={`${inputStyles.textInput} ${inputStyles.numberInput}`}
+          type="text"
+          inputMode="numeric"
+          value={ftStr}
+          maxLength={2}
+          autoComplete="off"
+          onChange={onFtChange}
+          aria-label={feetLabel}
+        />
+        <div aria-hidden="true">ft</div>
       </div>
-      <input
-        id={`${id}-inches`}
-        type="text"
-        inputMode="decimal"
-        value={inStr}
-        maxLength={4}
-        autoComplete="off"
-        onChange={onInChange}
-        aria-label={inchesLabel}
-      />
-      <div className={styles.heightUnit} aria-hidden="true">
-        in
+      <div className={inputStyles.compoundField}>
+        <input
+          id={`${id}-inches`}
+          className={`${inputStyles.textInput} ${inputStyles.numberInput}`}
+          type="text"
+          inputMode="decimal"
+          value={inStr}
+          maxLength={4}
+          autoComplete="off"
+          onChange={onInChange}
+          aria-label={inchesLabel}
+        />
+        <div aria-hidden="true">in</div>
       </div>
     </div>
   );

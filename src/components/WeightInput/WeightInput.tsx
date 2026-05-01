@@ -1,6 +1,7 @@
 import type React from 'react';
 import { useEffect, useId, useRef, useState } from 'react';
 import { useAppWeight } from '~/hooks/useAppWeight';
+import inputStyles from '~/styles/inputs.module.css';
 import { WeightUnit } from '~/types/weight';
 import { toFixedNoZero } from '~/utils/numbers';
 import {
@@ -9,7 +10,6 @@ import {
   convertLbToKg,
   convertStLbToKg,
 } from '~/utils/weights';
-import styles from './WeightInput.module.css';
 
 interface Props {
   weight: number | null;
@@ -73,25 +73,23 @@ function WeightInputKg({
         </div>
       )}
       <div
-        className={[styles.weightInput, inputContainerClassName]
+        className={[inputStyles.compoundInput, inputContainerClassName]
           .filter(Boolean)
           .join(' ')}
       >
-        <div className={styles.weightField}>
+        <div className={inputStyles.compoundField}>
           <input
             id={id}
             type="text"
             inputMode="decimal"
-            className={styles.weightInputKg}
+            className={`${inputStyles.textInput} ${inputStyles.numberInput}`}
             value={kgStr}
             maxLength={5}
             autoComplete="off"
             onChange={onKgChange}
             aria-label={inputAriaLabel}
           />
-          <div className={styles.weightUnit} aria-hidden="true">
-            kg
-          </div>
+          <div aria-hidden="true">kg</div>
         </div>
       </div>
     </>
@@ -154,11 +152,12 @@ function WeightInputStLb({
   const poundsLabel = label ? `${label} - Pounds` : 'Pounds';
 
   const inputContent = (
-    <div className={styles.weightInput}>
-      <div className={styles.weightField}>
+    <div className={inputStyles.compoundInput}>
+      <div className={inputStyles.compoundField}>
         <input
           ref={firstInputRef}
           id={`${id}-stone`}
+          className={`${inputStyles.textInput} ${inputStyles.numberInput}`}
           type="text"
           inputMode="numeric"
           value={stStr}
@@ -167,13 +166,12 @@ function WeightInputStLb({
           onChange={onStoneChange}
           aria-label={stoneLabel}
         />
-        <div className={styles.weightUnit} aria-hidden="true">
-          st
-        </div>
+        <div aria-hidden="true">st</div>
       </div>
-      <div className={styles.weightField}>
+      <div className={inputStyles.compoundField}>
         <input
           id={`${id}-pounds`}
+          className={`${inputStyles.textInput} ${inputStyles.numberInput}`}
           type="text"
           inputMode="decimal"
           value={lbStr}
@@ -182,9 +180,7 @@ function WeightInputStLb({
           onChange={onLbsChange}
           aria-label={poundsLabel}
         />
-        <div className={styles.weightUnit} aria-hidden="true">
-          lb
-        </div>
+        <div aria-hidden="true">lb</div>
       </div>
     </div>
   );
@@ -274,25 +270,23 @@ function WeightInputLb({
         </div>
       )}
       <div
-        className={[styles.weightInput, inputContainerClassName]
+        className={[inputStyles.compoundInput, inputContainerClassName]
           .filter(Boolean)
           .join(' ')}
       >
-        <div className={styles.weightField}>
+        <div className={inputStyles.compoundField}>
           <input
             id={id}
             type="text"
             inputMode="decimal"
-            className={styles.weightInputLb}
+            className={`${inputStyles.textInput} ${inputStyles.numberInput}`}
             value={lbStr}
             maxLength={5}
             autoComplete="off"
             onChange={onLbChange}
             aria-label={inputAriaLabel}
           />
-          <div className={styles.weightUnit} aria-hidden="true">
-            lb
-          </div>
+          <div aria-hidden="true">lb</div>
         </div>
       </div>
     </>
