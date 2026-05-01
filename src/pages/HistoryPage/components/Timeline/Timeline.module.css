@@ -1,6 +1,6 @@
 .timeline {
   padding-left: 2rem;
-  border-left: 1px solid var(--accent-colour);
+  border-left: 1px solid var(--colour-accent);
 }
 
 .weightRecord {
@@ -27,7 +27,7 @@
   background-color: transparent;
   border: none;
   font-weight: bold;
-  color: var(--accent-colour);
+  color: var(--colour-accent);
   border-radius: 2px;
   padding: 5px;
   cursor: pointer;
@@ -41,7 +41,7 @@
   position: absolute;
   width: 5px;
   height: 5px;
-  background-color: var(--accent-colour);
+  background-color: var(--colour-accent);
   left: calc(-2rem - 3px);
   top: calc(50% - 4px);
   border-radius: 100%;

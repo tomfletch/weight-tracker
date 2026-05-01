@@ -18,7 +18,7 @@
 }
 
 .colourSelect .colourInput:focus-visible + .colourLabel {
-  outline: 2px solid var(--accent-colour);
+  outline: 2px solid var(--colour-accent);
   outline-offset: 1px;
 }
 
@@ -32,7 +32,7 @@
   height: 16px;
   border-radius: 50%;
   border: 2px solid var(--colour-surface);
-  background-color: var(--accent-colour);
+  background-color: var(--colour-accent);
   color: white;
   font-size: 10px;
   line-height: 16px;

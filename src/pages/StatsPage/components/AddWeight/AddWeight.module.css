@@ -59,8 +59,8 @@
 
 .addButton {
   --icon-colour: white;
-  --icon-background: var(--accent-colour);
-  --icon-background-hover: rgb(from var(--accent-colour) r g b / 80%);
+  --icon-background: var(--colour-accent);
+  --icon-background-hover: rgb(from var(--colour-accent) r g b / 80%);
 
   float: right;
   border: none;

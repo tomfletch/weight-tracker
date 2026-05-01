@@ -13,7 +13,7 @@ import './utils/chart/chartjs';
 export function App() {
   const { accentColour } = useAppTheme();
   const appStyle = {
-    '--accent-colour': accentColour,
+    '--colour-accent': accentColour,
   } as CSSProperties;
 
   return (

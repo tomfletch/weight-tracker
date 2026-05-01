@@ -1,7 +1,6 @@
 :root {
   /* Default accent colour. This is overridden by the user's chosen accent colour in the app settings */
-  --accent-colour: #00c8ff;
-
+  --colour-accent: #00c8ff;
   --colour-text: #222;
   --colour-text-muted: #555;
   --colour-bg: #f5fafe;

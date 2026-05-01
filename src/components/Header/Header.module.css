@@ -51,7 +51,7 @@
 
 .mainNav a.active {
   /* font-weight: bold; */
-  color: var(--accent-colour);
+  color: var(--colour-accent);
 }
 
 @media (max-width: 600px) {

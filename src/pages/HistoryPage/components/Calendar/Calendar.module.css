@@ -43,5 +43,5 @@
 }
 
 .dataDot.hasData {
-  background-color: var(--accent-colour);
+  background-color: var(--colour-accent);
 }
