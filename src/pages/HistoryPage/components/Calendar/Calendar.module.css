@@ -21,7 +21,7 @@
 
 .calendarTable th {
   padding: 1rem;
-  color: #777;
+  color: var(--colour-text-muted);
   font-weight: normal;
   font-size: 1.2rem;
 }

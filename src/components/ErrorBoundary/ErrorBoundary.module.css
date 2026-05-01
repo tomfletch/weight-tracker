@@ -3,7 +3,7 @@
   display: grid;
   place-items: center;
   padding: 2rem;
-  background-color: #eee;
+  background-color: var(--colour-bg);
 }
 
 .errorCard {
@@ -12,19 +12,19 @@
 
 .errorCard p {
   margin: 0 0 1.5rem;
-  color: #555;
+  color: var(--colour-text-muted);
   line-height: 1.5;
 }
 
 .reloadButton {
-  border: 1px solid #bbb;
+  border: 1px solid var(--colour-border);
   border-radius: 3px;
   padding: 0.6rem 0.6rem;
   font-size: 1.6rem;
   font-family: Arial, Helvetica, sans-serif;
   cursor: pointer;
-  background-color: white;
-  color: #222;
+  background-color: var(--colour-surface);
+  color: var(--colour-text);
 }
 
 .reloadButton:hover {

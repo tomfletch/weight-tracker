@@ -2,9 +2,9 @@
   display: flex;
   align-items: center;
   gap: 3rem;
-  background-color: white;
+  background-color: var(--colour-surface);
   padding: 0 2rem;
-  border-bottom: 1px solid #e7e7e7;
+  border-bottom: 1px solid var(--colour-border);
 }
 
 .logo {
@@ -37,7 +37,7 @@
 .mainNav a {
   display: inline-block;
   text-decoration: none;
-  color: #888;
+  color: var(--colour-text-muted);
   padding: 1rem 2rem;
 }
 

@@ -8,6 +8,7 @@
 }
 
 .colourSelect .colourLabel {
+  position: relative;
   display: inline-block;
   width: 30px;
   height: 30px;
@@ -16,6 +17,24 @@
   border: 2px solid transparent;
 }
 
-.colourSelect .colourInput:checked + .colourLabel {
-  border-color: black;
+.colourSelect .colourInput:focus-visible + .colourLabel {
+  outline: 2px solid var(--accent-colour);
+  outline-offset: 1px;
+}
+
+.colourSelect .colourInput:checked + .colourLabel:after {
+  content: "✔";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--colour-surface);
+  background-color: var(--accent-colour);
+  color: white;
+  font-size: 10px;
+  line-height: 16px;
+  text-align: center;
 }

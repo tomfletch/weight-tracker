@@ -1,5 +1,5 @@
 .textLight {
-  color: #555;
+  color: var(--colour-text-muted);
 }
 
 .visuallyHidden {

@@ -2,8 +2,8 @@
 .selectInput {
   font-family: Arial, Helvetica, sans-serif;
   color: inherit;
-  background-color: #fff;
-  border: 1px solid #bbb;
+  background-color: var(--colour-surface);
+  border: 1px solid var(--colour-border);
   border-radius: 3px;
 }
 
@@ -14,7 +14,6 @@
 
 .textInput:focus-visible,
 .selectInput:focus-visible {
-  border-color: var(--accent-colour);
   outline: 2px solid var(--accent-colour);
   outline-offset: 1px;
 }

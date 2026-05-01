@@ -4,14 +4,14 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: white;
+  background-color: var(--colour-surface);
   text-align: center;
   width: 120px;
   height: 70px;
   margin-left: -60px;
   margin-top: -90px;
   border-radius: 3px;
-  border: 1px solid #e7e7e7;
+  border: 1px solid var(--colour-border);
   box-shadow: 0 8px 14px rgba(0, 0, 0, 0.1);
 }
 
@@ -22,12 +22,12 @@
   height: 0;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-top: 10px solid white;
+  border-top: 10px solid var(--colour-surface);
   content: "";
 }
 
 #chartjsTooltip .date {
   margin-bottom: 0.6rem;
   font-size: 1.4rem;
-  color: #555;
+  color: var(--colour-text-muted);
 }

@@ -15,8 +15,8 @@
 .progressBar {
   flex-grow: 1;
   margin: 0 1rem;
-  background-color: #fafafa;
-  border: 1px solid #ddd;
+  background-color: var(--colour-surface);
+  border: 1px solid var(--colour-border);
   height: 25px;
   border-radius: 25px;
   overflow: hidden;
@@ -47,7 +47,7 @@
 .labels {
   display: flex;
   font-size: 1.2rem;
-  color: #777;
+  color: var(--colour-text-muted);
   line-height: 1.2rem;
 }
 

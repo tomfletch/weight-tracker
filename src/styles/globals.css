@@ -1,6 +1,12 @@
 :root {
   /* Default accent colour. This is overridden by the user's chosen accent colour in the app settings */
   --accent-colour: #00c8ff;
+
+  --colour-text: #222;
+  --colour-text-muted: #555;
+  --colour-bg: #f5fafe;
+  --colour-surface: #fff;
+  --colour-border: #ddd;
 }
 
 html {
@@ -8,8 +14,8 @@ html {
 }
 
 body {
-  background-color: #f5fafe;
-  color: #222;
+  background-color: var(--colour-bg);
+  color: var(--colour-text);
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1.6rem;
   line-height: 1.3;
