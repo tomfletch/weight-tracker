@@ -50,8 +50,9 @@
 }
 
 .mainNav a.active {
-  /* font-weight: bold; */
   color: var(--colour-accent);
+  border-bottom: 2px solid var(--colour-accent);
+  margin-bottom: -1px;
 }
 
 @media (max-width: 600px) {
