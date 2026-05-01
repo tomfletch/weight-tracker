@@ -285,7 +285,7 @@ function HeightInputFtIn({
           )}
         </div>
         <fieldset
-          className={['inputFieldset', inputContainerClassName]
+          className={[inputStyles.inputFieldset, inputContainerClassName]
             .filter(Boolean)
             .join(' ')}
         >

@@ -203,7 +203,7 @@ function WeightInputStLb({
           )}
         </div>
         <fieldset
-          className={['inputFieldset', inputContainerClassName]
+          className={[inputStyles.inputFieldset, inputContainerClassName]
             .filter(Boolean)
             .join(' ')}
         >

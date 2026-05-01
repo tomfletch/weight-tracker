@@ -148,7 +148,7 @@ export function SettingsPage() {
             inputContainerClassName={styles.inputContainer}
           />
         </div>
-        <fieldset className="inputFieldset">
+        <fieldset className={inputStyles.inputFieldset}>
           <legend className="visuallyHidden">Theme</legend>
           <div className={styles.field}>
             <div className={styles.icon} aria-hidden={true}>

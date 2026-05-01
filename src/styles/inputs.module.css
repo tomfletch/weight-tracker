@@ -34,3 +34,9 @@
   width: 45px;
   text-align: right;
 }
+
+.inputFieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
