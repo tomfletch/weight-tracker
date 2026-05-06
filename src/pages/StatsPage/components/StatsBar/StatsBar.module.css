@@ -14,8 +14,15 @@
   margin-bottom: 0.5rem;
 }
 
+.weightChange {
+  font-size: 2.4rem;
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0.5rem;
+}
+
 .weightChangeIcon {
-  font-size: 1rem;
+  font-size: 1.6rem;
   vertical-align: 0;
 }
 

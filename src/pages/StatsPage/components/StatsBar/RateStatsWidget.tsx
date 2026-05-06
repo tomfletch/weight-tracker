@@ -51,7 +51,10 @@ export function RateStatsWidget({ type, startDate }: RateStatsWidgetProps) {
 
     currentRate = (
       <>
-        {icon} {formattedWeight} per week
+        <span className={styles.weightChange}>
+          {icon} {formattedWeight}
+        </span>
+        per week
       </>
     );
 
