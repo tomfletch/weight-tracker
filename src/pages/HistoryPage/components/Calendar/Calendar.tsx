@@ -31,7 +31,7 @@ export function Calendar() {
 
   const month = MONTH_NAMES[currentMonth.getMonth()];
   const year = currentMonth.getFullYear();
-  const dayOfMonth = (currentMonth.getDay() + 6) % 7;
+  const dayOfMonth = (currentMonth.getUTCDay() + 6) % 7;
 
   const onPrevMonth = () => {
     setCurrentMonth(

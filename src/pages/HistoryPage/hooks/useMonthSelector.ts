@@ -6,7 +6,9 @@ type UseMonthSelectorParams = {
 
 export const useMonthSelector = ({ minDate }: UseMonthSelectorParams) => {
   const today = new Date();
-  const currentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  const currentMonth = new Date(
+    Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 1),
+  );
 
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
 
@@ -19,7 +21,8 @@ export const useMonthSelector = ({ minDate }: UseMonthSelectorParams) => {
     if (isPrevMonthDisabled) return;
 
     setSelectedMonth(
-      (prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1),
+      (prev) =>
+        new Date(Date.UTC(prev.getUTCFullYear(), prev.getUTCMonth() - 1, 1)),
     );
   };
 
@@ -27,7 +30,8 @@ export const useMonthSelector = ({ minDate }: UseMonthSelectorParams) => {
     if (isNextMonthDisabled) return;
 
     setSelectedMonth(
-      (prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1),
+      (prev) =>
+        new Date(Date.UTC(prev.getUTCFullYear(), prev.getUTCMonth() + 1, 1)),
     );
   };
 

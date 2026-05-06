@@ -29,6 +29,8 @@ export function History() {
     isNextMonthDisabled,
   } = useMonthSelector({ minDate });
 
+  console.log(selectedMonth);
+
   const monthWeightRecords = useMonthWeightRecords(selectedMonth);
 
   return (
@@ -82,8 +84,8 @@ function HistoryTable({ monthWeightRecords }: HistoryTableProps) {
       <tbody>
         {monthWeightRecords.map((record, index) => {
           const date = new Date(record.date);
-          const dayOfMonth = date.getDate();
-          const dayOfWeek = DAY_NAMES_SHORT[date.getDay()];
+          const dayOfMonth = date.getUTCDate();
+          const dayOfWeek = DAY_NAMES_SHORT[(date.getUTCDay() + 6) % 7];
 
           const previousRecord = monthWeightRecords[index + 1];
           const weightChange = previousRecord
