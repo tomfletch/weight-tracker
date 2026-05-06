@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Card } from '~/components/Card/Card';
 import { IconButton } from '~/components/IconButton/IconButton';
 import { useAppWeight } from '~/hooks/useAppWeight';
+import { useAppStore } from '~/stores/appStore';
 import type { WeightRecord } from '~/types/weight';
 import { DAY_NAMES_SHORT, formatMonth } from '~/utils/dates';
 import { formatWeight } from '~/utils/weights';
@@ -69,8 +70,34 @@ type HistoryTableProps = {
   monthWeightRecords: WeightRecord[];
 };
 
+type ChangeIndicator = 'improve' | 'worsen' | 'noChange';
+
+function getChangeIndicator(
+  weightChange: number | undefined,
+  weightTargetKgs: number | null,
+  currentWeightKgs: number,
+): ChangeIndicator {
+  if (weightChange === undefined || weightChange === 0) {
+    return 'noChange';
+  }
+
+  if (weightTargetKgs === null) {
+    // Fallback if no goal weight set
+    return weightChange > 0 ? 'worsen' : 'improve';
+  }
+
+  // Determine if moving towards or away from goal
+  const isCurrentAboveGoal = currentWeightKgs > weightTargetKgs;
+  const isMovingTowardsGoal =
+    (isCurrentAboveGoal && weightChange < 0) ||
+    (!isCurrentAboveGoal && weightChange > 0);
+
+  return isMovingTowardsGoal ? 'improve' : 'worsen';
+}
+
 function HistoryTable({ monthWeightRecords }: HistoryTableProps) {
   const { weightUnit } = useAppWeight();
+  const weightTargetKgs = useAppStore((state) => state.weightTargetKgs);
 
   return (
     <table className={styles.weightTable}>
@@ -92,6 +119,13 @@ function HistoryTable({ monthWeightRecords }: HistoryTableProps) {
             ? record.weightKgs - previousRecord.weightKgs
             : undefined;
 
+          const changeIndicatorKey = getChangeIndicator(
+            weightChange,
+            weightTargetKgs,
+            record.weightKgs,
+          );
+          const changeIndicator = styles[changeIndicatorKey];
+
           return (
             <tr key={record.date}>
               <td>
@@ -102,16 +136,16 @@ function HistoryTable({ monthWeightRecords }: HistoryTableProps) {
               <td>
                 {weightChange !== undefined && (
                   <span
-                    className={`${styles.weightChange} ${weightChange === 0 ? styles.noChange : weightChange > 0 ? styles.increase : styles.decrease}`}
+                    className={`${styles.weightChange} ${weightChange === 0 ? styles.noChange : changeIndicator}`}
                   >
                     {
                       <FontAwesomeIcon
                         aria-label={
                           weightChange === 0
                             ? 'No weight change'
-                            : weightChange > 0
-                              ? 'Weight increasing'
-                              : 'Weight decreasing'
+                            : changeIndicatorKey === 'improve'
+                              ? 'Weight improving towards goal'
+                              : 'Weight worsening away from goal'
                         }
                         icon={
                           weightChange === 0
