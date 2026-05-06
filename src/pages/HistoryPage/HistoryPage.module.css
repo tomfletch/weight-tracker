@@ -40,6 +40,13 @@
   color: var(--colour-text-muted);
 }
 
+.weightChangeContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
 .weightChange {
   display: inline-flex;
   align-items: center;
@@ -65,4 +72,9 @@
 .weightChange.noChange {
   background-color: rgb(128 128 128 / 0.1);
   color: rgb(128 128 128 / 0.9);
+}
+
+.daysBetween {
+  color: var(--colour-text-muted);
+  white-space: nowrap;
 }

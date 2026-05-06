@@ -11,7 +11,7 @@ import { IconButton } from '~/components/IconButton/IconButton';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import { useAppStore } from '~/stores/appStore';
 import type { WeightRecord } from '~/types/weight';
-import { DAY_NAMES_SHORT, formatMonth } from '~/utils/dates';
+import { DAY_NAMES_SHORT, daysBetween, formatMonth } from '~/utils/dates';
 import { formatWeight } from '~/utils/weights';
 import styles from './HistoryPage.module.css';
 import { useMonthSelector } from './hooks/useMonthSelector';
@@ -119,6 +119,10 @@ function HistoryTable({ monthWeightRecords }: HistoryTableProps) {
             ? record.weightKgs - previousRecord.weightKgs
             : undefined;
 
+          const daysBetweenRecords = previousRecord
+            ? daysBetween(new Date(previousRecord.date), new Date(record.date))
+            : 1;
+
           const changeIndicatorKey = getChangeIndicator(
             weightChange,
             weightTargetKgs,
@@ -135,29 +139,36 @@ function HistoryTable({ monthWeightRecords }: HistoryTableProps) {
               <td>{formatWeight(record.weightKgs, weightUnit)}</td>
               <td>
                 {weightChange !== undefined && (
-                  <span
-                    className={`${styles.weightChange} ${weightChange === 0 ? styles.noChange : changeIndicator}`}
-                  >
-                    {
-                      <FontAwesomeIcon
-                        aria-label={
-                          weightChange === 0
-                            ? 'No weight change'
-                            : changeIndicatorKey === 'improve'
-                              ? 'Weight improving towards goal'
-                              : 'Weight worsening away from goal'
-                        }
-                        icon={
-                          weightChange === 0
-                            ? faEquals
-                            : weightChange > 0
-                              ? faLongArrowUp
-                              : faLongArrowDown
-                        }
-                      />
-                    }
-                    {formatWeight(Math.abs(weightChange), weightUnit)}
-                  </span>
+                  <div className={styles.weightChangeContainer}>
+                    <span
+                      className={`${styles.weightChange} ${weightChange === 0 ? styles.noChange : changeIndicator}`}
+                    >
+                      {
+                        <FontAwesomeIcon
+                          aria-label={
+                            weightChange === 0
+                              ? 'No weight change'
+                              : changeIndicatorKey === 'improve'
+                                ? 'Weight improving towards goal'
+                                : 'Weight worsening away from goal'
+                          }
+                          icon={
+                            weightChange === 0
+                              ? faEquals
+                              : weightChange > 0
+                                ? faLongArrowUp
+                                : faLongArrowDown
+                          }
+                        />
+                      }
+                      {formatWeight(Math.abs(weightChange), weightUnit)}
+                    </span>
+                    {daysBetweenRecords > 1 && (
+                      <span className={styles.daysBetween}>
+                        ({daysBetweenRecords}d)
+                      </span>
+                    )}
+                  </div>
                 )}
               </td>
             </tr>

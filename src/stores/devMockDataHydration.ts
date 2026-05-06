@@ -23,12 +23,15 @@ function buildMockWeightRecords(totalDays: number): WeightRecord[] {
     const microCycle = Math.cos(i / 2.75) * 0.15;
     const randomNoise = (Math.random() - 0.5) * 0.4;
 
-    records.push({
-      date: toISODate(date),
-      weightKgs: Number(
-        (baseWeightKgs - trend + cycle + microCycle + randomNoise).toFixed(2),
-      ),
-    });
+    // Occasionally skip a day to create more realistic gaps in the data.
+    if (Math.random() > 0.15) {
+      records.push({
+        date: toISODate(date),
+        weightKgs: Number(
+          (baseWeightKgs - trend + cycle + microCycle + randomNoise).toFixed(2),
+        ),
+      });
+    }
   }
 
   return records;
