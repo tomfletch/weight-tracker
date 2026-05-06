@@ -30,8 +30,6 @@ export function History() {
     isNextMonthDisabled,
   } = useMonthSelector({ minDate });
 
-  console.log(selectedMonth);
-
   const monthWeightRecords = useMonthWeightRecords(selectedMonth);
 
   return (
@@ -59,7 +57,10 @@ export function History() {
         {monthWeightRecords.length === 0 ? (
           <div className={styles.emptyState}>No entries for this month.</div>
         ) : (
-          <HistoryTable monthWeightRecords={monthWeightRecords} />
+          <HistoryTable
+            monthWeightRecords={monthWeightRecords}
+            allWeightRecords={weightRecords}
+          />
         )}
       </Card>
     </div>
@@ -68,6 +69,7 @@ export function History() {
 
 type HistoryTableProps = {
   monthWeightRecords: WeightRecord[];
+  allWeightRecords: WeightRecord[];
 };
 
 type ChangeIndicator = 'improve' | 'worsen' | 'noChange';
@@ -95,7 +97,10 @@ function getChangeIndicator(
   return isMovingTowardsGoal ? 'improve' : 'worsen';
 }
 
-function HistoryTable({ monthWeightRecords }: HistoryTableProps) {
+function HistoryTable({
+  monthWeightRecords,
+  allWeightRecords,
+}: HistoryTableProps) {
   const { weightUnit } = useAppWeight();
   const weightTargetKgs = useAppStore((state) => state.weightTargetKgs);
 
@@ -114,7 +119,21 @@ function HistoryTable({ monthWeightRecords }: HistoryTableProps) {
           const dayOfMonth = date.getUTCDate();
           const dayOfWeek = DAY_NAMES_SHORT[(date.getUTCDay() + 6) % 7];
 
-          const previousRecord = monthWeightRecords[index + 1];
+          let previousRecord: WeightRecord | undefined;
+
+          if (index === monthWeightRecords.length - 1) {
+            // For the first entry, find the previous record from all records
+            const recordIndex = allWeightRecords.findIndex(
+              (r) => r.date === record.date,
+            );
+
+            previousRecord =
+              recordIndex >= 0 ? allWeightRecords[recordIndex - 1] : undefined;
+          } else {
+            // For other entries, use the next entry in the month array (which is chronologically before)
+            previousRecord = monthWeightRecords[index + 1];
+          }
+
           const weightChange = previousRecord
             ? record.weightKgs - previousRecord.weightKgs
             : undefined;
