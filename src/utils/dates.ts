@@ -8,6 +8,16 @@ export const DAY_NAMES = [
   'Sunday',
 ];
 
+export const DAY_NAMES_SHORT = [
+  'Mon',
+  'Tue',
+  'Wed',
+  'Thu',
+  'Fri',
+  'Sat',
+  'Sun',
+];
+
 export const MONTH_NAMES_SHORT = [
   'Jan',
   'Feb',
@@ -42,6 +52,12 @@ export function formatDate(date: Date): string {
   const month = MONTH_NAMES_SHORT[date.getMonth()];
   const year = date.getFullYear();
   return `${day} ${month} ${year}`;
+}
+
+export function formatMonth(date: Date): string {
+  const month = MONTH_NAMES[date.getMonth()];
+  const year = date.getFullYear();
+  return `${month} ${year}`;
 }
 
 export function parseISODate(dateStr: string): Date {

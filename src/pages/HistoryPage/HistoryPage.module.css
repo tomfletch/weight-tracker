@@ -1,18 +1,62 @@
-.columns {
+.header {
+  margin-bottom: 2rem;
+}
+
+.monthHeader {
   display: flex;
-  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
-.calendarColumn {
-  margin-right: 2rem;
+.weightTable {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--colour-border);
 }
 
-.timelineColumn {
-  flex-grow: 1;
+.weightTable th,
+.weightTable td {
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--colour-border);
 }
 
-@media (max-width: 600px) {
-  .columns {
-    flex-direction: column;
-  }
+.weightTable th {
+  text-align: left;
+  background-color: var(--colour-bg);
+}
+
+.dayOfMonth {
+  display: inline-block;
+  margin-right: 0.5rem;
+  font-weight: 600;
+}
+
+.dayOfWeek {
+  text-transform: uppercase;
+  color: var(--colour-text-muted);
+}
+
+.weightChange {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--border-radius-circle);
+}
+
+.weightChange.increase {
+  background-color: rgb(255 0 0 / 0.1);
+  color: rgb(255 0 0 / 0.9);
+}
+
+.weightChange.decrease {
+  background-color: rgb(0 128 0 / 0.1);
+  color: rgb(0 128 0 / 0.9);
+}
+
+.weightChange.noChange {
+  background-color: rgb(128 128 128 / 0.1);
+  color: rgb(128 128 128 / 0.9);
 }
