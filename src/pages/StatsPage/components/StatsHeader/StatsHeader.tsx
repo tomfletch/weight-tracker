@@ -1,8 +1,4 @@
-import {
-  faLongArrowDown,
-  faLongArrowUp,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { WeightChangeIcon } from '~/components/WeightChangeIcon/WeightChangeIcon';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import { formatWeight } from '~/utils/weights';
 import styles from './StatsHeader.module.css';
@@ -43,11 +39,8 @@ export function StatsHeader() {
           <span className={styles.value}>
             {weightChangeStr}
             {weightChange !== 0 && (
-              <FontAwesomeIcon
-                aria-label={
-                  weightChange > 0 ? 'Weight increasing' : 'Weight decreasing'
-                }
-                icon={weightChange > 0 ? faLongArrowUp : faLongArrowDown}
+              <WeightChangeIcon
+                weightChange={weightChange}
                 className={styles.weightChangeIcon}
               />
             )}

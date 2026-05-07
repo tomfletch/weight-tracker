@@ -1,15 +1,13 @@
 import {
   faChevronLeft,
   faChevronRight,
-  faEquals,
-  faLongArrowDown,
-  faLongArrowUp,
   faTrashCan,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { Card } from '~/components/Card/Card';
 import { IconButton } from '~/components/IconButton/IconButton';
+import { WeightChangeIcon } from '~/components/WeightChangeIcon/WeightChangeIcon';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import { useAppStore } from '~/stores/appStore';
 import type { WeightRecord } from '~/types/weight';
@@ -77,6 +75,16 @@ type HistoryTableProps = {
 
 type ChangeIndicator = 'improve' | 'worsen' | 'noChange';
 
+type HistoryTableRow = {
+  record: WeightRecord;
+  date: Date;
+  dayOfMonth: number;
+  dayOfWeek: string;
+  weightChange: number | undefined;
+  daysBetweenRecords: number;
+  changeIndicator: ChangeIndicator;
+};
+
 function getChangeIndicator(
   weightChange: number | undefined,
   weightTargetKgs: number | null,
@@ -100,6 +108,57 @@ function getChangeIndicator(
   return isMovingTowardsGoal ? 'improve' : 'worsen';
 }
 
+function createHistoryTableRow(
+  record: WeightRecord,
+  index: number,
+  monthWeightRecords: WeightRecord[],
+  allWeightRecords: WeightRecord[],
+  weightTargetKgs: number | null,
+): HistoryTableRow {
+  const date = new Date(record.date);
+  const dayOfMonth = date.getUTCDate();
+  const dayOfWeek = DAY_NAMES_SHORT[(date.getUTCDay() + 6) % 7];
+
+  let previousRecord: WeightRecord | undefined;
+
+  if (index === monthWeightRecords.length - 1) {
+    // For the first entry, find the previous record from all records
+    const recordIndex = allWeightRecords.findIndex(
+      (r) => r.date === record.date,
+    );
+
+    previousRecord =
+      recordIndex >= 0 ? allWeightRecords[recordIndex - 1] : undefined;
+  } else {
+    // For other entries, use the next entry in the month array (which is chronologically before)
+    previousRecord = monthWeightRecords[index + 1];
+  }
+
+  const weightChange = previousRecord
+    ? record.weightKgs - previousRecord.weightKgs
+    : undefined;
+
+  const daysBetweenRecords = previousRecord
+    ? daysBetween(new Date(previousRecord.date), date)
+    : 1;
+
+  const changeIndicator = getChangeIndicator(
+    weightChange,
+    weightTargetKgs,
+    record.weightKgs,
+  );
+
+  return {
+    record,
+    date,
+    dayOfMonth,
+    dayOfWeek,
+    weightChange,
+    daysBetweenRecords,
+    changeIndicator,
+  };
+}
+
 function HistoryTable({
   monthWeightRecords,
   allWeightRecords,
@@ -108,6 +167,16 @@ function HistoryTable({
   const weightTargetKgs = useAppStore((state) => state.weightTargetKgs);
   const [pendingDeleteRecord, setPendingDeleteRecord] =
     useState<WeightRecord | null>(null);
+
+  const tableRows = monthWeightRecords.map((record, index) =>
+    createHistoryTableRow(
+      record,
+      index,
+      monthWeightRecords,
+      allWeightRecords,
+      weightTargetKgs,
+    ),
+  );
 
   return (
     <>
@@ -123,97 +192,40 @@ function HistoryTable({
           </tr>
         </thead>
         <tbody>
-          {monthWeightRecords.map((record, index) => {
-            const date = new Date(record.date);
-            const dayOfMonth = date.getUTCDate();
-            const dayOfWeek = DAY_NAMES_SHORT[(date.getUTCDay() + 6) % 7];
-
-            let previousRecord: WeightRecord | undefined;
-
-            if (index === monthWeightRecords.length - 1) {
-              // For the first entry, find the previous record from all records
-              const recordIndex = allWeightRecords.findIndex(
-                (r) => r.date === record.date,
-              );
-
-              previousRecord =
-                recordIndex >= 0
-                  ? allWeightRecords[recordIndex - 1]
-                  : undefined;
-            } else {
-              // For other entries, use the next entry in the month array (which is chronologically before)
-              previousRecord = monthWeightRecords[index + 1];
-            }
-
-            const weightChange = previousRecord
-              ? record.weightKgs - previousRecord.weightKgs
-              : undefined;
-
-            const daysBetweenRecords = previousRecord
-              ? daysBetween(
-                  new Date(previousRecord.date),
-                  new Date(record.date),
-                )
-              : 1;
-
-            const changeIndicatorKey = getChangeIndicator(
-              weightChange,
-              weightTargetKgs,
-              record.weightKgs,
-            );
-
-            return (
-              <tr key={record.date}>
-                <td>
-                  <span className={styles.dayOfMonth}>{dayOfMonth}</span>{' '}
-                  <span className={styles.dayOfWeek}>{dayOfWeek}</span>
-                </td>
-                <td>{formatWeight(record.weightKgs, weightUnit)}</td>
-                <td>
-                  {weightChange !== undefined && (
-                    <div className={styles.weightChangeContainer}>
-                      <span
-                        className={`${styles.weightChange} ${weightChange === 0 ? styles.noChange : styles[changeIndicatorKey]}`}
-                      >
-                        {
-                          <FontAwesomeIcon
-                            aria-label={
-                              weightChange === 0
-                                ? 'No weight change'
-                                : changeIndicatorKey === 'improve'
-                                  ? 'Weight improving towards goal'
-                                  : 'Weight worsening away from goal'
-                            }
-                            icon={
-                              weightChange === 0
-                                ? faEquals
-                                : weightChange > 0
-                                  ? faLongArrowUp
-                                  : faLongArrowDown
-                            }
-                          />
-                        }
-                        {formatWeight(Math.abs(weightChange), weightUnit)}
+          {tableRows.map((row) => (
+            <tr key={row.record.date}>
+              <td>
+                <span className={styles.dayOfMonth}>{row.dayOfMonth}</span>{' '}
+                <span className={styles.dayOfWeek}>{row.dayOfWeek}</span>
+              </td>
+              <td>{formatWeight(row.record.weightKgs, weightUnit)}</td>
+              <td>
+                {row.weightChange !== undefined && (
+                  <div className={styles.weightChangeContainer}>
+                    <span
+                      className={`${styles.weightChange} ${row.weightChange === 0 ? styles.noChange : styles[row.changeIndicator]}`}
+                    >
+                      <WeightChangeIcon weightChange={row.weightChange} />
+                      {formatWeight(Math.abs(row.weightChange), weightUnit)}
+                    </span>
+                    {row.daysBetweenRecords > 1 && (
+                      <span className={styles.daysBetween}>
+                        ({row.daysBetweenRecords}d)
                       </span>
-                      {daysBetweenRecords > 1 && (
-                        <span className={styles.daysBetween}>
-                          ({daysBetweenRecords}d)
-                        </span>
-                      )}
-                    </div>
-                  )}
-                </td>
-                <td className={styles.actionsCell}>
-                  <IconButton
-                    label="Delete entry"
-                    icon={<FontAwesomeIcon icon={faTrashCan} />}
-                    onClick={() => setPendingDeleteRecord(record)}
-                    className={styles.deleteButton}
-                  />
-                </td>
-              </tr>
-            );
-          })}
+                    )}
+                  </div>
+                )}
+              </td>
+              <td className={styles.actionsCell}>
+                <IconButton
+                  label="Delete entry"
+                  icon={<FontAwesomeIcon icon={faTrashCan} />}
+                  onClick={() => setPendingDeleteRecord(row.record)}
+                  className={styles.deleteButton}
+                />
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
 

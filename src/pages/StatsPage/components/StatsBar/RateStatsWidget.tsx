@@ -1,9 +1,5 @@
-import {
-  faLongArrowDown,
-  faLongArrowUp,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Card } from '~/components/Card/Card';
+import { WeightChangeIcon } from '~/components/WeightChangeIcon/WeightChangeIcon';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import { daysBetween, parseISODate } from '~/utils/dates';
 import { interpolateWeightAtDate } from '~/utils/weightInterpolation';
@@ -37,26 +33,22 @@ export function RateStatsWidget({ type, startDate }: RateStatsWidgetProps) {
 
     const formattedWeight = formatWeight(Math.abs(kgPerWeek), weightUnit);
 
-    let icon = null;
-
-    if (kgPerWeek !== 0) {
-      icon = (
-        <FontAwesomeIcon
-          aria-label={kgPerWeek > 0 ? 'Weight increasing' : 'Weight decreasing'}
-          icon={kgPerWeek > 0 ? faLongArrowUp : faLongArrowDown}
-          className={styles.weightChangeIcon}
-        />
+    if (kgPerWeek === 0) {
+      currentRate = <span className={styles.weightchange}>No change</span>;
+    } else {
+      currentRate = (
+        <>
+          <span className={styles.weightChange}>
+            <WeightChangeIcon
+              weightChange={kgPerWeek}
+              className={styles.weightChangeIcon}
+            />{' '}
+            {formattedWeight}
+          </span>
+          per week
+        </>
       );
     }
-
-    currentRate = (
-      <>
-        <span className={styles.weightChange}>
-          {icon} {formattedWeight}
-        </span>
-        per week
-      </>
-    );
 
     if (
       targetWeightDelta &&
