@@ -1,16 +1,18 @@
-import { useState } from 'react';
-
 type UseMonthSelectorParams = {
+  selectedMonth: Date;
+  onMonthChange: (selectedMonth: Date) => void;
   minDate?: string;
 };
 
-export const useMonthSelector = ({ minDate }: UseMonthSelectorParams) => {
+export const useMonthSelector = ({
+  selectedMonth,
+  onMonthChange,
+  minDate,
+}: UseMonthSelectorParams) => {
   const today = new Date();
   const currentMonth = new Date(
     Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 1),
   );
-
-  const [selectedMonth, setSelectedMonth] = useState(currentMonth);
 
   const isPrevMonthDisabled = minDate
     ? selectedMonth <= new Date(minDate)
@@ -20,23 +22,32 @@ export const useMonthSelector = ({ minDate }: UseMonthSelectorParams) => {
   const goToPreviousMonth = () => {
     if (isPrevMonthDisabled) return;
 
-    setSelectedMonth(
-      (prev) =>
-        new Date(Date.UTC(prev.getUTCFullYear(), prev.getUTCMonth() - 1, 1)),
+    onMonthChange(
+      new Date(
+        Date.UTC(
+          selectedMonth.getUTCFullYear(),
+          selectedMonth.getUTCMonth() - 1,
+          1,
+        ),
+      ),
     );
   };
 
   const goToNextMonth = () => {
     if (isNextMonthDisabled) return;
 
-    setSelectedMonth(
-      (prev) =>
-        new Date(Date.UTC(prev.getUTCFullYear(), prev.getUTCMonth() + 1, 1)),
+    onMonthChange(
+      new Date(
+        Date.UTC(
+          selectedMonth.getUTCFullYear(),
+          selectedMonth.getUTCMonth() + 1,
+          1,
+        ),
+      ),
     );
   };
 
   return {
-    selectedMonth,
     goToPreviousMonth,
     goToNextMonth,
     isPrevMonthDisabled,
