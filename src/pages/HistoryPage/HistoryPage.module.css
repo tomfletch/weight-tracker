@@ -27,6 +27,15 @@
   background-color: var(--colour-bg);
 }
 
+.actionsColumn {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.actionsCell {
+  text-align: right;
+}
+
 .dayOfMonth {
   display: inline-block;
   margin-right: 0.5rem;
@@ -77,4 +86,14 @@
 .daysBetween {
   color: var(--colour-text-muted);
   white-space: nowrap;
+}
+
+.deleteButton {
+  --icon-colour: var(--colour-text-muted);
+  --icon-background-hover: rgb(255 0 0 / 0.12);
+}
+
+.deleteButton:hover,
+.deleteButton:focus-visible {
+  --icon-colour: rgb(160 0 0);
 }

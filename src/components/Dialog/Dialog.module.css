@@ -1,0 +1,45 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  z-index: 100;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  background-color: rgb(0 0 0 / 0.45);
+  cursor: pointer;
+}
+
+.dialog {
+  position: relative;
+  width: min(100%, 420px);
+  background-color: var(--colour-surface);
+  border: 1px solid var(--colour-border);
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.2);
+  padding: 1.5rem;
+  z-index: 1;
+}
+
+.title {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.body {
+  margin-top: 1rem;
+  color: var(--colour-text-muted);
+}
+
+.actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
