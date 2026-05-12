@@ -1,17 +1,23 @@
 import type { ChartData, ChartOptions } from 'chart.js';
 import 'chartjs-adapter-date-fns';
+import { useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Card } from '~/components/Card/Card';
+import { ToggleGroup } from '~/components/ToggleGroup/ToggleGroup';
 import { useAppTheme } from '~/hooks/useAppTheme';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import {
   getMovingAverageDeltaChartData,
   getMovingAverageDeltaChartOptions,
 } from './chartData';
+import styles from './MovingAverageDeltaChart.module.css';
 
 export function MovingAverageDeltaChart() {
   const { weightRecords, weightUnit } = useAppWeight();
   const { accentColour } = useAppTheme();
+  const [movingAveragePeriod, setMovingAveragePeriod] = useState<
+    7 | 14 | 21 | 28
+  >(7);
 
   if (weightRecords.length === 0) {
     return <div>Not enough data</div>;
@@ -21,6 +27,7 @@ export function MovingAverageDeltaChart() {
     weightRecords,
     weightUnit,
     accentColour,
+    movingAverageSize: movingAveragePeriod,
   });
 
   const chartOptions: ChartOptions<'line'> =
@@ -28,9 +35,26 @@ export function MovingAverageDeltaChart() {
 
   return (
     <Card>
-      <Card.Title>Weight Change (7 Day Average)</Card.Title>
+      <div className={styles.chartHeader}>
+        <Card.Title>
+          Weight Change ({movingAveragePeriod} Day Average)
+        </Card.Title>
+        <ToggleGroup
+          label="Select moving average period"
+          value={movingAveragePeriod.toString()}
+          onValueChange={(val) =>
+            setMovingAveragePeriod(parseInt(val, 10) as 7 | 14 | 21 | 28)
+          }
+        >
+          <ToggleGroup.Item value="7">7D</ToggleGroup.Item>
+          <ToggleGroup.Item value="14">14D</ToggleGroup.Item>
+          <ToggleGroup.Item value="21">21D</ToggleGroup.Item>
+          <ToggleGroup.Item value="28">28D</ToggleGroup.Item>
+        </ToggleGroup>
+      </div>
       <p className="textLight">
-        Shows how your 7-day average weight is changing over time.
+        Shows how your {movingAveragePeriod}-day average weight is changing over
+        time.
       </p>
       <Line
         aria-label="A chart showing change in moving average weight over time"

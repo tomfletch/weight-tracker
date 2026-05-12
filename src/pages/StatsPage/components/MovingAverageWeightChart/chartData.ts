@@ -10,19 +10,26 @@ export function getMovingAverageWeightChartData({
   weightTargetKgs,
   weightUnit,
   accentColour,
+  movingAverageSize = 7,
+  maxDate = toISODate(new Date()),
 }: {
   weightRecords: WeightRecord[];
   weightTargetKgs: number | null;
   weightUnit: WeightUnit;
   accentColour: string;
+  movingAverageSize?: number;
+  maxDate?: string;
 }): ChartData<'line'> {
   const firstDate = parseISODate(weightRecords[0].date);
   const lastDate = parseISODate(weightRecords[weightRecords.length - 1].date);
+  const maxChartDate = parseISODate(maxDate);
+  const seriesEndDate = maxChartDate > lastDate ? maxChartDate : lastDate;
 
   const { dates, weights } = generateMovingAverageSeries(
     firstDate,
-    lastDate,
+    seriesEndDate,
     weightRecords,
+    movingAverageSize,
     true,
   );
 

@@ -3,21 +3,9 @@ import type { WeightRecord } from '~/types/weight';
 import {
   computeMovingAverage,
   generateMovingAverageSeries,
-  MOVING_AVERAGE_OFFSET,
-  MOVING_AVERAGE_SIZE,
 } from '~/utils/chart/movingAverage';
 
 describe('movingAverage utils', () => {
-  describe('MOVING_AVERAGE constants', () => {
-    it('should have size of 7', () => {
-      expect(MOVING_AVERAGE_SIZE).toBe(7);
-    });
-
-    it('should have offset of 3', () => {
-      expect(MOVING_AVERAGE_OFFSET).toBe(3);
-    });
-  });
-
   describe('computeMovingAverage', () => {
     const weightRecords: WeightRecord[] = [
       { date: '2025-01-01', weightKgs: 70 },
@@ -79,6 +67,29 @@ describe('movingAverage utils', () => {
       // Average of [70, 71, 72, 73, 74, 75, 76] = 73
       expect(result).toBe(73);
     });
+
+    it('should support custom moving average size', () => {
+      const date = new Date(2025, 0, 5); // 2025-01-05
+      const result = computeMovingAverage(date, weightRecords, 3);
+      // Average of [73, 74, 75] for dates Jan 4-6 = 74
+      expect(result).toBe(74);
+    });
+
+    it('should support even-sized moving average windows', () => {
+      const date = new Date(2025, 0, 5); // 2025-01-05
+      const result = computeMovingAverage(date, weightRecords, 4);
+      // Size 4 uses offsets -1 to +2: [73, 74, 75, 76]
+      // Average = 74.5
+      expect(result).toBe(74.5);
+    });
+
+    it('should throw for invalid moving average size', () => {
+      const date = new Date(2025, 0, 5);
+
+      expect(() => computeMovingAverage(date, weightRecords, 0)).toThrow(
+        'movingAverageSize must be an integer >= 1',
+      );
+    });
   });
 
   describe('generateMovingAverageSeries', () => {
@@ -103,6 +114,7 @@ describe('movingAverage utils', () => {
         firstDate,
         lastDate,
         weightRecords,
+        7,
         true,
       );
 
@@ -120,6 +132,7 @@ describe('movingAverage utils', () => {
         firstDate,
         lastDate,
         weightRecords,
+        7,
         true,
       );
 
@@ -127,6 +140,7 @@ describe('movingAverage utils', () => {
         firstDate,
         lastDate,
         weightRecords,
+        7,
         false,
       );
 
@@ -141,6 +155,7 @@ describe('movingAverage utils', () => {
         new Date(2025, 0, 1),
         new Date(2025, 0, 10),
         weightRecords,
+        7,
         true,
       );
 
@@ -163,6 +178,7 @@ describe('movingAverage utils', () => {
         firstDate,
         lastDate,
         weightRecords,
+        7,
         true,
       );
 
@@ -187,12 +203,27 @@ describe('movingAverage utils', () => {
         date,
         date,
         weightRecords,
+        7,
         true,
       );
 
       expect(dates.length).toBe(1);
       expect(averages.length).toBe(1);
       expect(dates[0]).toBe('2025-01-05');
+    });
+
+    it('should reflect custom window size in output', () => {
+      const { weights: averages } = generateMovingAverageSeries(
+        new Date(2025, 0, 1),
+        new Date(2025, 0, 10),
+        weightRecords,
+        3,
+        true,
+      );
+
+      // With a 3-day centered window, Jan 1 should be null but Jan 2 should be computable.
+      expect(averages[0]).toBeNull();
+      expect(averages[1]).not.toBeNull();
     });
   });
 });

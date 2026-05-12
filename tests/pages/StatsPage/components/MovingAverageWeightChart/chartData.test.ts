@@ -27,6 +27,7 @@ describe('movingAverageWeightChart chartData utils', () => {
         weightTargetKgs: 80,
         weightUnit: WeightUnit.KGS,
         accentColour: '#123456',
+        maxDate: '2025-01-11',
       });
 
       expect(chartData.datasets).toHaveLength(2);
@@ -42,6 +43,7 @@ describe('movingAverageWeightChart chartData utils', () => {
         weightTargetKgs: 80,
         weightUnit: WeightUnit.KGS,
         accentColour: '#123456',
+        maxDate: '2025-01-11',
       });
 
       const labels = getRequiredLabels(chartData);
@@ -55,6 +57,7 @@ describe('movingAverageWeightChart chartData utils', () => {
         weightTargetKgs: 82,
         weightUnit: WeightUnit.KGS,
         accentColour: '#123456',
+        maxDate: '2025-01-11',
       });
 
       const targetData = chartData.datasets[1].data;
@@ -70,6 +73,7 @@ describe('movingAverageWeightChart chartData utils', () => {
         weightTargetKgs: null,
         weightUnit: WeightUnit.KGS,
         accentColour: '#123456',
+        maxDate: '2025-01-11',
       });
 
       expect(chartData.datasets[1].data).toEqual([]);
@@ -81,10 +85,26 @@ describe('movingAverageWeightChart chartData utils', () => {
         weightTargetKgs: 80,
         weightUnit: WeightUnit.LBS,
         accentColour: '#123456',
+        maxDate: '2025-01-11',
       });
 
       const targetData = chartData.datasets[1].data;
       expect(targetData[0]).toBe(176.4);
+    });
+
+    it('should extend labels and target data to max date', () => {
+      const chartData = getMovingAverageWeightChartData({
+        weightRecords,
+        weightTargetKgs: 82,
+        weightUnit: WeightUnit.KGS,
+        accentColour: '#123456',
+        maxDate: '2025-01-31',
+      });
+
+      const labels = getRequiredLabels(chartData);
+      expect(labels[labels.length - 1]).toBe('2025-01-31');
+      expect(chartData.datasets[1].data).toHaveLength(labels.length);
+      expect(chartData.datasets[1].data[labels.length - 1]).toBe(82);
     });
   });
 

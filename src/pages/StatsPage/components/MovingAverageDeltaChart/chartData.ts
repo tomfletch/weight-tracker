@@ -9,10 +9,12 @@ export function getMovingAverageDeltaChartData({
   weightRecords,
   weightUnit,
   accentColour,
+  movingAverageSize = 7,
 }: {
   weightRecords: WeightRecord[];
   weightUnit: WeightUnit;
   accentColour: string;
+  movingAverageSize?: number;
 }): ChartData<'line'> {
   const firstDate = parseISODate(weightRecords[0].date);
   const lastDate = parseISODate(weightRecords[weightRecords.length - 1].date);
@@ -21,6 +23,7 @@ export function getMovingAverageDeltaChartData({
     firstDate,
     lastDate,
     weightRecords,
+    movingAverageSize,
     true,
   );
 
