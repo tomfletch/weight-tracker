@@ -44,7 +44,7 @@ describe('options utils', () => {
       expect(options).toBeDefined();
       expect(options.plugins?.legend?.display).toBe(false);
       expect(options.spanGaps).toBe(true);
-      expect(options.clip).toBe(false);
+      expect(options.clip).toBe(0);
       expect(options.interaction?.mode).toBe('nearest');
       expect(options.interaction?.axis).toBe('x');
       expect(options.interaction?.intersect).toBe(true);
