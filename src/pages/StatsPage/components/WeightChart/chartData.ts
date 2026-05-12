@@ -1,4 +1,4 @@
-import type { ChartData, ChartOptions } from 'chart.js';
+import type { ChartData, ChartOptions, ScriptableContext } from 'chart.js';
 import type { WeightRecord, WeightUnit } from '~/types/weight';
 import { buildBaseLineChartOptions } from '~/utils/chart/options';
 import { convertSeriesKgToDisplayUnit } from '~/utils/chart/weightUnits';
@@ -18,6 +18,27 @@ export type ChartPeriodKey = ChartPeriod['key'];
 export interface WeightChartDateRange {
   startDateStr: string;
   endDateStr: string;
+}
+
+function getAdaptivePointRadius(context: ScriptableContext<'line'>): number {
+  const { chart } = context;
+  const xScale = chart.scales.x;
+  const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+
+  const startPx = xScale.getPixelForValue(xScale.min);
+  const endPx = xScale.getPixelForValue(xScale.min + ONE_DAY_MS);
+
+  const minGapPx = Math.abs(endPx - startPx);
+
+  if (minGapPx > 12) {
+    return 3;
+  }
+
+  if (minGapPx > 6) {
+    return 2;
+  }
+
+  return 0;
 }
 
 function insertSortedUniqueDate(dates: string[], newDate: string) {
@@ -126,6 +147,11 @@ export function getWeightChartData({
         data: weights,
         borderColor: accentColour,
         borderWidth: 1,
+        pointRadius: getAdaptivePointRadius,
+        pointHoverRadius(context: ScriptableContext<'line'>) {
+          const radius = getAdaptivePointRadius(context);
+          return radius === 0 ? 0 : radius + 2;
+        },
         pointHitRadius: 500,
         pointBackgroundColor: accentColour,
         fill: true,
