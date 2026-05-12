@@ -53,7 +53,7 @@ export function buildBaseLineChartOptions(
       intersect: true,
     },
     spanGaps: true,
-    clip: false,
+    clip: 0,
     scales: {
       x: {
         type: 'time',
