@@ -1,5 +1,6 @@
 import type { ChartData, ChartOptions, ScriptableContext } from 'chart.js';
 import type { WeightRecord, WeightUnit } from '~/types/weight';
+import type { OnChartTooltipChange } from '~/utils/chart/createTooltip';
 import { buildBaseLineChartOptions } from '~/utils/chart/options';
 import { convertSeriesKgToDisplayUnit } from '~/utils/chart/weightUnits';
 import { parseISODate, toISODate } from '~/utils/dates';
@@ -175,6 +176,7 @@ export function getWeightChartData({
 export function getWeightChartOptions(
   weightUnit: WeightUnit,
   dateRange: WeightChartDateRange,
+  onTooltipChange?: OnChartTooltipChange,
 ): ChartOptions<'line'> {
   const { startDateStr, endDateStr } = dateRange;
 
@@ -182,5 +184,6 @@ export function getWeightChartOptions(
     weightUnit,
     minDate: startDateStr,
     maxDate: endDateStr,
+    onTooltipChange,
   });
 }

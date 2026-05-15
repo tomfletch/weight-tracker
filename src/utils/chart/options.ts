@@ -1,12 +1,13 @@
 import type { ChartOptions, TooltipItem } from 'chart.js';
 import type { WeightUnit } from '~/types/weight';
-import { createTooltip } from './createTooltip';
+import { createTooltip, type OnChartTooltipChange } from './createTooltip';
 import { formatWeightValueByUnit } from './weightUnits';
 
 export interface BaseChartOptionsInput {
   weightUnit: WeightUnit;
   maxDate?: string;
   minDate?: string;
+  onTooltipChange?: OnChartTooltipChange;
   yAxisConfig?: {
     beginAtZero?: boolean;
     precision?: number;
@@ -20,7 +21,13 @@ export interface BaseChartOptionsInput {
 export function buildBaseLineChartOptions(
   input: BaseChartOptionsInput,
 ): ChartOptions<'line'> {
-  const { weightUnit, maxDate, minDate, yAxisConfig = {} } = input;
+  const {
+    weightUnit,
+    maxDate,
+    minDate,
+    onTooltipChange,
+    yAxisConfig = {},
+  } = input;
   const { beginAtZero = false, precision = 0 } = yAxisConfig;
 
   const defaultTooltipLabel = (context: TooltipItem<'line'>) => {
@@ -44,7 +51,7 @@ export function buildBaseLineChartOptions(
         callbacks: {
           label: defaultTooltipLabel,
         },
-        external: createTooltip,
+        external: createTooltip(onTooltipChange),
       },
     },
     interaction: {

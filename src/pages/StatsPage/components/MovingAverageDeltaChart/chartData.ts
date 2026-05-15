@@ -1,5 +1,6 @@
 import type { ChartData, ChartOptions } from 'chart.js';
 import type { WeightRecord, WeightUnit } from '~/types/weight';
+import type { OnChartTooltipChange } from '~/utils/chart/createTooltip';
 import { generateMovingAverageSeries } from '~/utils/chart/movingAverage';
 import { buildBaseLineChartOptions } from '~/utils/chart/options';
 import { convertSeriesKgToDisplayUnit } from '~/utils/chart/weightUnits';
@@ -66,9 +67,11 @@ export function getMovingAverageDeltaChartData({
 export function getMovingAverageDeltaChartOptions(
   weightUnit: WeightUnit,
   maxDate: string = toISODate(new Date()),
+  onTooltipChange?: OnChartTooltipChange,
 ): ChartOptions<'line'> {
   return buildBaseLineChartOptions({
     weightUnit,
+    onTooltipChange,
     maxDate,
     yAxisConfig: {
       beginAtZero: true,

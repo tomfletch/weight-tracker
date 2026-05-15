@@ -3,9 +3,11 @@ import 'chartjs-adapter-date-fns';
 import { useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Card } from '~/components/Card/Card';
+import { ChartTooltip } from '~/components/ChartTooltip/ChartTooltip';
 import { ToggleGroup } from '~/components/ToggleGroup/ToggleGroup';
 import { useAppTheme } from '~/hooks/useAppTheme';
 import { useAppWeight } from '~/hooks/useAppWeight';
+import { useChartTooltipState } from '~/hooks/useChartTooltipState';
 import {
   getMovingAverageWeightChartData,
   getMovingAverageWeightChartOptions,
@@ -18,6 +20,7 @@ export function MovingAverageWeightChart() {
   const [movingAveragePeriod, setMovingAveragePeriod] = useState<
     7 | 14 | 21 | 28
   >(7);
+  const [tooltipState, setTooltipState] = useChartTooltipState();
 
   if (weightRecords.length === 0) {
     return <div>Not enough data</div>;
@@ -31,8 +34,11 @@ export function MovingAverageWeightChart() {
     movingAverageSize: movingAveragePeriod,
   });
 
-  const chartOptions: ChartOptions<'line'> =
-    getMovingAverageWeightChartOptions(weightUnit);
+  const chartOptions: ChartOptions<'line'> = getMovingAverageWeightChartOptions(
+    weightUnit,
+    undefined,
+    setTooltipState,
+  );
 
   return (
     <Card>
@@ -57,11 +63,14 @@ export function MovingAverageWeightChart() {
         Shows your weight trend using a {movingAveragePeriod}-day moving
         average, smoothing daily fluctuations.
       </p>
-      <Line
-        aria-label="A chart showing moving average weight over time"
-        data={chartData}
-        options={chartOptions}
-      />
+      <div className={styles.chartWrap}>
+        <Line
+          aria-label="A chart showing moving average weight over time"
+          data={chartData}
+          options={chartOptions}
+        />
+        <ChartTooltip tooltipState={tooltipState} />
+      </div>
     </Card>
   );
 }

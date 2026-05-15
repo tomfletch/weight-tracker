@@ -1,45 +1,67 @@
-import type { Chart } from 'chart.js';
+import type { TooltipModel } from 'chart.js';
 import { formatDate } from '../dates';
 
-export function createTooltip({ chart }: { chart: Chart }) {
-  // Tooltip Element
-  let tooltipEl = document.getElementById('chartjsTooltip');
+export interface ChartTooltipState {
+  isVisible: boolean;
+  position: {
+    left: number;
+    top: number;
+  };
+  data: {
+    dateLabel: string;
+    lines: string[];
+  } | null;
+}
 
-  // Create element on first render
-  if (!tooltipEl) {
-    tooltipEl = document.createElement('div');
-    tooltipEl.id = 'chartjsTooltip';
-    document.body.appendChild(tooltipEl);
+export type OnChartTooltipChange = (state: ChartTooltipState) => void;
+
+function getBodyLines(tooltip: TooltipModel<'line'>): string[] {
+  if (!tooltip.body) {
+    return [];
   }
 
-  // Hide if no tooltip
-  const tooltipModel = chart.tooltip;
-  if (!tooltipModel || tooltipModel.opacity === 0) {
-    tooltipEl.style.opacity = '0';
-    return;
-  }
+  return tooltip.body.flatMap((bodyItem) => bodyItem.lines);
+}
 
-  const parsedX = chart.tooltip.dataPoints[0].parsed.x;
-  if (parsedX === null) return;
-  const date = new Date(parsedX);
+export function createTooltip(onTooltipChange?: OnChartTooltipChange) {
+  const emitTooltipChange = onTooltipChange ?? (() => {});
 
-  // Set Text
-  if (tooltipModel.body) {
-    const bodyLines = tooltipModel.body.map((bodyItem) => bodyItem.lines);
+  return ({ tooltip }: { tooltip: TooltipModel<'line'> }) => {
+    if (tooltip.opacity === 0) {
+      emitTooltipChange({
+        isVisible: false,
+        position: {
+          left: 0,
+          top: 0,
+        },
+        data: null,
+      });
+      return;
+    }
 
-    let innerHtml = `<div class="date">${formatDate(date)}</div>`;
+    const parsedX = tooltip.dataPoints[0]?.parsed.x;
+    if (typeof parsedX !== 'number') {
+      emitTooltipChange({
+        isVisible: false,
+        position: {
+          left: 0,
+          top: 0,
+        },
+        data: null,
+      });
+      return;
+    }
 
-    bodyLines.forEach((body) => {
-      innerHtml += `<div>${body}</div>`;
+    emitTooltipChange({
+      isVisible: true,
+      position: {
+        left: tooltip.caretX,
+        top: tooltip.caretY,
+      },
+      data: {
+        dateLabel: formatDate(new Date(parsedX)),
+        lines: getBodyLines(tooltip),
+      },
     });
-
-    tooltipEl.innerHTML = innerHtml;
-  }
-
-  const position = chart.canvas.getBoundingClientRect();
-
-  // Display, position, and set styles for font
-  tooltipEl.style.opacity = '1';
-  tooltipEl.style.left = `${position.left + window.pageXOffset + tooltipModel.caretX}px`;
-  tooltipEl.style.top = `${position.top + window.pageYOffset + tooltipModel.caretY}px`;
+  };
 }
