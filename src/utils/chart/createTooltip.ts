@@ -15,6 +15,15 @@ export interface ChartTooltipState {
 
 export type OnChartTooltipChange = (state: ChartTooltipState) => void;
 
+export const DEFAULT_CHART_TOOLTIP_STATE: ChartTooltipState = {
+  isVisible: false,
+  position: {
+    left: 0,
+    top: 0,
+  },
+  data: null,
+};
+
 function getBodyLines(tooltip: TooltipModel<'line'>): string[] {
   if (!tooltip.body) {
     return [];
@@ -27,36 +36,32 @@ export function createTooltip(onTooltipChange?: OnChartTooltipChange) {
   const emitTooltipChange = onTooltipChange ?? (() => {});
 
   return ({ tooltip }: { tooltip: TooltipModel<'line'> }) => {
-    if (tooltip.opacity === 0) {
-      emitTooltipChange({
-        isVisible: false,
-        position: {
-          left: 0,
-          top: 0,
-        },
-        data: null,
-      });
+    const hasNoDataPoints = tooltip.dataPoints.length === 0;
+
+    if (tooltip.opacity === 0 || hasNoDataPoints) {
+      emitTooltipChange(DEFAULT_CHART_TOOLTIP_STATE);
       return;
     }
 
     const parsedX = tooltip.dataPoints[0]?.parsed.x;
-    if (typeof parsedX !== 'number') {
-      emitTooltipChange({
-        isVisible: false,
-        position: {
-          left: 0,
-          top: 0,
-        },
-        data: null,
-      });
+    const left = tooltip.caretX;
+    const top = tooltip.caretY;
+
+    if (
+      typeof parsedX !== 'number' ||
+      !Number.isFinite(parsedX) ||
+      !Number.isFinite(left) ||
+      !Number.isFinite(top)
+    ) {
+      emitTooltipChange(DEFAULT_CHART_TOOLTIP_STATE);
       return;
     }
 
     emitTooltipChange({
       isVisible: true,
       position: {
-        left: tooltip.caretX,
-        top: tooltip.caretY,
+        left,
+        top,
       },
       data: {
         dateLabel: formatDate(new Date(parsedX)),

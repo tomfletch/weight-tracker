@@ -3,15 +3,7 @@ import type {
   ChartTooltipState,
   OnChartTooltipChange,
 } from '~/utils/chart/createTooltip';
-
-export const DEFAULT_CHART_TOOLTIP_STATE: ChartTooltipState = {
-  isVisible: false,
-  position: {
-    left: 0,
-    top: 0,
-  },
-  data: null,
-};
+import { DEFAULT_CHART_TOOLTIP_STATE } from '~/utils/chart/createTooltip';
 
 function areTooltipLinesEqual(a: string[], b: string[]): boolean {
   if (a.length !== b.length) {
