@@ -10,8 +10,7 @@
   text-align: center;
   width: 120px;
   height: 70px;
-  margin-left: -60px;
-  margin-top: -90px;
+  transform: translate(-50%, calc(-100% - 20px));
   border-radius: var(--border-radius);
   border: 1px solid var(--colour-border);
   box-shadow: 0 8px 14px rgba(0, 0, 0, 0.1);
@@ -23,6 +22,8 @@
 .chartTooltip::after {
   position: absolute;
   top: 100%;
+  left: calc(50% + var(--tooltip-arrow-offset, 0px));
+  transform: translateX(-50%);
   width: 0;
   height: 0;
   border-left: 10px solid transparent;
