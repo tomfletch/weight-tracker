@@ -7,9 +7,11 @@ import {
   BMI_NORMAL_MIN,
   BMI_OVERWEIGHT_MAX,
   calculateBMI,
+  calculateHealthyWeightRange,
   getBMICategory,
 } from '~/utils/bmi';
 import { limit, map } from '~/utils/math';
+import { formatWeight } from '~/utils/weights';
 import styles from './StatsBar.module.css';
 
 export function BMIWidget() {
@@ -22,7 +24,7 @@ export function BMIWidget() {
 }
 
 function BMIWidgetContent() {
-  const { weightRecords } = useAppWeight();
+  const { weightRecords, weightUnit } = useAppWeight();
   const { height } = useAppHeight();
 
   const bmiDescriptionId = useId();
@@ -46,6 +48,9 @@ function BMIWidgetContent() {
 
   const normalMid = mapBar((BMI_NORMAL_MIN + BMI_NORMAL_MAX) / 2);
   const overweightMid = mapBar((BMI_NORMAL_MAX + BMI_OVERWEIGHT_MAX) / 2);
+
+  const { min: healthyWeightMin, max: healthyWeightMax } =
+    calculateHealthyWeightRange(height);
 
   return (
     <div
@@ -96,6 +101,21 @@ function BMIWidgetContent() {
           </li>
           <li>Obese: greater than {BMI_OVERWEIGHT_MAX}</li>
         </ul>
+      </div>
+      <div className={styles.bmiInfo}>
+        <p>
+          <span className={styles.label}>Your BMI:</span>
+          <span className={styles.data}>
+            {bmi.toFixed(1)} ({getBMICategory(bmi)})
+          </span>
+        </p>
+        <p>
+          <span className={styles.label}>Healthy weight range:</span>
+          <span>
+            {formatWeight(healthyWeightMin, weightUnit)} to{' '}
+            {formatWeight(healthyWeightMax, weightUnit)}
+          </span>
+        </p>
       </div>
     </div>
   );

@@ -21,3 +21,12 @@ export function getBMICategory(bmi: number): string {
   }
   throw new Error(`Invalid BMI value: ${bmi}`);
 }
+
+export function calculateHealthyWeightRange(heightM: number): {
+  min: number;
+  max: number;
+} {
+  const min = BMI_NORMAL_MIN * (heightM * heightM);
+  const max = BMI_NORMAL_MAX * (heightM * heightM);
+  return { min, max };
+}

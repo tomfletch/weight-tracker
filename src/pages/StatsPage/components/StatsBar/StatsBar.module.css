@@ -97,6 +97,17 @@
   font-size: 0.9rem;
 }
 
+.bmiInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* Adds spacing between rows */
+}
+
+.label {
+  font-weight: bold;
+  margin-right: 0.5rem; /* Adds spacing between label and data */
+}
+
 @media (max-width: 600px) {
   .statsBar {
     grid-template-columns: 1fr 1fr;
