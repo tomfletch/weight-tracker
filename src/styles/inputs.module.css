@@ -4,6 +4,7 @@
   background-color: var(--colour-surface);
   border: 1px solid var(--colour-border);
   border-radius: var(--border-radius);
+  padding: 0.6rem 0.6rem;
 }
 
 .textInput:focus,

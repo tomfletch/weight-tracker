@@ -51,12 +51,6 @@
   margin-right: 0.5rem;
 }
 
-.addWeight input {
-  height: 22px;
-  font-size: 1.4rem;
-  padding: 0 0.4rem;
-}
-
 .addButton {
   --icon-colour: white;
   --icon-background: var(--colour-accent);
