@@ -20,6 +20,8 @@ interface Props {
   labelDescriptionClassName?: string;
   labelContainerClassName?: string;
   inputContainerClassName?: string;
+  isInvalid?: boolean;
+  ariaDescribedby?: string;
 }
 
 function WeightInputKg({
@@ -31,6 +33,8 @@ function WeightInputKg({
   labelDescriptionClassName,
   labelContainerClassName,
   inputContainerClassName,
+  isInvalid,
+  ariaDescribedby,
 }: Props) {
   const id = useId();
 
@@ -49,6 +53,10 @@ function WeightInputKg({
     }
 
     const newWeight = parseFloat(kgStr);
+    if (!Number.isFinite(newWeight)) {
+      onChange(null);
+      return;
+    }
     onChange(newWeight);
   }, [isChanged, kgStr, onChange]);
 
@@ -82,12 +90,14 @@ function WeightInputKg({
             id={id}
             type="text"
             inputMode="decimal"
-            className={`${inputStyles.textInput} ${inputStyles.numberInput}`}
+            className={`${inputStyles.textInput} ${inputStyles.numberInput} ${isInvalid ? inputStyles.invalid : ''}`}
             value={kgStr}
             maxLength={5}
             autoComplete="off"
             onChange={onKgChange}
             aria-label={inputAriaLabel}
+            aria-invalid={isInvalid}
+            aria-describedby={ariaDescribedby}
           />
           <div aria-hidden="true">kg</div>
         </div>
@@ -105,6 +115,8 @@ function WeightInputStLb({
   labelDescriptionClassName,
   labelContainerClassName,
   inputContainerClassName,
+  isInvalid,
+  ariaDescribedby,
 }: Props) {
   const id = useId();
   const firstInputRef = useRef<HTMLInputElement>(null);
@@ -132,6 +144,11 @@ function WeightInputStLb({
     const st = parseInt(stStr, 10);
     const lb = parseFloat(lbStr);
 
+    if (!Number.isFinite(st) || !Number.isFinite(lb)) {
+      onChange(null);
+      return;
+    }
+
     const newWeightKg = convertStLbToKg({ st, lb });
     onChange(newWeightKg);
   }, [isChanged, stStr, lbStr, onChange]);
@@ -151,13 +168,15 @@ function WeightInputStLb({
   const stoneLabel = label ? `${label} - Stone` : 'Stone';
   const poundsLabel = label ? `${label} - Pounds` : 'Pounds';
 
+  console.log('isInvalid', isInvalid);
+
   const inputContent = (
     <div className={inputStyles.compoundInput}>
       <div className={inputStyles.compoundField}>
         <input
           ref={firstInputRef}
           id={`${id}-stone`}
-          className={`${inputStyles.textInput} ${inputStyles.numberInput}`}
+          className={`${inputStyles.textInput} ${inputStyles.numberInput} ${isInvalid ? inputStyles.invalid : ''}`}
           type="text"
           inputMode="numeric"
           value={stStr}
@@ -165,13 +184,15 @@ function WeightInputStLb({
           autoComplete="off"
           onChange={onStoneChange}
           aria-label={stoneLabel}
+          aria-invalid={isInvalid}
+          aria-describedby={ariaDescribedby}
         />
         <div aria-hidden="true">st</div>
       </div>
       <div className={inputStyles.compoundField}>
         <input
           id={`${id}-pounds`}
-          className={`${inputStyles.textInput} ${inputStyles.numberInput}`}
+          className={`${inputStyles.textInput} ${inputStyles.numberInput} ${isInvalid ? inputStyles.invalid : ''}`}
           type="text"
           inputMode="decimal"
           value={lbStr}
@@ -179,6 +200,8 @@ function WeightInputStLb({
           autoComplete="off"
           onChange={onLbsChange}
           aria-label={poundsLabel}
+          aria-invalid={isInvalid}
+          aria-describedby={ariaDescribedby}
         />
         <div aria-hidden="true">lb</div>
       </div>
@@ -226,6 +249,8 @@ function WeightInputLb({
   labelDescriptionClassName,
   labelContainerClassName,
   inputContainerClassName,
+  isInvalid,
+  ariaDescribedby,
 }: Props) {
   const id = useId();
 
@@ -245,6 +270,10 @@ function WeightInputLb({
     }
 
     const lb = parseFloat(lbStr);
+    if (!Number.isFinite(lb)) {
+      onChange(null);
+      return;
+    }
     const newWeightKg = convertLbToKg(lb);
     onChange(newWeightKg);
   }, [isChanged, lbStr, onChange]);
@@ -279,12 +308,14 @@ function WeightInputLb({
             id={id}
             type="text"
             inputMode="decimal"
-            className={`${inputStyles.textInput} ${inputStyles.numberInput}`}
+            className={`${inputStyles.textInput} ${inputStyles.numberInput} ${isInvalid ? inputStyles.invalid : ''}`}
             value={lbStr}
             maxLength={5}
             autoComplete="off"
             onChange={onLbChange}
             aria-label={inputAriaLabel}
+            aria-invalid={isInvalid}
+            aria-describedby={ariaDescribedby}
           />
           <div aria-hidden="true">lb</div>
         </div>
@@ -302,6 +333,8 @@ export function WeightInput({
   labelDescriptionClassName,
   labelContainerClassName,
   inputContainerClassName,
+  isInvalid,
+  ariaDescribedby,
 }: Props) {
   const { weightUnit } = useAppWeight();
 
@@ -325,6 +358,8 @@ export function WeightInput({
       labelDescriptionClassName={labelDescriptionClassName}
       labelContainerClassName={labelContainerClassName}
       inputContainerClassName={inputContainerClassName}
+      isInvalid={isInvalid}
+      ariaDescribedby={ariaDescribedby}
     />
   );
 }

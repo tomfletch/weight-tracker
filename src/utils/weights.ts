@@ -73,3 +73,7 @@ export function formatWeight(kgs: number, unit: WeightUnit): string {
 
   throw Error('Invalid weight unit');
 }
+
+export function isValidWeight(weightKgs: number | null): weightKgs is number {
+  return weightKgs !== null && Number.isFinite(weightKgs) && weightKgs > 0;
+}

@@ -17,6 +17,10 @@
   outline-offset: var(--focus-outline-offset);
 }
 
+.invalid {
+  border-color: #e74c3c;
+}
+
 .compoundInput {
   display: flex;
   gap: 1rem;

@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware';
 import { HeightUnit } from '~/types/height';
 import { type WeightRecord, WeightUnit } from '~/types/weight';
 import { DEFAULT_THEME, normaliseTheme, type Theme } from '~/utils/colours';
+import { isValidWeight } from '~/utils/weights';
 
 type AppState = {
   // Height
@@ -57,6 +58,9 @@ export const useAppStore = create<AppState>()(
         setWeightUnit: (weightUnit) => set({ weightUnit }),
         addWeight: (weightRecord) =>
           set((state) => {
+            if (!isValidWeight(weightRecord.weightKgs)) {
+              return state;
+            }
             const newWeightRecords = state.weightRecords.filter(
               (w) => w.date !== weightRecord.date,
             );

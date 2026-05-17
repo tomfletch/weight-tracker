@@ -44,3 +44,9 @@
   align-items: center;
   gap: 1rem;
 }
+
+.errorMessage {
+  color: var(--colour-error, #e74c3c);
+  font-size: 1.2rem;
+  margin: 0;
+}

@@ -1,8 +1,9 @@
-import { useRef } from 'react';
+import { useId, useRef, useState } from 'react';
 import { Dialog } from '~/components/Dialog/Dialog';
 import { WeightInput } from '~/components/WeightInput/WeightInput';
 import type { WeightRecord } from '~/types/weight';
 import { formatDateStr } from '~/utils/dates';
+import { isValidWeight } from '~/utils/weights';
 import styles from './EditWeightDialog.module.css';
 
 type EditWeightDialogProps = {
@@ -23,6 +24,11 @@ export function EditWeightDialog({
   onConfirm,
 }: EditWeightDialogProps) {
   const cancelButtonRef = useRef<HTMLButtonElement | null>(null);
+  const errorId = useId();
+  const [touched, setTouched] = useState(false);
+
+  const canSave = isValidWeight(weightKgs);
+  const showError = touched && !canSave;
 
   return (
     <Dialog
@@ -43,9 +49,8 @@ export function EditWeightDialog({
           <button
             type="button"
             className={`${styles.dialogButton} ${styles.confirmSaveButton}`}
-            disabled={weightKgs === null}
             onClick={() => {
-              if (weightKgs !== null) {
+              if (canSave) {
                 onConfirm(weightKgs);
               }
             }}
@@ -62,10 +67,20 @@ export function EditWeightDialog({
             <WeightInput
               key={record.date}
               weight={weightKgs}
-              onChange={onWeightChange}
+              onChange={(weight) => {
+                setTouched(true);
+                onWeightChange(weight);
+              }}
               label="Weight:"
+              isInvalid={showError}
+              ariaDescribedby={showError ? errorId : undefined}
             />
           </div>
+          {showError && (
+            <p className={styles.errorMessage} role="alert" id={errorId}>
+              Enter a valid weight to save
+            </p>
+          )}
         </div>
       )}
     </Dialog>
