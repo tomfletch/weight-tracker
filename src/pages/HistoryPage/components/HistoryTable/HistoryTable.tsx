@@ -1,4 +1,4 @@
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { IconButton } from '~/components/IconButton/IconButton';
@@ -9,6 +9,7 @@ import type { WeightRecord } from '~/types/weight';
 import { DAY_NAMES_SHORT, daysBetween } from '~/utils/dates';
 import { formatWeight } from '~/utils/weights';
 import { DeleteConfirmationDialog } from '../DeleteConfirmationDialog/DeleteConfirmationDialog';
+import { EditWeightDialog } from '../EditWeightDialog/EditWeightDialog';
 import styles from './HistoryTable.module.css';
 
 type HistoryTableProps = {
@@ -106,8 +107,13 @@ export function HistoryTable({
   monthWeightRecords,
   allWeightRecords,
 }: HistoryTableProps) {
-  const { weightUnit, deleteWeight } = useAppWeight();
+  const { weightUnit, addWeight, deleteWeight } = useAppWeight();
   const weightTargetKgs = useAppStore((state) => state.weightTargetKgs);
+  const [pendingEditRecord, setPendingEditRecord] =
+    useState<WeightRecord | null>(null);
+  const [pendingEditWeightKgs, setPendingEditWeightKgs] = useState<
+    number | null
+  >(null);
   const [pendingDeleteRecord, setPendingDeleteRecord] =
     useState<WeightRecord | null>(null);
 
@@ -160,17 +166,49 @@ export function HistoryTable({
                 )}
               </td>
               <td className={styles.actionsCell}>
-                <IconButton
-                  label="Delete entry"
-                  icon={<FontAwesomeIcon icon={faTrashCan} />}
-                  onClick={() => setPendingDeleteRecord(row.record)}
-                  className={styles.deleteButton}
-                />
+                <div className={styles.actionsButtons}>
+                  <IconButton
+                    label="Edit entry"
+                    icon={<FontAwesomeIcon icon={faPenToSquare} />}
+                    onClick={() => {
+                      setPendingEditRecord(row.record);
+                      setPendingEditWeightKgs(row.record.weightKgs);
+                    }}
+                    className={styles.editButton}
+                  />
+                  <IconButton
+                    label="Delete entry"
+                    icon={<FontAwesomeIcon icon={faTrashCan} />}
+                    onClick={() => setPendingDeleteRecord(row.record)}
+                    className={styles.deleteButton}
+                  />
+                </div>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      <EditWeightDialog
+        record={pendingEditRecord}
+        weightKgs={pendingEditWeightKgs}
+        isOpen={pendingEditRecord !== null}
+        onClose={() => {
+          setPendingEditRecord(null);
+          setPendingEditWeightKgs(null);
+        }}
+        onWeightChange={setPendingEditWeightKgs}
+        onConfirm={(weightKgs) => {
+          if (pendingEditRecord !== null) {
+            addWeight({
+              date: pendingEditRecord.date,
+              weightKgs,
+            });
+          }
+          setPendingEditRecord(null);
+          setPendingEditWeightKgs(null);
+        }}
+      />
 
       <DeleteConfirmationDialog
         record={pendingDeleteRecord}

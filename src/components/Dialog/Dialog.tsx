@@ -1,5 +1,5 @@
 import type { ReactNode, RefObject } from 'react';
-import { useEffect, useId } from 'react';
+import { useEffect, useId, useRef } from 'react';
 import styles from './Dialog.module.css';
 
 type DialogProps = {
@@ -21,6 +21,12 @@ export function Dialog({
 }: DialogProps) {
   const titleId = useId();
 
+  const onCloseRef = useRef(onClose);
+
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
   useEffect(() => {
     if (!isOpen) {
       return;
@@ -28,7 +34,7 @@ export function Dialog({
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        onClose();
+        onCloseRef.current();
       }
     };
 
@@ -38,7 +44,7 @@ export function Dialog({
     return () => {
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [initialFocusRef, isOpen, onClose]);
+  }, [initialFocusRef, isOpen]);
 
   if (!isOpen) {
     return null;
@@ -49,7 +55,7 @@ export function Dialog({
       <button
         type="button"
         className={styles.backdrop}
-        onClick={onClose}
+        onClick={() => onCloseRef.current()}
         aria-label="Close dialog"
       />
       <div

@@ -24,6 +24,13 @@
   text-align: right;
 }
 
+.actionsButtons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.4rem;
+}
+
 .dayOfMonth {
   display: inline-block;
   margin-right: 0.5rem;
@@ -79,6 +86,20 @@
 .deleteButton {
   --icon-colour: var(--colour-text-muted);
   --icon-background-hover: rgb(255 0 0 / 0.12);
+}
+
+.editButton {
+  --icon-colour: var(--colour-text-muted);
+  --icon-background-hover: color-mix(
+    in srgb,
+    var(--colour-accent) 18%,
+    transparent
+  );
+}
+
+.editButton:hover,
+.editButton:focus-visible {
+  --icon-colour: var(--colour-accent);
 }
 
 .deleteButton:hover,
