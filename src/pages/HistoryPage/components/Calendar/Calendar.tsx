@@ -3,6 +3,7 @@ import {
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import clsx from 'clsx';
 import { useState } from 'react';
 import { Card } from '~/components/Card/Card';
 import { IconButton } from '~/components/IconButton/IconButton';
@@ -77,7 +78,10 @@ export function Calendar() {
             <>
               {calendarDay.getDate()}
               <div
-                className={`${styles.dataDot} ${dateHasWeightRecord(calendarDay) ? styles.hasData : ''}`}
+                className={clsx(
+                  styles.dataDot,
+                  dateHasWeightRecord(calendarDay) && styles.hasData,
+                )}
               />
             </>
           )}

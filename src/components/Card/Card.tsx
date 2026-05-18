@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import styles from './Card.module.css';
 
 type CardProps = {
@@ -6,11 +7,7 @@ type CardProps = {
 };
 
 export function Card({ children, className }: CardProps) {
-  return (
-    <section className={`${styles.card} ${className || ''}`}>
-      {children}
-    </section>
-  );
+  return <section className={clsx(styles.card, className)}>{children}</section>;
 }
 
 type CardTitleProps = {

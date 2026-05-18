@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { useRef } from 'react';
 import { Dialog } from '~/components/Dialog/Dialog';
 import { useAppWeight } from '~/hooks/useAppWeight';
@@ -32,7 +33,7 @@ export function DeleteConfirmationDialog({
         <>
           <button
             type="button"
-            className={`${styles.dialogButton} ${styles.cancelButton}`}
+            className={clsx(styles.dialogButton, styles.cancelButton)}
             onClick={onClose}
             ref={cancelButtonRef}
           >
@@ -40,7 +41,7 @@ export function DeleteConfirmationDialog({
           </button>
           <button
             type="button"
-            className={`${styles.dialogButton} ${styles.confirmDeleteButton}`}
+            className={clsx(styles.dialogButton, styles.confirmDeleteButton)}
             onClick={onConfirm}
           >
             Delete

@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import styles from './TabList.module.css';
 
 type TabListProps = {
@@ -29,7 +30,7 @@ TabList.Tab = function Tab({
     <button
       role="tab"
       type="button"
-      className={`${styles.tab} ${isActive ? styles.active : ''}`}
+      className={clsx(styles.tab, isActive && styles.active)}
       onClick={onSelect}
       aria-selected={isActive}
       aria-controls={controls}

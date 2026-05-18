@@ -1,5 +1,6 @@
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import clsx from 'clsx';
 import { useState } from 'react';
 import { IconButton } from '~/components/IconButton/IconButton';
 import { WeightChangeIcon } from '~/components/WeightChangeIcon/WeightChangeIcon';
@@ -152,7 +153,10 @@ export function HistoryTable({
                 {row.weightChange !== undefined && (
                   <div className={styles.weightChangeContainer}>
                     <span
-                      className={`${styles.weightChange} ${styles[row.changeIndicator]}`}
+                      className={clsx(
+                        styles.weightChange,
+                        styles[row.changeIndicator],
+                      )}
                     >
                       <WeightChangeIcon weightChange={row.weightChange} />
                       {formatWeight(Math.abs(row.weightChange), weightUnit)}

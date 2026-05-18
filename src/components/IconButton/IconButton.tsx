@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { type ReactNode, useState } from 'react';
 import styles from './IconButton.module.css';
 
@@ -26,7 +27,7 @@ export function IconButton({
   return (
     <button
       type={type}
-      className={`${styles.iconButton} ${className || ''}`}
+      className={clsx(styles.iconButton, className)}
       aria-label={label}
       onClick={onClick}
       disabled={disabled}
@@ -36,9 +37,7 @@ export function IconButton({
       onBlur={hideTooltip}
     >
       {icon}
-      <div
-        className={`${styles.tooltip} ${isShowingTooltip ? styles.show : ''}`}
-      >
+      <div className={clsx(styles.tooltip, isShowingTooltip && styles.show)}>
         {label}
       </div>
     </button>

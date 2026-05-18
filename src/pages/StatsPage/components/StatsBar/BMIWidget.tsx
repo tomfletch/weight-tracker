@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { useId } from 'react';
 import { Card } from '~/components/Card/Card';
 import { useAppHeight } from '~/hooks/useAppHeight';
@@ -16,7 +17,7 @@ import styles from './StatsBar.module.css';
 
 export function BMIWidget() {
   return (
-    <Card className={`${styles.statsWidget} ${styles.bmiWidget}`}>
+    <Card className={clsx(styles.statsWidget, styles.bmiWidget)}>
       <Card.Title>BMI</Card.Title>
       <BMIWidgetContent />
     </Card>

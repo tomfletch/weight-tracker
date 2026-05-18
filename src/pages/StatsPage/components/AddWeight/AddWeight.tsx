@@ -1,5 +1,6 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import clsx from 'clsx';
 import type React from 'react';
 import { useState } from 'react';
 import { Card } from '~/components/Card/Card';
@@ -37,7 +38,7 @@ export function AddWeight() {
       <Card className={styles.addWeight}>
         <form onSubmit={onWeightSubmit}>
           <div className={styles.formFields}>
-            <div className={`${styles.field} ${styles.dateSection}`}>
+            <div className={clsx(styles.field, styles.dateSection)}>
               <label htmlFor="date-input" className={styles.label}>
                 Date:
               </label>

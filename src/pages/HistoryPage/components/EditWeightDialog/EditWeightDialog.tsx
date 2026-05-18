@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { useId, useRef, useState } from 'react';
 import { Dialog } from '~/components/Dialog/Dialog';
 import { WeightInput } from '~/components/WeightInput/WeightInput';
@@ -48,7 +49,7 @@ export function EditWeightDialog({
           </button>
           <button
             type="button"
-            className={`${styles.dialogButton} ${styles.confirmSaveButton}`}
+            className={clsx(styles.dialogButton, styles.confirmSaveButton)}
             onClick={() => {
               if (canSave) {
                 onConfirm(weightKgs);

@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import type React from 'react';
 import { useEffect, useId, useRef, useState } from 'react';
 import { useAppWeight } from '~/hooks/useAppWeight';
@@ -80,17 +81,17 @@ function WeightInputKg({
           )}
         </div>
       )}
-      <div
-        className={[inputStyles.compoundInput, inputContainerClassName]
-          .filter(Boolean)
-          .join(' ')}
-      >
+      <div className={clsx(inputStyles.compoundInput, inputContainerClassName)}>
         <div className={inputStyles.compoundField}>
           <input
             id={id}
             type="text"
             inputMode="decimal"
-            className={`${inputStyles.textInput} ${inputStyles.numberInput} ${isInvalid ? inputStyles.invalid : ''}`}
+            className={clsx(
+              inputStyles.textInput,
+              inputStyles.numberInput,
+              isInvalid && inputStyles.invalid,
+            )}
             value={kgStr}
             maxLength={5}
             autoComplete="off"
@@ -176,7 +177,11 @@ function WeightInputStLb({
         <input
           ref={firstInputRef}
           id={`${id}-stone`}
-          className={`${inputStyles.textInput} ${inputStyles.numberInput} ${isInvalid ? inputStyles.invalid : ''}`}
+          className={clsx(
+            inputStyles.textInput,
+            inputStyles.numberInput,
+            isInvalid && inputStyles.invalid,
+          )}
           type="text"
           inputMode="numeric"
           value={stStr}
@@ -192,7 +197,11 @@ function WeightInputStLb({
       <div className={inputStyles.compoundField}>
         <input
           id={`${id}-pounds`}
-          className={`${inputStyles.textInput} ${inputStyles.numberInput} ${isInvalid ? inputStyles.invalid : ''}`}
+          className={clsx(
+            inputStyles.textInput,
+            inputStyles.numberInput,
+            isInvalid && inputStyles.invalid,
+          )}
           type="text"
           inputMode="decimal"
           value={lbStr}
@@ -226,9 +235,7 @@ function WeightInputStLb({
           )}
         </div>
         <fieldset
-          className={[inputStyles.inputFieldset, inputContainerClassName]
-            .filter(Boolean)
-            .join(' ')}
+          className={clsx(inputStyles.inputFieldset, inputContainerClassName)}
         >
           <legend className="visuallyHidden">{label}</legend>
           {inputContent}
@@ -298,17 +305,17 @@ function WeightInputLb({
           )}
         </div>
       )}
-      <div
-        className={[inputStyles.compoundInput, inputContainerClassName]
-          .filter(Boolean)
-          .join(' ')}
-      >
+      <div className={clsx(inputStyles.compoundInput, inputContainerClassName)}>
         <div className={inputStyles.compoundField}>
           <input
             id={id}
             type="text"
             inputMode="decimal"
-            className={`${inputStyles.textInput} ${inputStyles.numberInput} ${isInvalid ? inputStyles.invalid : ''}`}
+            className={clsx(
+              inputStyles.textInput,
+              inputStyles.numberInput,
+              isInvalid && inputStyles.invalid,
+            )}
             value={lbStr}
             maxLength={5}
             autoComplete="off"

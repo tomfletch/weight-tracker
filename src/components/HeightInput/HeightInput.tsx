@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import type React from 'react';
 import { useEffect, useId, useRef, useState } from 'react';
 import { useAppHeight } from '~/hooks/useAppHeight';
@@ -77,15 +78,11 @@ function HeightInputCm({
           )}
         </div>
       )}
-      <div
-        className={[inputStyles.compoundInput, inputContainerClassName]
-          .filter(Boolean)
-          .join(' ')}
-      >
+      <div className={clsx(inputStyles.compoundInput, inputContainerClassName)}>
         <div className={inputStyles.compoundField}>
           <input
             id={id}
-            className={`${inputStyles.textInput} ${inputStyles.numberInput}`}
+            className={clsx(inputStyles.textInput, inputStyles.numberInput)}
             type="text"
             inputMode="decimal"
             value={heightStr}
@@ -154,15 +151,11 @@ function HeightInputIn({
           )}
         </div>
       )}
-      <div
-        className={[inputStyles.compoundInput, inputContainerClassName]
-          .filter(Boolean)
-          .join(' ')}
-      >
+      <div className={clsx(inputStyles.compoundInput, inputContainerClassName)}>
         <div className={inputStyles.compoundField}>
           <input
             id={id}
-            className={`${inputStyles.textInput} ${inputStyles.numberInput}`}
+            className={clsx(inputStyles.textInput, inputStyles.numberInput)}
             type="text"
             inputMode="decimal"
             value={heightStr}
@@ -239,7 +232,7 @@ function HeightInputFtIn({
         <input
           ref={firstInputRef}
           id={`${id}-feet`}
-          className={`${inputStyles.textInput} ${inputStyles.numberInput}`}
+          className={clsx(inputStyles.textInput, inputStyles.numberInput)}
           type="text"
           inputMode="numeric"
           value={ftStr}
@@ -253,7 +246,7 @@ function HeightInputFtIn({
       <div className={inputStyles.compoundField}>
         <input
           id={`${id}-inches`}
-          className={`${inputStyles.textInput} ${inputStyles.numberInput}`}
+          className={clsx(inputStyles.textInput, inputStyles.numberInput)}
           type="text"
           inputMode="decimal"
           value={inStr}
@@ -285,9 +278,7 @@ function HeightInputFtIn({
           )}
         </div>
         <fieldset
-          className={[inputStyles.inputFieldset, inputContainerClassName]
-            .filter(Boolean)
-            .join(' ')}
+          className={clsx(inputStyles.inputFieldset, inputContainerClassName)}
         >
           <legend className="visuallyHidden">{label}</legend>
           {inputContent}
