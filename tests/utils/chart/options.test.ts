@@ -218,6 +218,9 @@ describe('options utils', () => {
         throw new Error('Expected x-scale time configuration to be defined');
       }
       expect(xScale.time.unit).toBe('day');
+
+      expect(xScale.ticks?.maxRotation).toBe(0);
+      expect(xScale.ticks?.autoSkipPadding).toBe(15);
     });
   });
 });

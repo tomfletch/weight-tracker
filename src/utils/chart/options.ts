@@ -69,6 +69,10 @@ export function buildBaseLineChartOptions(
         time: {
           unit: 'day',
         },
+        ticks: {
+          maxRotation: 0,
+          autoSkipPadding: 15,
+        },
       },
       y: {
         beginAtZero,
