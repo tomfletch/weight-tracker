@@ -1,32 +1,56 @@
 <?xml version="1.0"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 200">
-  <path
-    d="
-      M 0 0
-      l 0 130
-      a 70 70 0 0 0 140 0
-      l 0 -130
-      l -50 0
-      l 0 130
-      a 20 20 0 0 1 -40 0
-      l 0 -130
-      z
-    "
-    fill="#00c8ff"
-  />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -15 230 230">
+  <defs>
+    <path
+      id="shape-left"
+      d="
+        M 0 0
+        l 0 130
+        a 70 70 0 0 0 140 0
+        l 0 -130
+        l -50 0
+        l 0 130
+        a 20 20 0 0 1 -40 0
+        l 0 -130
+        z
+      "
+    />
 
-  <path
-    d="
-      M 90 0
-      l 0 130
-      a 70 70 0 0 0 140 0
-      l 0 -130
-      l -50 0
-      l 0 130
-      a 20 20 0 0 1 -40 0
-      l 0 -130
-      z
-    "
-    fill="#00c8ff"
-  />
+    <path
+      id="shape-right"
+      d="
+        M 90 0
+        l 0 130
+        a 70 70 0 0 0 140 0
+        l 0 -130
+        l -50 0
+        l 0 130
+        a 20 20 0 0 1 -40 0
+        l 0 -130
+        z
+      "
+    />
+
+    <clipPath id="clip-right-shape">
+      <use href="#shape-right" />
+    </clipPath>
+
+    <mask id="mask-left-only" x="0" y="0" width="230" height="200" maskUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="230" height="200" fill="black" />
+      <use href="#shape-left" fill="white" />
+      <use href="#shape-right" fill="black" />
+    </mask>
+
+    <mask id="mask-right-only" x="0" y="0" width="230" height="200" maskUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="230" height="200" fill="black" />
+      <use href="#shape-right" fill="white" />
+      <use href="#shape-left" fill="black" />
+    </mask>
+  </defs>
+
+  <use href="#shape-left" fill="#95e1ff" mask="url(#mask-left-only)" />
+
+  <use href="#shape-left" fill="#5dd5ff" clip-path="url(#clip-right-shape)" />
+
+  <use href="#shape-right" fill="#95e1ff" mask="url(#mask-right-only)" />
 </svg>
