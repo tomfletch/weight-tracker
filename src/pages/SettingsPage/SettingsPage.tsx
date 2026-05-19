@@ -16,6 +16,7 @@ import { WeightInput } from '~/components/WeightInput/WeightInput';
 import { useAppHeight } from '~/hooks/useAppHeight';
 import { useAppSettings } from '~/hooks/useAppSettings';
 import { useAppWeight } from '~/hooks/useAppWeight';
+import buttonStyles from '~/styles/buttons.module.css';
 import inputStyles from '~/styles/inputs.module.css';
 import { HeightUnit, type HeightUnit as HeightUnitType } from '~/types/height';
 import { WeightUnit, type WeightUnit as WeightUnitType } from '~/types/weight';
@@ -187,7 +188,7 @@ export function SettingsPage() {
           <div className={styles.inputContainer}>
             <button
               type="button"
-              className={styles.dangerButton}
+              className={clsx(buttonStyles.button, buttonStyles.danger)}
               onClick={() => setIsDeleteAllDataDialogOpen(true)}
             >
               Delete all data
@@ -205,7 +206,7 @@ export function SettingsPage() {
           <>
             <button
               type="button"
-              className={styles.dialogButton}
+              className={clsx(buttonStyles.button, buttonStyles.neutral)}
               onClick={() => setIsDeleteAllDataDialogOpen(false)}
               ref={cancelDeleteAllDataButtonRef}
             >
@@ -213,7 +214,7 @@ export function SettingsPage() {
             </button>
             <button
               type="button"
-              className={styles.confirmDeleteButton}
+              className={clsx(buttonStyles.button, buttonStyles.danger)}
               onClick={() => {
                 clearAllData();
                 setIsDeleteAllDataDialogOpen(false);

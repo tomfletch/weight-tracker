@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { useId, useRef, useState } from 'react';
 import { Dialog } from '~/components/Dialog/Dialog';
 import { WeightInput } from '~/components/WeightInput/WeightInput';
+import buttonStyles from '~/styles/buttons.module.css';
 import type { WeightRecord } from '~/types/weight';
 import { formatDateStr } from '~/utils/dates';
 import { isValidWeight } from '~/utils/weights';
@@ -41,7 +42,7 @@ export function EditWeightDialog({
         <>
           <button
             type="button"
-            className={styles.dialogButton}
+            className={clsx(buttonStyles.button, buttonStyles.neutral)}
             onClick={onClose}
             ref={cancelButtonRef}
           >
@@ -49,7 +50,7 @@ export function EditWeightDialog({
           </button>
           <button
             type="button"
-            className={clsx(styles.dialogButton, styles.confirmSaveButton)}
+            className={clsx(buttonStyles.button, buttonStyles.primary)}
             onClick={() => {
               if (canSave) {
                 onConfirm(weightKgs);

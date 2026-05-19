@@ -1,6 +1,8 @@
+import clsx from 'clsx';
 import type { ErrorInfo, ReactNode } from 'react';
 import { Component } from 'react';
 import { useLocation } from 'react-router-dom';
+import buttonStyles from '~/styles/buttons.module.css';
 import { Card } from '../Card/Card';
 import styles from './ErrorBoundary.module.css';
 
@@ -53,7 +55,7 @@ class ErrorBoundaryClass extends Component<
             </p>
             <button
               type="button"
-              className={styles.reloadButton}
+              className={clsx(buttonStyles.button, buttonStyles.neutral)}
               onClick={this.handleReload}
             >
               Reload app

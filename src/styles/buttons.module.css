@@ -1,0 +1,58 @@
+.button {
+  border: 1px solid var(--colour-border);
+  border-radius: var(--border-radius);
+  background-color: var(--colour-surface);
+  color: var(--colour-text);
+  font-size: 1.4rem;
+  line-height: 1.2;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+}
+
+.button:hover,
+.button:focus-visible {
+  border-color: color-mix(
+    in srgb,
+    var(--colour-accent) 45%,
+    var(--colour-border)
+  );
+}
+
+.button:focus-visible {
+  outline: var(--focus-outline-width) solid var(--colour-accent);
+  outline-offset: var(--focus-outline-offset);
+}
+
+.button:disabled {
+  cursor: default;
+  color: #ccc;
+}
+
+.neutral {
+  background-color: var(--colour-surface);
+  color: var(--colour-text);
+}
+
+.primary {
+  background-color: var(--colour-accent);
+  border-color: var(--colour-accent);
+  color: #fff;
+}
+
+.primary:hover,
+.primary:focus-visible {
+  background-color: color-mix(in srgb, var(--colour-accent) 84%, #000);
+  border-color: color-mix(in srgb, var(--colour-accent) 84%, #000);
+}
+
+.danger {
+  background-color: rgb(170 0 0);
+  border-color: rgb(170 0 0);
+  color: #fff;
+}
+
+.danger:hover,
+.danger:focus-visible {
+  background-color: rgb(140 0 0);
+  border-color: rgb(140 0 0);
+}
