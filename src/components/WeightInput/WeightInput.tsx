@@ -169,8 +169,6 @@ function WeightInputStLb({
   const stoneLabel = label ? `${label} - Stone` : 'Stone';
   const poundsLabel = label ? `${label} - Pounds` : 'Pounds';
 
-  console.log('isInvalid', isInvalid);
-
   const inputContent = (
     <div className={inputStyles.compoundInput}>
       <div className={inputStyles.compoundField}>
