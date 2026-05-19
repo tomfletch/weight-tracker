@@ -31,23 +31,28 @@ type AppState = {
 
     // Settings
     setTheme: (theme: Theme) => void;
+    clearAllData: () => void;
   };
+};
+
+const initialAppState: Omit<AppState, 'actions'> = {
+  // Height
+  height: null,
+  heightUnit: HeightUnit.CM,
+
+  // Weight
+  weightUnit: WeightUnit.STONES_LBS,
+  weightRecords: [],
+  weightTargetKgs: null,
+
+  // Settings
+  theme: DEFAULT_THEME,
 };
 
 export const useAppStore = create<AppState>()(
   persist(
     (set) => ({
-      // Height
-      height: null,
-      heightUnit: HeightUnit.CM,
-
-      // Weight
-      weightUnit: WeightUnit.STONES_LBS,
-      weightRecords: [],
-      weightTargetKgs: null,
-
-      // Settings
-      theme: DEFAULT_THEME,
+      ...initialAppState,
 
       actions: {
         // Height
@@ -80,6 +85,10 @@ export const useAppStore = create<AppState>()(
 
         // Settings
         setTheme: (theme) => set({ theme: normaliseTheme(theme) }),
+        clearAllData: () => {
+          useAppStore.persist.clearStorage();
+          set({ ...initialAppState });
+        },
       },
     }),
     {

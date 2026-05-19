@@ -3,11 +3,14 @@ import {
   faPaintBrush,
   faRuler,
   faRulerVertical,
+  faTrashCan,
   faWeightScale,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useCallback } from 'react';
+import clsx from 'clsx';
+import { useCallback, useRef, useState } from 'react';
 import { Card } from '~/components/Card/Card';
+import { Dialog } from '~/components/Dialog/Dialog';
 import { HeightInput } from '~/components/HeightInput/HeightInput';
 import { WeightInput } from '~/components/WeightInput/WeightInput';
 import { useAppHeight } from '~/hooks/useAppHeight';
@@ -34,8 +37,11 @@ const heightUnitOptions = [
 export function SettingsPage() {
   const { weightUnit, setWeightUnit, weightTargetKgs, setWeightTargetKgs } =
     useAppWeight();
-  const { theme, setTheme } = useAppSettings();
+  const { theme, setTheme, clearAllData } = useAppSettings();
   const { heightUnit, setHeightUnit, height, setHeight } = useAppHeight();
+  const [isDeleteAllDataDialogOpen, setIsDeleteAllDataDialogOpen] =
+    useState(false);
+  const cancelDeleteAllDataButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const onTargetWeightChange = useCallback(
     (weight: number | null) => {
@@ -148,7 +154,7 @@ export function SettingsPage() {
             inputContainerClassName={styles.inputContainer}
           />
         </div>
-        <fieldset className={inputStyles.inputFieldset}>
+        <fieldset className={clsx(inputStyles.inputFieldset, styles.fieldset)}>
           <legend className="visuallyHidden">Theme</legend>
           <div className={styles.field}>
             <div className={styles.icon} aria-hidden={true}>
@@ -167,7 +173,60 @@ export function SettingsPage() {
             </div>
           </div>
         </fieldset>
+
+        <div className={styles.field}>
+          <div className={styles.icon} aria-hidden={true}>
+            <FontAwesomeIcon icon={faTrashCan} fontSize={30} />
+          </div>
+          <div className={styles.labelContainer}>
+            <div className={styles.label}>Delete all data</div>
+            <p className={styles.labelDescription}>
+              Permanently remove all data including weight records and settings.
+            </p>
+          </div>
+          <div className={styles.inputContainer}>
+            <button
+              type="button"
+              className={styles.dangerButton}
+              onClick={() => setIsDeleteAllDataDialogOpen(true)}
+            >
+              Delete all data
+            </button>
+          </div>
+        </div>
       </Card>
+
+      <Dialog
+        isOpen={isDeleteAllDataDialogOpen}
+        title="Delete all data?"
+        onClose={() => setIsDeleteAllDataDialogOpen(false)}
+        initialFocusRef={cancelDeleteAllDataButtonRef}
+        actions={
+          <>
+            <button
+              type="button"
+              className={styles.dialogButton}
+              onClick={() => setIsDeleteAllDataDialogOpen(false)}
+              ref={cancelDeleteAllDataButtonRef}
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              className={styles.confirmDeleteButton}
+              onClick={() => {
+                clearAllData();
+                setIsDeleteAllDataDialogOpen(false);
+              }}
+            >
+              Delete all data
+            </button>
+          </>
+        }
+      >
+        This will permanently delete all app data and restore defaults. This
+        action cannot be undone.
+      </Dialog>
     </div>
   );
 }

@@ -9,3 +9,7 @@ select,
 textarea {
   font: inherit;
 }
+
+p {
+  text-wrap: pretty;
+}
