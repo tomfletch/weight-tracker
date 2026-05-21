@@ -1,68 +1,45 @@
-import { useCallback, useState } from 'react';
-import type {
-  ChartTooltipState,
-  OnChartTooltipChange,
-} from '~/utils/chart/createTooltip';
+import { useRef } from 'react';
+import type { ChartTooltipChangeState } from '~/utils/chart/createTooltip';
 import { DEFAULT_CHART_TOOLTIP_STATE } from '~/utils/chart/createTooltip';
+import { useChartTooltipChangeHandler } from './useChartTooltipChangeHandler';
+import { useChartTooltipClampedPosition } from './useChartTooltipClampedPosition';
+import { useChartTooltipTouchDismissal } from './useChartTooltipTouchDismissal';
 
-function areTooltipLinesEqual(a: string[], b: string[]): boolean {
-  if (a.length !== b.length) {
-    return false;
-  }
+export type ChartTooltipState = ChartTooltipChangeState & {
+  arrowOffset: number;
+};
 
-  return a.every((line, index) => line === b[index]);
-}
+export function useChartTooltipInteraction() {
+  const {
+    tooltipChangeState,
+    onTooltipChange,
+    temporarilyIgnoreTooltipChange,
+  } = useChartTooltipChangeHandler();
 
-function isSameVisibleTooltipState(
-  previousState: ChartTooltipState,
-  nextState: ChartTooltipState,
-): boolean {
-  if (!previousState.isVisible || !nextState.isVisible) {
-    return false;
-  }
+  const chartWrapRef = useRef<HTMLDivElement>(null);
 
-  if (
-    previousState.position.left !== nextState.position.left ||
-    previousState.position.top !== nextState.position.top
-  ) {
-    return false;
-  }
+  useChartTooltipTouchDismissal({
+    tooltipChangeState,
+    chartWrapRef,
+    onDismiss: () => {
+      temporarilyIgnoreTooltipChange();
+      onTooltipChange(DEFAULT_CHART_TOOLTIP_STATE);
+    },
+  });
 
-  if (!previousState.data || !nextState.data) {
-    return previousState.data === nextState.data;
-  }
+  const clampedPosition = useChartTooltipClampedPosition({
+    tooltipChangeState,
+    chartWrapRef,
+  });
 
-  return (
-    previousState.data.dateLabel === nextState.data.dateLabel &&
-    areTooltipLinesEqual(previousState.data.lines, nextState.data.lines)
-  );
-}
+  const tooltipState: ChartTooltipState = {
+    ...tooltipChangeState,
+    position: {
+      top: tooltipChangeState.position.top,
+      left: clampedPosition.left,
+    },
+    arrowOffset: clampedPosition.arrowOffset,
+  };
 
-export function useChartTooltipState() {
-  const [tooltipState, setTooltipState] = useState<ChartTooltipState>(
-    DEFAULT_CHART_TOOLTIP_STATE,
-  );
-
-  const onTooltipChange = useCallback<OnChartTooltipChange>((nextState) => {
-    setTooltipState((previousState) => {
-      if (nextState.isVisible) {
-        if (isSameVisibleTooltipState(previousState, nextState)) {
-          return previousState;
-        }
-        return nextState;
-      }
-
-      if (!previousState.isVisible) {
-        return previousState;
-      }
-
-      // Keep the previous anchor/content while fading out to avoid a visual jump.
-      return {
-        ...previousState,
-        isVisible: false,
-      };
-    });
-  }, []);
-
-  return [tooltipState, onTooltipChange] as const;
+  return { tooltipState, onTooltipChange, chartWrapRef };
 }

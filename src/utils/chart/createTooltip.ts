@@ -1,7 +1,7 @@
 import type { TooltipModel } from 'chart.js';
 import { formatDate } from '../dates';
 
-export interface ChartTooltipState {
+export interface ChartTooltipChangeState {
   isVisible: boolean;
   position: {
     left: number;
@@ -13,9 +13,9 @@ export interface ChartTooltipState {
   } | null;
 }
 
-export type OnChartTooltipChange = (state: ChartTooltipState) => void;
+export type OnChartTooltipChange = (state: ChartTooltipChangeState) => void;
 
-export const DEFAULT_CHART_TOOLTIP_STATE: ChartTooltipState = {
+export const DEFAULT_CHART_TOOLTIP_STATE: ChartTooltipChangeState = {
   isVisible: false,
   position: {
     left: 0,
