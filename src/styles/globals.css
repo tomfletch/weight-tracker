@@ -6,6 +6,8 @@
   --colour-bg: #f5fafe;
   --colour-surface: #fff;
   --colour-border: #ddd;
+  --colour-success: #2e7d32;
+  --colour-error: #d32f2f;
 
   --border-radius: 4px;
   --border-radius-circle: 999px;

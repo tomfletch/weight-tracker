@@ -11,6 +11,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 import { useCallback, useRef, useState } from 'react';
+import { ActionStatusMessage } from '~/components/ActionStatusMessage/ActionStatusMessage';
 import { Card } from '~/components/Card/Card';
 import { Dialog } from '~/components/Dialog/Dialog';
 import { HeightInput } from '~/components/HeightInput/HeightInput';
@@ -385,23 +386,10 @@ export function SettingsPage() {
                 />
                 Export backup (JSON)
               </button>
-              {backupExportStatus && (
-                <p
-                  className={styles.labelDescription}
-                  style={{
-                    margin: 0,
-                    color:
-                      backupExportStatus.type === 'error'
-                        ? '#d32f2f'
-                        : '#2e7d32',
-                  }}
-                  role={
-                    backupExportStatus.type === 'error' ? 'alert' : 'status'
-                  }
-                >
-                  {backupExportStatus.message}
-                </p>
-              )}
+              <ActionStatusMessage
+                status={backupExportStatus}
+                className={styles.labelDescription}
+              />
               <button
                 type="button"
                 className={clsx(buttonStyles.button, buttonStyles.neutral)}
@@ -413,23 +401,10 @@ export function SettingsPage() {
                 />
                 Import backup (JSON)
               </button>
-              {backupImportStatus && (
-                <p
-                  className={styles.labelDescription}
-                  style={{
-                    margin: 0,
-                    color:
-                      backupImportStatus.type === 'error'
-                        ? '#d32f2f'
-                        : '#2e7d32',
-                  }}
-                  role={
-                    backupImportStatus.type === 'error' ? 'alert' : 'status'
-                  }
-                >
-                  {backupImportStatus.message}
-                </p>
-              )}
+              <ActionStatusMessage
+                status={backupImportStatus}
+                className={styles.labelDescription}
+              />
               <button
                 type="button"
                 className={clsx(buttonStyles.button, buttonStyles.neutral)}
@@ -442,19 +417,10 @@ export function SettingsPage() {
                 />
                 Export weights (CSV)
               </button>
-              {csvExportStatus && (
-                <p
-                  className={styles.labelDescription}
-                  style={{
-                    margin: 0,
-                    color:
-                      csvExportStatus.type === 'error' ? '#d32f2f' : '#2e7d32',
-                  }}
-                  role={csvExportStatus.type === 'error' ? 'alert' : 'status'}
-                >
-                  {csvExportStatus.message}
-                </p>
-              )}
+              <ActionStatusMessage
+                status={csvExportStatus}
+                className={styles.labelDescription}
+              />
               {weightRecords.length === 0 && (
                 <p className={styles.labelDescription} style={{ margin: 0 }}>
                   No weight data to export yet.

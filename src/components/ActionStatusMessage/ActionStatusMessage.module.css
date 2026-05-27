@@ -1,0 +1,11 @@
+.statusMessage {
+  margin: 0;
+}
+
+.success {
+  color: var(--colour-success);
+}
+
+.error {
+  color: var(--colour-error);
+}
