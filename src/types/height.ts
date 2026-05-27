@@ -1,7 +1,10 @@
-export const HeightUnit = {
-  CM: 'CM',
-  FT_IN: 'FT_IN',
-  IN: 'IN',
-} as const;
+import * as z from 'zod/mini';
+import { createEnum } from '~/utils/createEnum';
 
-export type HeightUnit = (typeof HeightUnit)[keyof typeof HeightUnit];
+const HEIGHT_UNIT_VALUES = ['CM', 'FT_IN', 'IN'] as const;
+
+export const heightUnitSchema = z.enum(HEIGHT_UNIT_VALUES);
+
+export const HeightUnit = createEnum(HEIGHT_UNIT_VALUES);
+
+export type HeightUnit = z.infer<typeof heightUnitSchema>;

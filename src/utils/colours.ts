@@ -1,10 +1,16 @@
+import * as z from 'zod/mini';
+
 export const THEMES = [
   { name: 'Blue', value: 'blue', colours: { accentColour: '#0078c8' } },
   { name: 'Pink', value: 'pink', colours: { accentColour: '#df0072' } },
   { name: 'Green', value: 'green', colours: { accentColour: '#00892a' } },
 ] as const;
 
-export type Theme = (typeof THEMES)[number]['value'];
+const THEME_VALUES = THEMES.map((t) => t.value);
+
+export const themeSchema = z.enum(THEME_VALUES);
+
+export type Theme = z.infer<typeof themeSchema>;
 
 export type ThemeOption = {
   name: string;

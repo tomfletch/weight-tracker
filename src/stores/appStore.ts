@@ -5,6 +5,12 @@ import { type WeightRecord, WeightUnit } from '~/types/weight';
 import { DEFAULT_THEME, normaliseTheme, type Theme } from '~/utils/colours';
 import { isValidWeight } from '~/utils/weights';
 
+/**
+ * Current schema version for app store data.
+ * Used for JSON backups to ensure forward/backward compatibility.
+ */
+export const APP_STORE_VERSION = 1;
+
 type AppState = {
   // Height
   height: number | null;
@@ -93,6 +99,7 @@ export const useAppStore = create<AppState>()(
     }),
     {
       name: 'appStore',
+      version: APP_STORE_VERSION,
       partialize: (state) => {
         const { actions, ...persistedState } = state;
         return persistedState;
