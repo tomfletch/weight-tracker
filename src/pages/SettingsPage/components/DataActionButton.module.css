@@ -1,0 +1,8 @@
+.icon {
+  margin-right: 0.5rem;
+}
+
+.helpText {
+  color: var(--colour-text-muted);
+  margin: 0;
+}

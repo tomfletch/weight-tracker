@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import styles from './ActionStatusMessage.module.css';
 
-type ActionStatus = { type: 'success' | 'error'; message: string };
+export type ActionStatus = { type: 'success' | 'error'; message: string };
 
 type ActionStatusMessageProps = {
   status: ActionStatus | null;

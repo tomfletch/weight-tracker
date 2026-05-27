@@ -5,13 +5,11 @@ import {
   faRuler,
   faRulerVertical,
   faTrashCan,
-  faUpload,
   faWeightScale,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 import { useCallback, useRef, useState } from 'react';
-import { ActionStatusMessage } from '~/components/ActionStatusMessage/ActionStatusMessage';
 import { Card } from '~/components/Card/Card';
 import { Dialog } from '~/components/Dialog/Dialog';
 import { HeightInput } from '~/components/HeightInput/HeightInput';
@@ -19,27 +17,14 @@ import { WeightInput } from '~/components/WeightInput/WeightInput';
 import { useAppHeight } from '~/hooks/useAppHeight';
 import { useAppSettings } from '~/hooks/useAppSettings';
 import { useAppWeight } from '~/hooks/useAppWeight';
-import { useAppStore } from '~/stores/appStore';
 import buttonStyles from '~/styles/buttons.module.css';
 import inputStyles from '~/styles/inputs.module.css';
 import { HeightUnit, type HeightUnit as HeightUnitType } from '~/types/height';
 import { WeightUnit, type WeightUnit as WeightUnitType } from '~/types/weight';
-import {
-  createAppDataBackup,
-  downloadJSON,
-  generateBackupFilename,
-} from '~/utils/backup/backupExport';
-import {
-  hasExistingAppData,
-  validateAndParseJSONBackup,
-} from '~/utils/backup/backupImport';
-import type { AppDataBackup } from '~/utils/backup/backupSchema';
-import {
-  downloadCSV,
-  exportWeightRecordsAsCSV,
-  generateWeightCSVFilename,
-} from '~/utils/csvExport';
+import { BackupExportButton } from './components/BackupExportButton/BackupExportButton';
+import { BackupImportButton } from './components/BackupImportButton/BackupImportButton';
 import { ColourSelect } from './components/ColourSelect/ColourSelect';
+import { ExportWeightsCsvButton } from './components/ExportWeightsCsvButton/ExportWeightsCsvButton';
 import styles from './SettingsPage.module.css';
 
 const weightUnitOptions = [
@@ -54,8 +39,6 @@ const heightUnitOptions = [
   { key: HeightUnit.IN, name: 'Inches (in)' },
 ];
 
-type ActionStatus = { type: 'success' | 'error'; message: string } | null;
-
 export function SettingsPage() {
   const {
     weightUnit,
@@ -69,20 +52,6 @@ export function SettingsPage() {
   const [isDeleteAllDataDialogOpen, setIsDeleteAllDataDialogOpen] =
     useState(false);
   const cancelDeleteAllDataButtonRef = useRef<HTMLButtonElement | null>(null);
-
-  const [backupExportStatus, setBackupExportStatus] =
-    useState<ActionStatus>(null);
-  const [backupImportStatus, setBackupImportStatus] =
-    useState<ActionStatus>(null);
-  const [csvExportStatus, setCsvExportStatus] = useState<ActionStatus>(null);
-  const importFileInputRef = useRef<HTMLInputElement | null>(null);
-
-  // Import confirmation
-  const [isImportConfirmDialogOpen, setIsImportConfirmDialogOpen] =
-    useState(false);
-  const [pendingImportData, setPendingImportData] =
-    useState<AppDataBackup | null>(null);
-  const cancelImportButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const onTargetWeightChange = useCallback(
     (weight: number | null) => {
@@ -103,148 +72,6 @@ export function SettingsPage() {
       HeightUnit[heightUnitStr as keyof typeof HeightUnit];
     setHeightUnit(newHeightUnit);
   };
-
-  const handleExportWeightsCSV = useCallback(() => {
-    try {
-      if (weightRecords.length === 0) {
-        setCsvExportStatus({
-          type: 'error',
-          message: 'No weight records to export.',
-        });
-        return;
-      }
-
-      const csvContent = exportWeightRecordsAsCSV(weightRecords);
-      const filename = generateWeightCSVFilename(new Date());
-      downloadCSV(csvContent, filename);
-
-      setCsvExportStatus({
-        type: 'success',
-        message: `Exported ${weightRecords.length} weight record(s).`,
-      });
-    } catch (error) {
-      setCsvExportStatus({
-        type: 'error',
-        message: `Export failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
-      });
-    }
-  }, [weightRecords]);
-
-  const handleExportJSON = useCallback(() => {
-    try {
-      // Get the current persisted state from store
-      const state = useAppStore.getState();
-      const persistedState = {
-        height: state.height,
-        heightUnit: state.heightUnit,
-        weightUnit: state.weightUnit,
-        weightRecords: state.weightRecords,
-        weightTargetKgs: state.weightTargetKgs,
-        theme: state.theme,
-      };
-
-      const backup = createAppDataBackup(persistedState);
-      const jsonContent = JSON.stringify(backup, null, 2);
-      const filename = generateBackupFilename(new Date());
-      downloadJSON(jsonContent, filename);
-
-      setBackupExportStatus({
-        type: 'success',
-        message: `Exported backup: ${persistedState.weightRecords.length} weight record(s).`,
-      });
-    } catch (error) {
-      setBackupExportStatus({
-        type: 'error',
-        message: `Export failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
-      });
-    }
-  }, []);
-
-  const handleImportJSON = useCallback(() => {
-    // Click the hidden file input to open file picker
-    importFileInputRef.current?.click();
-  }, []);
-
-  const performImportData = useCallback((backup: AppDataBackup) => {
-    try {
-      // Replace persisted state atomically while preserving actions.
-      useAppStore.setState({
-        height: backup.data.height,
-        heightUnit: backup.data.heightUnit,
-        weightUnit: backup.data.weightUnit,
-        weightRecords: backup.data.weightRecords,
-        weightTargetKgs: backup.data.weightTargetKgs,
-        theme: backup.data.theme,
-      });
-
-      const successMessage = [
-        `Imported backup: ${backup.data.weightRecords.length} weight record(s)`,
-        `height set: ${backup.data.height !== null ? 'yes' : 'no'}`,
-        `target weight set: ${backup.data.weightTargetKgs !== null ? 'yes' : 'no'}`,
-      ].join(', ');
-      setBackupImportStatus({ type: 'success', message: successMessage });
-      setIsImportConfirmDialogOpen(false);
-      setPendingImportData(null);
-    } catch (error) {
-      setBackupImportStatus({
-        type: 'error',
-        message: `Import failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
-      });
-    }
-  }, []);
-
-  const handleImportFileSelected = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        try {
-          const content = e.target?.result as string;
-          const backup = validateAndParseJSONBackup(content);
-
-          // Check if there's existing data
-          const state = useAppStore.getState();
-          const existingData = {
-            height: state.height,
-            heightUnit: state.heightUnit,
-            weightUnit: state.weightUnit,
-            weightRecords: state.weightRecords,
-            weightTargetKgs: state.weightTargetKgs,
-            theme: state.theme,
-          };
-
-          if (hasExistingAppData(existingData)) {
-            // Show confirmation dialog
-            setPendingImportData(backup);
-            setIsImportConfirmDialogOpen(true);
-          } else {
-            // No existing data, import directly
-            performImportData(backup);
-          }
-        } catch (error) {
-          setBackupImportStatus({
-            type: 'error',
-            message: `Import failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
-          });
-        }
-      };
-
-      reader.onerror = () => {
-        setBackupImportStatus({
-          type: 'error',
-          message: 'Failed to read file.',
-        });
-      };
-
-      reader.readAsText(file);
-
-      // Reset file input
-      event.target.value = '';
-    },
-    [performImportData],
-  );
 
   return (
     <div className="pageContainer">
@@ -369,64 +196,9 @@ export function SettingsPage() {
           </div>
           <div className={styles.inputContainer}>
             <div className={styles.exportButtonsContainer}>
-              <button
-                type="button"
-                className={clsx(buttonStyles.button, buttonStyles.neutral)}
-                onClick={handleExportJSON}
-              >
-                <FontAwesomeIcon
-                  icon={faDownload}
-                  className={styles.iconMargin}
-                />
-                Export backup (JSON)
-              </button>
-              <ActionStatusMessage
-                status={backupExportStatus}
-                className={styles.labelDescription}
-              />
-              <button
-                type="button"
-                className={clsx(buttonStyles.button, buttonStyles.neutral)}
-                onClick={handleImportJSON}
-              >
-                <FontAwesomeIcon
-                  icon={faUpload}
-                  className={styles.iconMargin}
-                />
-                Import backup (JSON)
-              </button>
-              <ActionStatusMessage
-                status={backupImportStatus}
-                className={styles.labelDescription}
-              />
-              <button
-                type="button"
-                className={clsx(buttonStyles.button, buttonStyles.neutral)}
-                onClick={handleExportWeightsCSV}
-                disabled={weightRecords.length === 0}
-              >
-                <FontAwesomeIcon
-                  icon={faDownload}
-                  className={styles.iconMargin}
-                />
-                Export weights (CSV)
-              </button>
-              <ActionStatusMessage
-                status={csvExportStatus}
-                className={styles.labelDescription}
-              />
-              {weightRecords.length === 0 && (
-                <p className={clsx(styles.labelDescription, styles.noMargin)}>
-                  No weight data to export yet.
-                </p>
-              )}
-              <input
-                type="file"
-                ref={importFileInputRef}
-                accept=".json,application/json"
-                className={styles.hiddenInput}
-                onChange={handleImportFileSelected}
-              />
+              <BackupExportButton />
+              <BackupImportButton />
+              <ExportWeightsCsvButton />
             </div>
           </div>
         </div>
@@ -483,42 +255,6 @@ export function SettingsPage() {
       >
         This will permanently delete all app data and restore defaults. This
         action cannot be undone.
-      </Dialog>
-
-      <Dialog
-        isOpen={isImportConfirmDialogOpen}
-        title="Import backup?"
-        onClose={() => setIsImportConfirmDialogOpen(false)}
-        initialFocusRef={cancelImportButtonRef}
-        actions={
-          <>
-            <button
-              type="button"
-              className={clsx(buttonStyles.button, buttonStyles.neutral)}
-              onClick={() => {
-                setIsImportConfirmDialogOpen(false);
-                setPendingImportData(null);
-              }}
-              ref={cancelImportButtonRef}
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              className={clsx(buttonStyles.button, buttonStyles.primary)}
-              onClick={() => {
-                if (pendingImportData) {
-                  performImportData(pendingImportData);
-                }
-              }}
-            >
-              Import
-            </button>
-          </>
-        }
-      >
-        This will replace all existing app data with the backup. This action
-        cannot be undone. Are you sure you want to continue?
       </Dialog>
     </div>
   );
