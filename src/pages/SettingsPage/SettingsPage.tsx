@@ -53,6 +53,8 @@ const heightUnitOptions = [
   { key: HeightUnit.IN, name: 'Inches (in)' },
 ];
 
+type ActionStatus = { type: 'success' | 'error'; message: string } | null;
+
 export function SettingsPage() {
   const {
     weightUnit,
@@ -67,13 +69,11 @@ export function SettingsPage() {
     useState(false);
   const cancelDeleteAllDataButtonRef = useRef<HTMLButtonElement | null>(null);
 
-  // Export/import status
-  const [exportImportStatus, setExportImportStatus] = useState<string | null>(
-    null,
-  );
-  const [statusType, setStatusType] = useState<'success' | 'error' | null>(
-    null,
-  );
+  const [backupExportStatus, setBackupExportStatus] =
+    useState<ActionStatus>(null);
+  const [backupImportStatus, setBackupImportStatus] =
+    useState<ActionStatus>(null);
+  const [csvExportStatus, setCsvExportStatus] = useState<ActionStatus>(null);
   const importFileInputRef = useRef<HTMLInputElement | null>(null);
 
   // Import confirmation
@@ -106,8 +106,10 @@ export function SettingsPage() {
   const handleExportWeightsCSV = useCallback(() => {
     try {
       if (weightRecords.length === 0) {
-        setStatusType('error');
-        setExportImportStatus('No weight records to export.');
+        setCsvExportStatus({
+          type: 'error',
+          message: 'No weight records to export.',
+        });
         return;
       }
 
@@ -115,15 +117,15 @@ export function SettingsPage() {
       const filename = generateWeightCSVFilename(new Date());
       downloadCSV(csvContent, filename);
 
-      setStatusType('success');
-      setExportImportStatus(
-        `Exported ${weightRecords.length} weight record(s).`,
-      );
+      setCsvExportStatus({
+        type: 'success',
+        message: `Exported ${weightRecords.length} weight record(s).`,
+      });
     } catch (error) {
-      setStatusType('error');
-      setExportImportStatus(
-        `Export failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
-      );
+      setCsvExportStatus({
+        type: 'error',
+        message: `Export failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      });
     }
   }, [weightRecords]);
 
@@ -145,15 +147,15 @@ export function SettingsPage() {
       const filename = generateBackupFilename(new Date());
       downloadJSON(jsonContent, filename);
 
-      setStatusType('success');
-      setExportImportStatus(
-        `Exported backup: ${persistedState.weightRecords.length} weight record(s).`,
-      );
+      setBackupExportStatus({
+        type: 'success',
+        message: `Exported backup: ${persistedState.weightRecords.length} weight record(s).`,
+      });
     } catch (error) {
-      setStatusType('error');
-      setExportImportStatus(
-        `Export failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
-      );
+      setBackupExportStatus({
+        type: 'error',
+        message: `Export failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      });
     }
   }, []);
 
@@ -174,21 +176,19 @@ export function SettingsPage() {
         theme: backup.data.theme,
       });
 
-      setStatusType('success');
-
       const successMessage = [
         `Imported backup: ${backup.data.weightRecords.length} weight record(s)`,
         `height set: ${backup.data.height !== null ? 'yes' : 'no'}`,
         `target weight set: ${backup.data.weightTargetKgs !== null ? 'yes' : 'no'}`,
       ].join(', ');
-      setExportImportStatus(successMessage);
+      setBackupImportStatus({ type: 'success', message: successMessage });
       setIsImportConfirmDialogOpen(false);
       setPendingImportData(null);
     } catch (error) {
-      setStatusType('error');
-      setExportImportStatus(
-        `Import failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
-      );
+      setBackupImportStatus({
+        type: 'error',
+        message: `Import failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      });
     }
   }, []);
 
@@ -223,16 +223,18 @@ export function SettingsPage() {
             performImportData(backup);
           }
         } catch (error) {
-          setStatusType('error');
-          setExportImportStatus(
-            `Import failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
-          );
+          setBackupImportStatus({
+            type: 'error',
+            message: `Import failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+          });
         }
       };
 
       reader.onerror = () => {
-        setStatusType('error');
-        setExportImportStatus('Failed to read file.');
+        setBackupImportStatus({
+          type: 'error',
+          message: 'Failed to read file.',
+        });
       };
 
       reader.readAsText(file);
@@ -383,6 +385,23 @@ export function SettingsPage() {
                 />
                 Export backup (JSON)
               </button>
+              {backupExportStatus && (
+                <p
+                  className={styles.labelDescription}
+                  style={{
+                    margin: 0,
+                    color:
+                      backupExportStatus.type === 'error'
+                        ? '#d32f2f'
+                        : '#2e7d32',
+                  }}
+                  role={
+                    backupExportStatus.type === 'error' ? 'alert' : 'status'
+                  }
+                >
+                  {backupExportStatus.message}
+                </p>
+              )}
               <button
                 type="button"
                 className={clsx(buttonStyles.button, buttonStyles.neutral)}
@@ -394,6 +413,23 @@ export function SettingsPage() {
                 />
                 Import backup (JSON)
               </button>
+              {backupImportStatus && (
+                <p
+                  className={styles.labelDescription}
+                  style={{
+                    margin: 0,
+                    color:
+                      backupImportStatus.type === 'error'
+                        ? '#d32f2f'
+                        : '#2e7d32',
+                  }}
+                  role={
+                    backupImportStatus.type === 'error' ? 'alert' : 'status'
+                  }
+                >
+                  {backupImportStatus.message}
+                </p>
+              )}
               <button
                 type="button"
                 className={clsx(buttonStyles.button, buttonStyles.neutral)}
@@ -406,21 +442,22 @@ export function SettingsPage() {
                 />
                 Export weights (CSV)
               </button>
-              {weightRecords.length === 0 && (
-                <p className={styles.labelDescription} style={{ margin: 0 }}>
-                  No weight data to export yet.
-                </p>
-              )}
-              {exportImportStatus && (
+              {csvExportStatus && (
                 <p
                   className={styles.labelDescription}
                   style={{
                     margin: 0,
-                    color: statusType === 'error' ? '#d32f2f' : '#2e7d32',
+                    color:
+                      csvExportStatus.type === 'error' ? '#d32f2f' : '#2e7d32',
                   }}
-                  role={statusType === 'error' ? 'alert' : 'status'}
+                  role={csvExportStatus.type === 'error' ? 'alert' : 'status'}
                 >
-                  {exportImportStatus}
+                  {csvExportStatus.message}
+                </p>
+              )}
+              {weightRecords.length === 0 && (
+                <p className={styles.labelDescription} style={{ margin: 0 }}>
+                  No weight data to export yet.
                 </p>
               )}
               <input
