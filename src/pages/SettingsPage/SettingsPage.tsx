@@ -368,13 +368,7 @@ export function SettingsPage() {
             </p>
           </div>
           <div className={styles.inputContainer}>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0.75rem',
-              }}
-            >
+            <div className={styles.exportButtonsContainer}>
               <button
                 type="button"
                 className={clsx(buttonStyles.button, buttonStyles.neutral)}
@@ -382,7 +376,7 @@ export function SettingsPage() {
               >
                 <FontAwesomeIcon
                   icon={faDownload}
-                  style={{ marginRight: '0.5rem' }}
+                  className={styles.iconMargin}
                 />
                 Export backup (JSON)
               </button>
@@ -397,7 +391,7 @@ export function SettingsPage() {
               >
                 <FontAwesomeIcon
                   icon={faUpload}
-                  style={{ marginRight: '0.5rem' }}
+                  className={styles.iconMargin}
                 />
                 Import backup (JSON)
               </button>
@@ -413,7 +407,7 @@ export function SettingsPage() {
               >
                 <FontAwesomeIcon
                   icon={faDownload}
-                  style={{ marginRight: '0.5rem' }}
+                  className={styles.iconMargin}
                 />
                 Export weights (CSV)
               </button>
@@ -422,7 +416,7 @@ export function SettingsPage() {
                 className={styles.labelDescription}
               />
               {weightRecords.length === 0 && (
-                <p className={styles.labelDescription} style={{ margin: 0 }}>
+                <p className={clsx(styles.labelDescription, styles.noMargin)}>
                   No weight data to export yet.
                 </p>
               )}
@@ -430,7 +424,7 @@ export function SettingsPage() {
                 type="file"
                 ref={importFileInputRef}
                 accept=".json,application/json"
-                style={{ display: 'none' }}
+                className={styles.hiddenInput}
                 onChange={handleImportFileSelected}
               />
             </div>

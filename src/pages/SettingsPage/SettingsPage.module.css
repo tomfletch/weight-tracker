@@ -60,3 +60,21 @@
   color: var(--colour-text-muted);
   margin: 0;
 }
+
+.exportButtonsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.iconMargin {
+  margin-right: 0.5rem;
+}
+
+.noMargin {
+  margin: 0;
+}
+
+.hiddenInput {
+  display: none;
+}
