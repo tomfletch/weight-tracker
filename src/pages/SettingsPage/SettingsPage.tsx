@@ -38,7 +38,7 @@ import {
   exportWeightRecordsAsCSV,
   generateWeightCSVFilename,
 } from '~/utils/csvExport';
-import { ColourSelect } from './ColourSelect/ColourSelect';
+import { ColourSelect } from './components/ColourSelect/ColourSelect';
 import styles from './SettingsPage.module.css';
 
 const weightUnitOptions = [
