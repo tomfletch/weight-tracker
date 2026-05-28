@@ -40,13 +40,8 @@ const heightUnitOptions = [
 ];
 
 export function SettingsPage() {
-  const {
-    weightUnit,
-    setWeightUnit,
-    weightTargetKgs,
-    setWeightTargetKgs,
-    weightRecords,
-  } = useAppWeight();
+  const { weightUnit, setWeightUnit, weightTargetKgs, setWeightTargetKgs } =
+    useAppWeight();
   const { theme, setTheme, clearAllData } = useAppSettings();
   const { heightUnit, setHeightUnit, height, setHeight } = useAppHeight();
   const [isDeleteAllDataDialogOpen, setIsDeleteAllDataDialogOpen] =
