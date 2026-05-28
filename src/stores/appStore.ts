@@ -104,6 +104,13 @@ export const useAppStore = create<AppState>()(
         const { actions, ...persistedState } = state;
         return persistedState;
       },
+      migrate: (persistedState, version) => {
+        if (version === 0) {
+          return persistedState;
+        }
+
+        return persistedState;
+      },
     },
   ),
 );
