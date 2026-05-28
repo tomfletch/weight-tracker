@@ -37,10 +37,12 @@ export async function importAppBackupFromFile(
   } else {
     // No existing data, import directly
     performImportData(backup);
+    const count = backup.data.weightRecords.length;
+    const recordLabel = count === 1 ? 'weight record' : 'weight records';
     return {
       status: 'imported',
       message: [
-        `Imported backup: ${backup.data.weightRecords.length} weight record(s)`,
+        `Imported backup: ${count} ${recordLabel}`,
         `height set: ${backup.data.height !== null ? 'yes' : 'no'}`,
         `target weight set: ${backup.data.weightTargetKgs !== null ? 'yes' : 'no'}`,
       ].join(', '),

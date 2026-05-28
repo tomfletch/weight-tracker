@@ -21,9 +21,10 @@ export function ExportWeightsCsvButton() {
   const handleExportWeightsCSV = useCallback(() => {
     try {
       const count = exportAppWeightsAsCSV();
+      const recordLabel = count === 1 ? 'weight record' : 'weight records';
       setCsvExportStatus({
         type: 'success',
-        message: `Exported ${count} weight record(s).`,
+        message: `Exported ${count} ${recordLabel}.`,
       });
     } catch (error) {
       setCsvExportStatus({

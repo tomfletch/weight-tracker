@@ -17,9 +17,10 @@ export function BackupExportButton() {
   const handleExportJSON = useCallback(() => {
     try {
       const count = exportAppBackup();
+      const recordLabel = count === 1 ? 'weight record' : 'weight records';
       setBackupExportStatus({
         type: 'success',
-        message: `Exported backup: ${count} weight record(s).`,
+        message: `Exported backup: ${count} ${recordLabel}.`,
       });
     } catch (error) {
       setBackupExportStatus({
