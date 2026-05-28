@@ -1,4 +1,4 @@
-import { APP_STORE_VERSION } from '~/stores/appStore';
+import { APP_STORE_VERSION, useAppStore } from '~/stores/appStore';
 import { HeightUnit } from '~/types/height';
 import type { WeightRecord } from '~/types/weight';
 import { WeightUnit } from '~/types/weight';
@@ -11,11 +11,68 @@ import type { Theme } from '~/utils/colours';
 import { parseISODate } from '~/utils/dates';
 import { isValidWeight } from '~/utils/weights';
 
+export async function importAppBackupFromFile(
+  file: File,
+): Promise<
+  | { status: 'imported'; message: string }
+  | { status: 'confirm'; backup: AppDataBackup }
+> {
+  const content = await readFileAsText(file);
+  const backup = validateAndParseJSONBackup(content);
+
+  // Check if there's existing data
+  const state = useAppStore.getState();
+  const existingData = {
+    height: state.height,
+    heightUnit: state.heightUnit,
+    weightUnit: state.weightUnit,
+    weightRecords: state.weightRecords,
+    weightTargetKgs: state.weightTargetKgs,
+    theme: state.theme,
+  };
+
+  if (hasExistingAppData(existingData)) {
+    // UI should confirm before importing
+    return { status: 'confirm', backup };
+  } else {
+    // No existing data, import directly
+    performImportData(backup);
+    return {
+      status: 'imported',
+      message: [
+        `Imported backup: ${backup.data.weightRecords.length} weight record(s)`,
+        `height set: ${backup.data.height !== null ? 'yes' : 'no'}`,
+        `target weight set: ${backup.data.weightTargetKgs !== null ? 'yes' : 'no'}`,
+      ].join(', '),
+    };
+  }
+}
+
+export function performImportData(backup: AppDataBackup) {
+  useAppStore.setState({
+    height: backup.data.height,
+    heightUnit: backup.data.heightUnit,
+    weightUnit: backup.data.weightUnit,
+    weightRecords: backup.data.weightRecords,
+    weightTargetKgs: backup.data.weightTargetKgs,
+    theme: backup.data.theme,
+  });
+}
+
+function readFileAsText(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = () => reject(new Error('Failed to read file.'));
+    reader.readAsText(file);
+  });
+}
+
 /**
  * Validate and parse JSON backup file.
  * Throws descriptive errors if validation fails.
  */
-export function validateAndParseJSONBackup(jsonContent: string): AppDataBackup {
+function validateAndParseJSONBackup(jsonContent: string): AppDataBackup {
   let parsed: unknown;
 
   try {
@@ -96,7 +153,7 @@ function validateWeightRecord(record: WeightRecord): WeightRecord {
   return record;
 }
 
-export function hasExistingAppData(state: {
+function hasExistingAppData(state: {
   height: AppBackupData['height'];
   heightUnit: AppBackupData['heightUnit'];
   weightUnit: AppBackupData['weightUnit'];

@@ -8,11 +8,7 @@ import {
 } from '~/components/ActionStatusMessage/ActionStatusMessage';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import buttonStyles from '~/styles/buttons.module.css';
-import {
-  downloadCSV,
-  exportWeightRecordsAsCSV,
-  generateWeightCSVFilename,
-} from '~/utils/csvExport';
+import { exportAppWeightsAsCSV } from '~/utils/csvExport';
 import styles from '../DataActionButton.module.css';
 
 export function ExportWeightsCsvButton() {
@@ -24,21 +20,10 @@ export function ExportWeightsCsvButton() {
 
   const handleExportWeightsCSV = useCallback(() => {
     try {
-      if (weightRecords.length === 0) {
-        setCsvExportStatus({
-          type: 'error',
-          message: 'No weight records to export.',
-        });
-        return;
-      }
-
-      const csvContent = exportWeightRecordsAsCSV(weightRecords);
-      const filename = generateWeightCSVFilename(new Date());
-      downloadCSV(csvContent, filename);
-
+      const count = exportAppWeightsAsCSV();
       setCsvExportStatus({
         type: 'success',
-        message: `Exported ${weightRecords.length} weight record(s).`,
+        message: `Exported ${count} weight record(s).`,
       });
     } catch (error) {
       setCsvExportStatus({
@@ -46,7 +31,7 @@ export function ExportWeightsCsvButton() {
         message: `Export failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
       });
     }
-  }, [weightRecords]);
+  }, []);
 
   return (
     <>

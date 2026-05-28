@@ -7,11 +7,10 @@ import {
   ActionStatusMessage,
 } from '~/components/ActionStatusMessage/ActionStatusMessage';
 import { Dialog } from '~/components/Dialog/Dialog';
-import { useAppStore } from '~/stores/appStore';
 import buttonStyles from '~/styles/buttons.module.css';
 import {
-  hasExistingAppData,
-  validateAndParseJSONBackup,
+  importAppBackupFromFile,
+  performImportData,
 } from '~/utils/backup/backupImport';
 import type { AppDataBackup } from '~/utils/backup/backupSchema';
 import styles from '../DataActionButton.module.css';
@@ -31,18 +30,9 @@ export function BackupImportButton() {
     importFileInputRef.current?.click();
   }, []);
 
-  const performImportData = useCallback((backup: AppDataBackup) => {
+  const performImportDataHandler = useCallback((backup: AppDataBackup) => {
     try {
-      // Replace persisted state atomically while preserving actions.
-      useAppStore.setState({
-        height: backup.data.height,
-        heightUnit: backup.data.heightUnit,
-        weightUnit: backup.data.weightUnit,
-        weightRecords: backup.data.weightRecords,
-        weightTargetKgs: backup.data.weightTargetKgs,
-        theme: backup.data.theme,
-      });
-
+      performImportData(backup);
       const successMessage = [
         `Imported backup: ${backup.data.weightRecords.length} weight record(s)`,
         `height set: ${backup.data.height !== null ? 'yes' : 'no'}`,
@@ -60,56 +50,27 @@ export function BackupImportButton() {
   }, []);
 
   const handleImportFileSelected = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
+    async (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];
       if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        try {
-          const content = e.target?.result as string;
-          const backup = validateAndParseJSONBackup(content);
-
-          // Check if there's existing data
-          const state = useAppStore.getState();
-          const existingData = {
-            height: state.height,
-            heightUnit: state.heightUnit,
-            weightUnit: state.weightUnit,
-            weightRecords: state.weightRecords,
-            weightTargetKgs: state.weightTargetKgs,
-            theme: state.theme,
-          };
-
-          if (hasExistingAppData(existingData)) {
-            // Show confirmation dialog
-            setPendingImportData(backup);
-            setIsImportConfirmDialogOpen(true);
-          } else {
-            // No existing data, import directly
-            performImportData(backup);
-          }
-        } catch (error) {
-          setBackupImportStatus({
-            type: 'error',
-            message: `Import failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
-          });
+      try {
+        const result = await importAppBackupFromFile(file);
+        if (result.status === 'imported') {
+          setBackupImportStatus({ type: 'success', message: result.message });
+        } else if (result.status === 'confirm') {
+          setPendingImportData(result.backup);
+          setIsImportConfirmDialogOpen(true);
         }
-      };
-
-      reader.onerror = () => {
+      } catch (error) {
         setBackupImportStatus({
           type: 'error',
-          message: 'Failed to read file.',
+          message: `Import failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
         });
-      };
-
-      reader.readAsText(file);
-
+      }
       // Reset file input
       event.target.value = '';
     },
-    [performImportData],
+    [],
   );
 
   return (
@@ -153,7 +114,7 @@ export function BackupImportButton() {
               className={clsx(buttonStyles.button, buttonStyles.primary)}
               onClick={() => {
                 if (pendingImportData) {
-                  performImportData(pendingImportData);
+                  performImportDataHandler(pendingImportData);
                 }
               }}
             >

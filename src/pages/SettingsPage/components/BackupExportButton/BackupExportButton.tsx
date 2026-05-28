@@ -6,13 +6,8 @@ import {
   type ActionStatus,
   ActionStatusMessage,
 } from '~/components/ActionStatusMessage/ActionStatusMessage';
-import { useAppStore } from '~/stores/appStore';
 import buttonStyles from '~/styles/buttons.module.css';
-import {
-  createAppDataBackup,
-  downloadJSON,
-  generateBackupFilename,
-} from '~/utils/backup/backupExport';
+import { exportAppBackup } from '~/utils/backup/backupExport';
 import styles from '../DataActionButton.module.css';
 
 export function BackupExportButton() {
@@ -21,25 +16,10 @@ export function BackupExportButton() {
 
   const handleExportJSON = useCallback(() => {
     try {
-      // Use the current store snapshot so the downloaded backup matches persisted app data.
-      const state = useAppStore.getState();
-      const persistedState = {
-        height: state.height,
-        heightUnit: state.heightUnit,
-        weightUnit: state.weightUnit,
-        weightRecords: state.weightRecords,
-        weightTargetKgs: state.weightTargetKgs,
-        theme: state.theme,
-      };
-
-      const backup = createAppDataBackup(persistedState);
-      const jsonContent = JSON.stringify(backup, null, 2);
-      const filename = generateBackupFilename(new Date());
-      downloadJSON(jsonContent, filename);
-
+      const count = exportAppBackup();
       setBackupExportStatus({
         type: 'success',
-        message: `Exported backup: ${persistedState.weightRecords.length} weight record(s).`,
+        message: `Exported backup: ${count} weight record(s).`,
       });
     } catch (error) {
       setBackupExportStatus({
