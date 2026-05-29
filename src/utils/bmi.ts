@@ -14,6 +14,10 @@ export function calculateBMI(weightKgs: number, heightM: number): number {
 }
 
 export function getBMICategory(bmi: number): string {
+  if (bmi < 0) {
+    throw new Error(`Invalid BMI value: ${bmi}`);
+  }
+
   for (const category of BMI_CATEGORIES) {
     if (bmi < category.max) {
       return category.name;
