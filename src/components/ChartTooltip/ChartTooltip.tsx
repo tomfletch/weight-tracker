@@ -21,6 +21,7 @@ export function ChartTooltip({ tooltipState }: ChartTooltipProps) {
       className={styles.chartTooltip}
       style={tooltipStyle}
       aria-hidden={!tooltipState.isVisible}
+      role="tooltip"
     >
       {tooltipState.data ? (
         <>
