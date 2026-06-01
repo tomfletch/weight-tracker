@@ -23,7 +23,7 @@ export function App() {
           Skip to content
         </a>
         <Header />
-        <main id="main-content">
+        <main id="main-content" className={styles.mainContent}>
           <ErrorBoundary>
             <Routes>
               <Route path="/" element={<StatsPage />} />

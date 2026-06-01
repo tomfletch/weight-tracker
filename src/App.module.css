@@ -13,3 +13,7 @@
 .skipToContent:focus {
   top: 0;
 }
+
+.mainContent {
+  padding-top: var(--header-height);
+}

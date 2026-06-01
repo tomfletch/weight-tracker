@@ -17,7 +17,7 @@ const LINKS = [
 export function Header() {
   return (
     <header className={styles.header}>
-      <h1>
+      <h1 className={styles.logoContainer}>
         <Link to="/" className={styles.logo}>
           <img
             className={styles.logoIcon}

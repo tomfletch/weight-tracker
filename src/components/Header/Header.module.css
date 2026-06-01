@@ -1,10 +1,21 @@
+:root {
+  --header-height: 43px;
+}
+
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
   display: flex;
   align-items: center;
   gap: 3rem;
   background-color: var(--colour-surface);
   padding: 0 2rem;
   border-bottom: 1px solid var(--colour-border);
+  height: var(--header-height);
+  box-sizing: border-box;
 }
 
 .logo {
@@ -56,12 +67,18 @@
 }
 
 @media (max-width: 600px) {
-  .header {
-    flex-direction: column;
-    gap: 1rem;
+  :root {
+    --header-height: 72px;
   }
 
-  .logo {
-    padding-top: 1rem;
+  .header {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .logoContainer {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
   }
 }
