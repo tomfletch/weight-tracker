@@ -14,6 +14,8 @@
 
   --focus-outline-width: 2px;
   --focus-outline-offset: 2px;
+
+  overscroll-behavior: none;
 }
 
 html {
