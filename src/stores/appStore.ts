@@ -33,7 +33,7 @@ type AppState = {
 
   actions: {
     // Onboarding
-    setOnboardingCompleted: (completed: boolean) => void;
+    setOnboardingCompleted: () => void;
 
     // Height
     setHeight: (height: number | null) => void;
@@ -75,8 +75,7 @@ export const useAppStore = create<AppState>()(
 
       actions: {
         // Onboarding
-        setOnboardingCompleted: (hasCompletedOnboarding) =>
-          set({ hasCompletedOnboarding }),
+        setOnboardingCompleted: () => set({ hasCompletedOnboarding: true }),
 
         // Height
         setHeight: (height) => set({ height }),

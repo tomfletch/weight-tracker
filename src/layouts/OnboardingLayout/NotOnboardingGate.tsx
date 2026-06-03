@@ -1,15 +1,13 @@
 import type { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAppStore } from '~/stores/appStore';
+import { useAppSettings } from '~/hooks/useAppSettings';
 
 type OnboardingGateProps = {
   children: ReactNode;
 };
 
 export function NotOnboardingGate({ children }: OnboardingGateProps) {
-  const hasCompletedOnboarding = useAppStore(
-    (state) => state.hasCompletedOnboarding,
-  );
+  const { hasCompletedOnboarding } = useAppSettings();
 
   if (hasCompletedOnboarding) {
     return <Navigate to="/" replace />;

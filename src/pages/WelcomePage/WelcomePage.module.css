@@ -7,6 +7,8 @@
 }
 
 .welcomeCard {
+  display: grid;
+  gap: 2rem;
   width: min(36rem, 100%);
   text-align: center;
 }

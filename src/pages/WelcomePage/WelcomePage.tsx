@@ -2,14 +2,24 @@ import clsx from 'clsx';
 import logo from '~/assets/logo.svg';
 import { Card } from '~/components/Card/Card';
 import { Steps } from '~/components/Steps/Steps';
+import { useAppSettings } from '~/hooks/useAppSettings';
 import { useStepCounter } from '~/hooks/useStepCounter';
 import buttonStyles from '~/styles/buttons.module.css';
+import { Step1 } from './steps/Step1';
+import { Step2 } from './steps/Step2';
+import { Step3 } from './steps/Step3';
 import styles from './WelcomePage.module.css';
 
+const stepComponents = [Step1, Step2, Step3];
+
 export function WelcomePage() {
+  const { setOnboardingCompleted } = useAppSettings();
+
   const { currentStep, incrementStep, decrementStep } = useStepCounter({
     stepCount: 3,
   });
+
+  const StepComponent = stepComponents[currentStep - 1];
 
   return (
     <div className={styles.container}>
@@ -30,6 +40,10 @@ export function WelcomePage() {
           currentStep={currentStep}
         />
 
+        <div className={styles.stepContent}>
+          <StepComponent />
+        </div>
+
         <div className={styles.actions}>
           <button
             type="button"
@@ -41,7 +55,13 @@ export function WelcomePage() {
           <button
             type="button"
             className={clsx(buttonStyles.button, buttonStyles.primary)}
-            onClick={incrementStep}
+            onClick={() => {
+              if (currentStep === stepComponents.length) {
+                setOnboardingCompleted();
+              } else {
+                incrementStep();
+              }
+            }}
           >
             Next
           </button>
