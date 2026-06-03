@@ -78,3 +78,7 @@ export function ErrorBoundary({ children }: { children: ReactNode }) {
     </ErrorBoundaryClass>
   );
 }
+
+export function GlobalErrorBoundary({ children }: { children: ReactNode }) {
+  return <ErrorBoundaryClass>{children}</ErrorBoundaryClass>;
+}
