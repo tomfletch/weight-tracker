@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { ErrorBoundary } from '~/components/ErrorBoundary/ErrorBoundary';
 import { Header } from '~/components/Header/Header';
-import { OnboardingGate } from '~/components/OnboardingGate/OnboardingGate';
+import { OnboardingGate } from '~/layouts/AppLayout/OnboardingGate';
 import styles from './AppLayout.module.css';
 
 export function AppLayout() {

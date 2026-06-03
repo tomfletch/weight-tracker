@@ -1,8 +1,9 @@
 import type { CSSProperties } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import { AppLayout } from './components/AppLayout/AppLayout';
 import { useAppTheme } from './hooks/useAppTheme';
 import './index.css';
+import { AppLayout } from './layouts/AppLayout/AppLayout';
+import { OnboardingLayout } from './layouts/OnboardingLayout/OnboardingLayout';
 import { HistoryPage } from './pages/HistoryPage/HistoryPage';
 import { SettingsPage } from './pages/SettingsPage/SettingsPage';
 import { StatsPage } from './pages/StatsPage/StatsPage';
@@ -18,7 +19,9 @@ export function App() {
     <Router>
       <div style={appStyle}>
         <Routes>
-          <Route path="/welcome" element={null} />
+          <Route element={<OnboardingLayout />}>
+            <Route path="/welcome" element={null} />
+          </Route>
           <Route element={<AppLayout />}>
             <Route path="/" element={<StatsPage />} />
             <Route path="/history" element={<HistoryPage />} />
