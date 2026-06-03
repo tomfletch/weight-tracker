@@ -8,4 +8,19 @@
 
 .welcomeCard {
   width: min(36rem, 100%);
+  text-align: center;
+}
+
+.logoContainer {
+  margin-bottom: 1rem;
+}
+
+.welcomeTitle {
+  margin-bottom: 1rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

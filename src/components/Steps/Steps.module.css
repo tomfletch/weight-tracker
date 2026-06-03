@@ -1,0 +1,79 @@
+.container {
+  position: relative;
+  isolation: isolate;
+}
+
+.steps {
+  display: flex;
+  gap: 2rem;
+}
+
+.progressBar,
+.progressFill {
+  position: absolute;
+  top: anchor(--steps-active-child center);
+  left: anchor(--steps-first-child center);
+  right: anchor(--steps-last-child center);
+  height: 2px;
+  translate: 0 -50%;
+  z-index: -1;
+  background-color: var(--colour-border);
+}
+
+.progressFill {
+  right: anchor(--steps-active-child center);
+  background-color: var(--colour-accent);
+  transition: right 0.5s linear;
+}
+
+.step:first-child {
+  anchor-name: --steps-first-child;
+}
+
+.step:last-child {
+  anchor-name: --steps-last-child;
+}
+
+.step[data-state="active"] .stepNumber {
+  anchor-name: --steps-active-child;
+}
+
+.step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  box-sizing: border-box;
+}
+
+.stepNumber {
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--border-radius-circle);
+  display: grid;
+  place-content: center;
+  background-color: var(--colour-border);
+  color: var(--colour-text-muted);
+  box-sizing: border-box;
+}
+
+.stepLabel {
+  color: var(--colour-text-muted);
+}
+
+.step[data-state="active"] .stepNumber {
+  background-color: #fff;
+  border: 2px solid var(--colour-accent);
+  color: var(--colour-accent);
+  font-weight: bold;
+}
+
+.step[data-state="active"] .stepLabel {
+  font-weight: bold;
+}
+
+.step[data-state="completed"] .stepNumber {
+  background-color: var(--colour-accent);
+  color: #fff;
+}
