@@ -52,6 +52,7 @@ export async function importAppBackupFromFile(
 
 export function performImportData(backup: AppDataBackup) {
   useAppStore.setState({
+    hasCompletedOnboarding: true,
     height: backup.data.height,
     heightUnit: backup.data.heightUnit,
     weightUnit: backup.data.weightUnit,

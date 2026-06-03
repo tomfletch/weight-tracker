@@ -51,6 +51,7 @@ function applyMockData() {
   }
 
   useAppStore.setState({
+    hasCompletedOnboarding: true,
     height: 1.78,
     heightUnit: HeightUnit.CM,
     weightUnit: WeightUnit.KGS,

@@ -8,10 +8,17 @@ import { isValidWeight } from '~/utils/weights';
 /**
  * Current schema version for app store data.
  * Used for JSON backups to ensure forward/backward compatibility.
+ *
+ * Version history:
+ * - 1: Initial schema
+ * - 2: Added hasCompletedOnboarding flag
  */
-export const APP_STORE_VERSION = 1;
+export const APP_STORE_VERSION = 2;
 
 type AppState = {
+  // Onboarding
+  hasCompletedOnboarding: boolean;
+
   // Height
   height: number | null;
   heightUnit: HeightUnit;
@@ -25,6 +32,9 @@ type AppState = {
   theme: Theme;
 
   actions: {
+    // Onboarding
+    setOnboardingCompleted: (completed: boolean) => void;
+
     // Height
     setHeight: (height: number | null) => void;
     setHeightUnit: (heightUnit: HeightUnit) => void;
@@ -42,6 +52,9 @@ type AppState = {
 };
 
 const initialAppState: Omit<AppState, 'actions'> = {
+  // Onboarding
+  hasCompletedOnboarding: false,
+
   // Height
   height: null,
   heightUnit: HeightUnit.CM,
@@ -61,6 +74,10 @@ export const useAppStore = create<AppState>()(
       ...initialAppState,
 
       actions: {
+        // Onboarding
+        setOnboardingCompleted: (hasCompletedOnboarding) =>
+          set({ hasCompletedOnboarding }),
+
         // Height
         setHeight: (height) => set({ height }),
         setHeightUnit: (heightUnit) => set({ heightUnit }),
@@ -105,11 +122,21 @@ export const useAppStore = create<AppState>()(
         return persistedState;
       },
       migrate: (persistedState, version) => {
-        if (version === 0) {
-          return persistedState;
+        let state = persistedState as Record<string, unknown>;
+
+        // Version 0 -> 1: initial version, no migration needed
+        if (version < 1) {
+          // No schema changes required for version 1
         }
 
-        return persistedState;
+        // Version 1 -> 2: add hasCompletedOnboarding flag
+        if (version < 2) {
+          const weightRecords = (state.weightRecords as unknown[]) || [];
+          const hasCompletedOnboarding = weightRecords.length > 0;
+          state = { ...state, hasCompletedOnboarding };
+        }
+
+        return state;
       },
     },
   ),

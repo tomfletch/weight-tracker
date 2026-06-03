@@ -1,8 +1,6 @@
 import type { CSSProperties } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import styles from './App.module.css';
-import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
-import { Header } from './components/Header/Header';
+import { AppLayout } from './components/AppLayout/AppLayout';
 import { useAppTheme } from './hooks/useAppTheme';
 import './index.css';
 import { HistoryPage } from './pages/HistoryPage/HistoryPage';
@@ -18,20 +16,15 @@ export function App() {
 
   return (
     <Router>
-      <div className={styles.App} style={appStyle}>
-        <a href="#main-content" className={styles.skipToContent}>
-          Skip to content
-        </a>
-        <Header />
-        <main id="main-content" className={styles.mainContent}>
-          <ErrorBoundary>
-            <Routes>
-              <Route path="/" element={<StatsPage />} />
-              <Route path="/history" element={<HistoryPage />} />
-              <Route path="/settings" element={<SettingsPage />} />
-            </Routes>
-          </ErrorBoundary>
-        </main>
+      <div style={appStyle}>
+        <Routes>
+          <Route path="/welcome" element={null} />
+          <Route element={<AppLayout />}>
+            <Route path="/" element={<StatsPage />} />
+            <Route path="/history" element={<HistoryPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+          </Route>
+        </Routes>
       </div>
     </Router>
   );
