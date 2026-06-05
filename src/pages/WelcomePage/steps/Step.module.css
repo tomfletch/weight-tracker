@@ -1,8 +1,35 @@
 .container {
   display: grid;
-  gap: 1rem;
+  gap: 2rem;
+}
+
+.stepHeader {
+  text-align: center;
 }
 
 .description {
   text-wrap: balance;
+}
+
+.field {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.labelContainer {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.label {
+  font-weight: 600;
+}
+
+.labelDescription {
+  color: var(--text-light);
+}
+
+.inputContainer {
+  display: grid;
+  gap: 0.5rem;
 }

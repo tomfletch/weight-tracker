@@ -10,6 +10,9 @@
   display: grid;
   gap: 2rem;
   width: min(36rem, 100%);
+}
+
+.welcomeHeader {
   text-align: center;
 }
 
@@ -21,8 +24,25 @@
   margin-bottom: 1rem;
 }
 
+.stepContent {
+  display: grid;
+}
+
+.step {
+  grid-row: 1;
+  grid-column: 1;
+}
+
+.step[aria-hidden="true"] {
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+}
+
+.nextButton {
+  margin-left: auto;
 }

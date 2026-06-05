@@ -19,25 +19,21 @@ import { useAppSettings } from '~/hooks/useAppSettings';
 import { useAppWeight } from '~/hooks/useAppWeight';
 import buttonStyles from '~/styles/buttons.module.css';
 import inputStyles from '~/styles/inputs.module.css';
-import { HeightUnit, type HeightUnit as HeightUnitType } from '~/types/height';
-import { WeightUnit, type WeightUnit as WeightUnitType } from '~/types/weight';
+import {
+  HeightUnit,
+  type HeightUnit as HeightUnitType,
+  heightUnitOptions,
+} from '~/types/height';
+import {
+  WeightUnit,
+  type WeightUnit as WeightUnitType,
+  weightUnitOptions,
+} from '~/types/weight';
 import { BackupExportButton } from './components/BackupExportButton/BackupExportButton';
 import { BackupImportButton } from './components/BackupImportButton/BackupImportButton';
 import { ColourSelect } from './components/ColourSelect/ColourSelect';
 import { ExportWeightsCsvButton } from './components/ExportWeightsCsvButton/ExportWeightsCsvButton';
 import styles from './SettingsPage.module.css';
-
-const weightUnitOptions = [
-  { key: WeightUnit.STONES_LBS, name: 'Stone and Pounds (st, lb)' },
-  { key: WeightUnit.LBS, name: 'Pounds (lb)' },
-  { key: WeightUnit.KGS, name: 'Kilograms (kg)' },
-];
-
-const heightUnitOptions = [
-  { key: HeightUnit.CM, name: 'Centimeters (cm)' },
-  { key: HeightUnit.FT_IN, name: 'Feet and Inches (ft, in)' },
-  { key: HeightUnit.IN, name: 'Inches (in)' },
-];
 
 export function SettingsPage() {
   const { weightUnit, setWeightUnit, weightTargetKgs, setWeightTargetKgs } =
