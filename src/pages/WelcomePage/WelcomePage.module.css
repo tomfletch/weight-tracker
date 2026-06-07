@@ -3,6 +3,7 @@
   display: grid;
   place-items: center;
   padding: 2rem;
+  box-sizing: border-box;
   background-color: var(--colour-bg);
 }
 
