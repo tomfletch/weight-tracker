@@ -6,6 +6,12 @@
   background-color: var(--colour-bg);
 }
 
+.content {
+  display: grid;
+  gap: 2rem;
+  place-items: center;
+}
+
 .welcomeCard {
   display: grid;
   gap: 2rem;
