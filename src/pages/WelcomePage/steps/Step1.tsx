@@ -69,7 +69,7 @@ export function Step1() {
         <WeightInput
           weight={currentWeight}
           onChange={onWeightChange}
-          label="Current Weight"
+          label="Current Weight (optional)"
           labelClassName={styles.label}
           labelDescriptionClassName={styles.labelDescription}
           labelContainerClassName={styles.labelContainer}

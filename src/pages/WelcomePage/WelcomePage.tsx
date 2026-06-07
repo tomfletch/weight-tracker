@@ -79,7 +79,7 @@ export function WelcomePage() {
                 }
               }}
             >
-              Next
+              {currentStep === lastStepNumber ? 'Finish' : 'Next'}
             </button>
           </div>
         </Card>

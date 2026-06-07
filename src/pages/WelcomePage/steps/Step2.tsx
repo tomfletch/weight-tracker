@@ -52,7 +52,7 @@ export function Step2() {
         <HeightInput
           height={height}
           onChange={setHeight}
-          label="Height"
+          label="Height (optional)"
           labelClassName={styles.label}
           labelDescriptionClassName={styles.labelDescription}
           labelContainerClassName={styles.labelContainer}

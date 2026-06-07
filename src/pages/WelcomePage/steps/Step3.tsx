@@ -31,7 +31,7 @@ export function Step3() {
         <WeightInput
           weight={weightTargetKgs}
           onChange={onTargetWeightChange}
-          label="Target Weight"
+          label="Target Weight (optional)"
           labelClassName={styles.label}
           labelDescriptionClassName={styles.labelDescription}
           labelContainerClassName={styles.labelContainer}
