@@ -55,6 +55,16 @@ describe('App', () => {
     ).toBeInTheDocument();
   });
 
+  it('renders WelcomePage when onboarding has not been completed', () => {
+    useAppStore.setState({ hasCompletedOnboarding: false });
+
+    render(<App />);
+
+    expect(
+      screen.getByRole('heading', { level: 1, name: /welcome/i }),
+    ).toBeInTheDocument();
+  });
+
   it('renders HistoryPage on /history', () => {
     navigateTo('/history');
     render(<App />);
