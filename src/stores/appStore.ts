@@ -43,7 +43,7 @@ type AppState = {
     setWeightUnit: (weightUnit: WeightUnit) => void;
     addWeight: (weightRecord: WeightRecord) => void;
     deleteWeight: (date: string) => void;
-    setWeightTargetKgs: (weightTarget: number) => void;
+    setWeightTargetKgs: (weightTarget: number | null) => void;
 
     // Settings
     setTheme: (theme: Theme) => void;

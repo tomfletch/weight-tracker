@@ -9,7 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
-import { useCallback, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Card } from '~/components/Card/Card';
 import { ColourSelect } from '~/components/ColourSelect/ColourSelect';
 import { Dialog } from '~/components/Dialog/Dialog';
@@ -43,14 +43,6 @@ export function SettingsPage() {
   const [isDeleteAllDataDialogOpen, setIsDeleteAllDataDialogOpen] =
     useState(false);
   const cancelDeleteAllDataButtonRef = useRef<HTMLButtonElement | null>(null);
-
-  const onTargetWeightChange = useCallback(
-    (weight: number | null) => {
-      if (!weight) return;
-      setWeightTargetKgs(weight);
-    },
-    [setWeightTargetKgs],
-  );
 
   const onWeightUnitChange = (weightUnitStr: string) => {
     const newWeightUnit: WeightUnitType =
@@ -104,7 +96,7 @@ export function SettingsPage() {
           </div>
           <WeightInput
             weight={weightTargetKgs}
-            onChange={onTargetWeightChange}
+            onChange={setWeightTargetKgs}
             label="Target Weight"
             labelClassName={styles.label}
             labelDescription="Set your goal weight."
