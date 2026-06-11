@@ -1,3 +1,5 @@
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useId } from 'react';
 import {
   getThemeColours,
@@ -41,7 +43,7 @@ function ColourSelectOption({
   const id = useId();
 
   return (
-    <>
+    <div>
       <input
         id={id}
         className={styles.colourInput}
@@ -55,7 +57,15 @@ function ColourSelectOption({
         className={styles.colourLabel}
         style={{ backgroundColor: getThemeColours(theme.value).accentColour }}
         aria-label={`Theme ${theme.name}`}
-      />
-    </>
+      >
+        {isSelected ? (
+          <FontAwesomeIcon
+            icon={faCheck}
+            className={styles.checkIcon}
+            aria-hidden="true"
+          />
+        ) : null}
+      </label>
+    </div>
   );
 }

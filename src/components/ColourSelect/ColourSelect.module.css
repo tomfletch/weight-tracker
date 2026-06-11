@@ -28,19 +28,16 @@
   outline-offset: var(--focus-outline-offset);
 }
 
-.colourSelect .colourInput:checked + .colourLabel:after {
-  content: "✔";
+.colourSelect .colourLabel .checkIcon {
   position: absolute;
+  padding: 4px;
   top: -8px;
   right: -8px;
   display: block;
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   border-radius: var(--border-radius-circle);
   border: 2px solid var(--colour-surface);
   background-color: var(--colour-accent);
   color: white;
-  font-size: 10px;
-  line-height: 16px;
-  text-align: center;
 }
