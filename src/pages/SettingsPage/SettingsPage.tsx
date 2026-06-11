@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 import { useCallback, useRef, useState } from 'react';
 import { Card } from '~/components/Card/Card';
+import { ColourSelect } from '~/components/ColourSelect/ColourSelect';
 import { Dialog } from '~/components/Dialog/Dialog';
 import { HeightInput } from '~/components/HeightInput/HeightInput';
 import { WeightInput } from '~/components/WeightInput/WeightInput';
@@ -31,7 +32,6 @@ import {
 } from '~/types/weight';
 import { BackupExportButton } from './components/BackupExportButton/BackupExportButton';
 import { BackupImportButton } from './components/BackupImportButton/BackupImportButton';
-import { ColourSelect } from './components/ColourSelect/ColourSelect';
 import { ExportWeightsCsvButton } from './components/ExportWeightsCsvButton/ExportWeightsCsvButton';
 import styles from './SettingsPage.module.css';
 

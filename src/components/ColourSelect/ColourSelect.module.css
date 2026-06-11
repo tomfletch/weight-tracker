@@ -1,5 +1,8 @@
 .colourSelect {
-  display: inline-block;
+  display: inline-grid;
+  grid-auto-flow: column;
+  gap: 1rem;
+  align-items: center;
 }
 
 .colourSelect .colourInput {
@@ -9,10 +12,12 @@
 
 .colourSelect .colourLabel {
   position: relative;
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  margin-right: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 31px;
+  margin-right: 0;
   vertical-align: middle;
   border-radius: var(--border-radius);
   cursor: pointer;

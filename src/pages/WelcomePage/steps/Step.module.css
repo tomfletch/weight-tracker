@@ -16,6 +16,11 @@
   gap: 0.75rem;
 }
 
+.fieldCenter {
+  justify-items: center;
+  margin-top: 1.5rem;
+}
+
 .labelContainer {
   display: grid;
   gap: 0.25rem;

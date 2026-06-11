@@ -8,12 +8,14 @@ import buttonStyles from '~/styles/buttons.module.css';
 import { Step1 } from './steps/Step1';
 import { Step2 } from './steps/Step2';
 import { Step3 } from './steps/Step3';
+import { Step4 } from './steps/Step4';
 import styles from './WelcomePage.module.css';
 
 const steps = [
   { number: 1, label: 'Weight', Component: Step1 },
   { number: 2, label: 'Height', Component: Step2 },
-  { number: 3, label: 'Target Weight', Component: Step3 },
+  { number: 3, label: 'Target', Component: Step3 },
+  { number: 4, label: 'Theme', Component: Step4 },
 ];
 
 const lastStepNumber = steps[steps.length - 1].number;
@@ -22,7 +24,7 @@ export function WelcomePage() {
   const { setOnboardingCompleted } = useAppSettings();
 
   const { currentStep, incrementStep, decrementStep } = useStepCounter({
-    stepCount: 3,
+    stepCount: 4,
   });
 
   return (
