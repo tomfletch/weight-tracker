@@ -1,9 +1,20 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { App } from '../src/App';
+import { useAppStore } from '../src/stores/appStore';
+
+const navigateTo = (path: string) => {
+  window.history.replaceState({}, '', path);
+  // Trigger a popstate event to notify React Router
+  window.dispatchEvent(new PopStateEvent('popstate', { state: {} }));
+};
 
 describe('App', () => {
+  beforeEach(() => {
+    useAppStore.setState({ hasCompletedOnboarding: true });
+  });
+
   it('navigates via header links and shows correct page', async () => {
     render(<App />);
     const user = userEvent.setup();
@@ -45,7 +56,7 @@ describe('App', () => {
   });
 
   it('renders HistoryPage on /history', () => {
-    window.history.pushState({}, '', '/history');
+    navigateTo('/history');
     render(<App />);
     expect(
       screen.getByRole('heading', { level: 1, name: /history/i }),
@@ -53,7 +64,7 @@ describe('App', () => {
   });
 
   it('renders SettingsPage on /settings', () => {
-    window.history.pushState({}, '', '/settings');
+    navigateTo('/settings');
     render(<App />);
     expect(
       screen.getByRole('heading', { level: 1, name: /settings/i }),
